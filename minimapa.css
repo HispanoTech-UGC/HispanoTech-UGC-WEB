@@ -1,0 +1,20 @@
+body{
+    margin: 0 auto;
+    position: relative;
+    max-height: 100vh;
+    background: white;
+    padding-inline: 0.5vw;
+    padding-bottom: 0.5vw;
+}
+
+#minimap-container{
+    background: red;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 30vh;
+    width: 30vh;
+    border-radius: 100%;
+    margin-left: 2vw;
+    margin-top: 2vw;
+}
