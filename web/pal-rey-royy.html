@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="minimapa.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
 </head>
 <style>
     #container-pagina{
@@ -16,13 +17,20 @@
         height: 91vh;
         border-radius: 60px;
     }
+
+    #cameraFeed{
+        width: 100%;
+        height: 100%;
+        border-radius: 60px;
+    }
 </style>
 <body>
     <div id="container-pagina">
+        <img id="cameraFeed" alt="camara">
         <div id="minimap-container">
             <canvas id="mapCanvas"></canvas>
         </div>
     </div>
-
+<script src="conexion-robot.js"></script>
 </body>
 </html>
