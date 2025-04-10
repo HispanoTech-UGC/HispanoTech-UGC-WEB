@@ -57,6 +57,16 @@ document.addEventListener('DOMContentLoaded', event => {
             estado.textContent = 'Conectado';
             estado.style.background = 'green';
             updateCameraFeed();
+            //Subscribe to the map topic
+            var mapTopic = new ROSLIB.Topic({
+                ros: data.ros,
+                name: '/map',
+                messageType: 'nav_msgs/msg/OccupancyGrid'
+            });
+
+            mapTopic.subscribe((message) => {
+                draw_occupancy_grid(canvasMap, message)
+            });
             console.log("Conexion con ROSBridge correcta")
         })
         data.ros.on("error", (error) => {
