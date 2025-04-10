@@ -69,7 +69,7 @@ graph LR
 
 1. Clona este repositorio:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/HispanoTech-UGC/HispanoTech-UGC-WEB.git
    ```
 2. Instala las dependencias necesarias:
    ```bash
