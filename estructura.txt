@@ -1,0 +1,34 @@
+/hispanotech
+│
+├── index.html              → Landing Page
+├── producto.html           → Página del robot (detalles, funcionalidades, specs)
+├── login.html              → Inicio de sesión para instituciones
+├── registro.html           → Registro restringido (solo admins policiales)
+├── operador.html           → Vista interna para los operadores
+│
+├── /assets
+│   ├── /img                → Logos, íconos, fondos, imágenes del robot
+│   ├── /fonts              → Tipografías personalizadas
+│   └── /videos             → Si tienes fondos animados o clips del robot
+│
+├── /css
+│   ├── base.css            → Reset + reglas generales (body, html, tipografías)
+│   ├── layout.css          → Grid/flex, header, footer, contenedores
+│   ├── components.css      → Botones, tarjetas, formularios, etc.
+│   ├── pages               → Estilos específicos por página
+│   │   ├── landing.css
+│   │   ├── producto.css
+│   │   ├── login.css
+│   │   └── operador.css
+│
+├── /js
+│   ├── main.js             → Funciones generales (menu, scroll, etc.)
+│   ├── auth.js             → Validaciones de login/registro
+│   ├── map.js              → Lógica del mapa interactivo
+│   ├── operador.js         → Funcionalidad para la vista del operador
+│   └── api.js              → Llamadas a backend o simulaciones de datos
+│
+├── /data                   → Datos estáticos (JSONs simulados para pruebas)
+│   └── zonas.json
+│
+└── /docs                   → Branding, wireframes, manuales o documentación interna
