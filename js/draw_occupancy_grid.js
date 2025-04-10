@@ -1,7 +1,10 @@
 function draw_occupancy_grid(canvas, map_data, robotPosition) {
     const container = canvas.parentElement;
     const ctx = canvas.getContext("2d");
-
+    robotPosition = {
+        x:0,
+        y:0
+    }
     // Ajustar el tamaño del canvas al tamaño del contenedor
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
@@ -37,15 +40,24 @@ function draw_occupancy_grid(canvas, map_data, robotPosition) {
             width:4,
             height:4,
         }
-        let posX = robotPosition.x + canvas.width/2 - robotSize.width/2;
-        let posY = robotPosition.y + canvas.height/2 - robotSize.height/2;
+        const res = map.info.resolution;
+        const origin = map.info.origin;
 
-        // console.log(posX, posY)
+        // Posición en celdas del mapa
+        const mapX = (robotPosition.x - origin.position.x) / res;
+        const mapY = (robotPosition.y - origin.position.y) / res;
 
-        // ctx.beginPath();
-        // ctx.fillStyle = 'green';
-        // ctx.fillRect(posX, posY, robotSize.width, robotSize.height);
-        // ctx.stroke();
+        // Posición en píxeles en el canvas (invertimos eje Y si es necesario)
+        const posX = mapX * scaleX;
+        const posY = canvas.height - mapY * scaleY; // Invertir Y si tu mapa lo necesita
+
+
+        console.log(posX, posY)
+
+        ctx.beginPath();
+        ctx.fillStyle = 'green';
+        ctx.fillRect(posX, posY, robotSize.width, robotSize.height);
+        ctx.stroke();
 
         ctx.beginPath();
         ctx.fillStyle = 'green';

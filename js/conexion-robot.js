@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', event => {
 
             mapTopic.subscribe((message) => {
                 console.log('suscrito a map')
-                draw_occupancy_grid(canvasMap, message);
+                draw_occupancy_grid(canvasMap, message, 0);
             });
             updateCameraFeed();
             console.log("Conexion con ROSBridge correcta")
