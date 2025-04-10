@@ -66,8 +66,8 @@
 .body {
   display: flex;
   flex-direction: column;
-  width: 1440px;
-  height: 1024px;
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
@@ -75,10 +75,10 @@
   position: relative;
 }
 
-.body .camara {
+.body .subtract {
   position: relative;
-  width: 1420px;
-  height: 922px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -90,7 +90,7 @@
   justify-content: center;
   gap: 10px;
   position: absolute;
-  top: 92px;
+  top: 14px;
   left: 1130px;
   border-left-width: 1px;
   border-left-style: solid;
@@ -114,14 +114,15 @@
   align-items: flex-start;
   justify-content: center;
   gap: 10px;
-  padding: 0px 1px 10px 22px;
+  padding: 0px 1px 70px 22px;
   position: relative;
 }
 
 .body .div-wrapper {
   display: inline-flex;
   flex-direction: column;
-  height: 39px;
+  width: 220px;
+  height: 0px;
   align-items: center;
   gap: 10px;
   padding: 10px;
@@ -153,8 +154,8 @@
 
 .body .vector {
   position: absolute;
-  width: 21px;
-  height: 14px;
+  width: 24px;
+  height: 24px;
   top: 1px;
   left: 0;
 }
@@ -167,7 +168,7 @@
   left: 0;
   font-family: "Quicksand-Medium", Helvetica;
   font-weight: 500;
-  color: var(--negro);
+  color: var(--color-blanco);
   font-size: 11px;
   line-height: 16.0px;
   white-space: nowrap;
@@ -182,6 +183,7 @@
   gap: 20px;
   position: relative;
   flex: 0 0 auto;
+  padding: 0px 0px 0px 80px
 }
 
 .body .log {
@@ -209,7 +211,7 @@
   margin-top: -1.00px;
   font-family: "Quicksand-SemiBold", Helvetica;
   font-weight: 600;
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: 14px;
   letter-spacing: 0;
   line-height: 20.3px;
@@ -221,7 +223,7 @@
   width: fit-content;
   font-family: var(--micro-font-family);
   font-weight: var(--micro-font-weight);
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: var(--micro-font-size);
   letter-spacing: var(--micro-letter-spacing);
   line-height: var(--micro-line-height);
@@ -242,7 +244,7 @@
   width: fit-content;
   font-family: var(--micro-font-family);
   font-weight: var(--micro-font-weight);
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: var(--micro-font-size);
   letter-spacing: var(--micro-letter-spacing);
   line-height: var(--micro-line-height);
@@ -299,7 +301,7 @@
   margin-top: -1.00px;
   font-family: var(--micro-font-family);
   font-weight: var(--micro-font-weight);
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: var(--micro-font-size);
   letter-spacing: var(--micro-letter-spacing);
   line-height: var(--micro-line-height);
@@ -333,9 +335,9 @@
   flex: 1;
   position: relative;
   margin-top: -1.00px;
-  font-family: "Quicksand-Regular", Helvetica;
+  font-family: var(--body-medium);
   font-weight: 400;
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: 18px;
   letter-spacing: 0;
   line-height: 26.1px;
@@ -369,7 +371,7 @@
   margin-top: -1.00px;
   font-family: "Quicksand-Regular", Helvetica;
   font-weight: 400;
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: 18px;
   letter-spacing: 0;
   line-height: 26.1px;
@@ -408,7 +410,7 @@
   margin-top: -1.00px;
   font-family: var(--body-small-font-family);
   font-weight: var(--body-small-font-weight);
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: var(--body-small-font-size);
   text-align: center;
   letter-spacing: var(--body-small-letter-spacing);
@@ -421,7 +423,7 @@
   align-self: stretch;
   font-family: var(--healing-medium-font-family);
   font-weight: var(--healing-medium-font-weight);
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: var(--healing-medium-font-size);
   line-height: var(--healing-medium-line-height);
   text-align: center;
@@ -810,7 +812,7 @@
   border-radius: 1000px;
 }
 
-.body .girar {
+/*.body .girar {
   display: flex;
   flex-direction: column;
   width: 64px;
@@ -825,7 +827,7 @@
   border-color: #ffffff66;
   transform: rotate(-45deg);
   box-shadow: 0px 4px 4px #00000040;
-}
+}*/
 
 .body .frame-12 {
   display: inline-flex;
@@ -964,3 +966,62 @@
   left: 20px;
   background-color: #0000005e;
 }
+
+
+.wifi{
+    width: 24px; ;
+    height: 24px;
+}
+
+ul.intervinientes-list {
+    list-style-type: disc;  /* Muestra los puntos antes de cada elemento */
+    padding-left: 20px;     /* Da espacio a la izquierda para los puntos */
+    color: var(--color-blanco);
+    font-family: var(--micro-font-family);
+    font-size: var(--micro-font-size)
+}
+
+.numeroBateria{
+    color: var(--color-negro);
+    position: absolute;
+    z-index: 10;
+    top: 5px;
+    right: 1px;
+    font-family: var(--micro-font-family);
+    font-size: var(--micro-font-size);
+    font-family: var(--micro-font-family);
+}
+
+.direccion {
+    position: absolute;
+    z-index: 20;
+    top: -55px;
+    right: -5px;
+    transition: transform 0.3s ease; /* para animar el giro suavemente */
+  }
+  
+  .WASD {
+    transition: all 0.2s ease;
+    position: absolute;
+    z-index: 30;
+  }
+  
+  .WASD.active {
+    background-color: #e0e0e0; /* Cambiá esto a lo que usarías en :hover */
+    transform: scale(1.1);     /* O cualquier otro efecto */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  .WASD:hover {
+background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.16) 85%,
+rgba(255, 255, 255, 0.4)91%
+);    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .S {
+    position: absolute;
+    top: -40px;  
+    right: 60px; 
+    z-index: 20;
+  }
+  
