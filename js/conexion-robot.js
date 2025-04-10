@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', event => {
     console.log("entro en la pagina")
 
-    const direccionBridge = document.getElementById("direccion_bridge");
-    const img = document.getElementById("container-pagina");
-
     // Agregar control con el teclado (WASD)
     document.addEventListener("keydown", (event) => {
         switch (event.key.toLowerCase()) {
