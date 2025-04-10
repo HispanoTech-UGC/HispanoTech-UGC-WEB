@@ -1,32 +1,36 @@
 function draw_occupancy_grid(canvas, map_data, robotPosition) {
-    canvasMap = document.getElementById("map");
+    const container = canvas.parentElement;
+    const ctx = canvas.getContext("2d");
 
-    var ctx = canvas.getContext("2d");
-    //document.querySelector('canvas'); //canvas.getContext("2d");
+    // Ajustar el tamaño del canvas al tamaño del contenedor
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
 
-    var map = map_data;
-    var pointSize = 1;
+    const map = map_data;
+    const mapWidth = map.info.width;
+    const mapHeight = map.info.height;
 
-    canvas.width = map.info.width;
-    canvas.height = map.info.height;
+    // Escalado para ajustar el mapa al canvas
+    const scaleX = canvas.width / mapWidth;
+    const scaleY = canvas.height / mapHeight;
 
-    for (let i = 0; i < map.info.height; i++) {
-        for (let j = 0; j < map.info.width; j++) {
+    const pointSize = 1;
 
-            let posX = j;
-            let posY = i;
-            let pos = map.info.width * i + j;
-
+    for (let i = 0; i < mapHeight; i++) {
+        for (let j = 0; j < mapWidth; j++) {
+            let pos = mapWidth * i + j;
             let gridValue = map.data[pos];
+            let color = evaluarGradiente(gridValue);
 
-            var color = evaluarGradiente(gridValue);
+            // Posición y escala
+            const posX = j * scaleX;
+            const posY = i * scaleY;
 
-            ctx.beginPath();
-            ctx.fillRect(posX, posY, pointSize, pointSize);
             ctx.fillStyle = color;
-            ctx.stroke();
+            ctx.fillRect(posX, posY, scaleX, scaleY);
         }
     }
+    
 
     if(robotPosition) {
         let robotSize = {
