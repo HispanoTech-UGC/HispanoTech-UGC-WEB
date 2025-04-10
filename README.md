@@ -42,7 +42,7 @@ El proyecto utiliza **Supabase** como base de datos. Supabase es una plataforma 
 
 El proyecto está alojado en **GitHub Pages**, lo que permite una fácil visualización y acceso al sitio web. Para acceder al proyecto, visita el siguiente enlace:
 
-[HispanoTech en GitHub Pages](https://<tu-usuario>.github.io/HispanoTech-UGC-WEB/)
+[HispanoTech en GitHub Pages](https://hispanotech-ugc.github.io/HispanoTech-UGC-WEB/)
 
 ## Diagramas
 
