@@ -45,10 +45,10 @@
                   <div class="overlap-group">
                     <div class="rectangle"></div>
                     <img class="vector" src="assets/imágenes/iconos/batería03.svg" />
-                    <div class="text-wrapper">40</div>
+                    <div class="numeroBateria">40</div>
                   </div>
                 </div>
-                <img class="img" src="assets/imágenes/iconos/Property 1=20wifi.svg" />
+                <img class="img wifi" src="assets/imágenes/iconos/Property 1=100wifi.svg" />
               </div>
             </div>
           </div>
@@ -63,9 +63,14 @@
                 <div class="text-wrapper-3">2025-03-30-1423</div>
               </div>
               <p class="intervinientes">
-                Intervinientes:<br />Negociador (N) – Oficial Ramírez<br />Atracador 1 (A1) – Presunto líder del
-                grupo <br />Atracador 2 (A2) – Secuaz<br />Atracador 3 (A3) – Secuaz
+                Intervinientes:
               </p>
+              <ul class="intervinientes-list">
+                <li>Negociador (N) – Oficial Ramírez</li>
+                <li>Atracador 1 (A1) – Presunto líder del grupo</li>
+                <li>Atracador 2 (A2) – Secuaz</li>
+                <li>Atracador 3 (A3) – Secuaz</li>
+              </ul>
             </div>
             <img class="line" src="assets/imágenes/iconos/Line 2.svg" />
             <div class="contenedor-c">
@@ -218,7 +223,7 @@
                 <div class="frame-7">
                   <div class="img">
                     <div class="overlap-group-2">
-                      <img class="vector-2" src="assets/imágenes/iconos/plus.svg" /> <img class="vector-3" src="" />
+                      <img class="img" src="assets/imágenes/iconos/plus.svg" />
                     </div>
                   </div>
                   <img class="img" src="assets/imágenes/iconos/minus.svg" />
@@ -232,7 +237,7 @@
                 <div class="frame-7">
                   <div class="img">
                     <div class="overlap-group-2">
-                      <img class="vector-2" src="assets/imágenes/iconos/plus.svg" /> <img class="vector-3" src="" />
+                      <img class="img" src="assets/imágenes/iconos/plus.svg" /> 
                     </div>
                   </div>
                   <img class="img" src="assets/imágenes/iconos/minus.svg" />
@@ -278,32 +283,39 @@
                     <img class="line-2" src="assets/imágenes/iconos/Vector15.svg" />
                     <div class="AWSD-wrapper">
                       <div class="AWSD">
-                        <div class="WASD"><div class="text-wrapper-10">W</div></div>
-                        <div class="frame-11">
-                          <div class="WASD"><div class="text-wrapper-10">A</div></div>
-                          <div class="flecha">
+                        <button class="WASD W">
+                            <span class="text-wrapper-10">W</span>
+                          </button>
+                                                  <div class="frame-11">
+                            <button class="WASD A">
+                                <span class="text-wrapper-10">A</span>
+                              </button>
+                                                        <div class="flecha">
                             <div class="girar">
-                              <div class="frame-12">
-                                <div class="ellipse-3"></div>
-                                <div class="ellipse-4"></div>
-                              </div>
+                              <img class="direccion" src="assets/imágenes/iconos/dirección.svg">
+                              </img>
                               <div class="frame-13">
                                 <div class="overlap-group-wrapper">
                                   <div class="overlap-group-3">
-                                    <img class="rectangle-3" src="img/rectangle-146.svg" />
-                                    <div class="ellipse-5"></div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div class="WASD"><div class="text-wrapper-10">D</div></div>
-                        </div>
-                        <div class="WASD"><div class="text-wrapper-10">X</div></div>
+                          <button class="WASD D">
+                            <span class="text-wrapper-10">D</span>
+                          </button>
+                                                  </div>
+                        <button class="WASD X">
+                            <span class="text-wrapper-10">X</span>
+                          </button>
+                          <button class="WASD S">
+                            <span class="text-wrapper-10">S</span>
+                          </button>
                       </div>
                     </div>
                   </div>
-                  <img class="vector-5" src="img/vector-15.svg" />
+                  <img class="vector-5" src="assets/imágenes/iconos/Vector15.svg" />
                 </div>
               </div>
             </div>
@@ -313,5 +325,6 @@
       </div>
       <div class="rectangle-4"></div>
     </div>
+    <script src="js/operador.js"></script>
   </body>
 </html>
