@@ -1,0 +1,71 @@
+header {
+    font-family: 'Quicksand-Regular', Helvetica;
+    font-weight: 400;
+    width: 100%;
+}
+
+h1 {
+    display: block; /* Por defecto, el <h1> ya es display: block, pero puedes modificarlo si lo deseas */
+    margin-block-start: 0; /* Modificar el margen superior */
+    margin-block-end: 0; /* Modificar el margen inferior */
+    margin-inline-start: 0; /* Modificar el margen izquierdo */
+    margin-inline-end: 0; /* Modificar el margen derecho */
+    unicode-bidi: normal; /* Modificar el valor de unicode-bidi si es necesario */
+
+    color: var(--color-negro);
+    font-family: var(--display-small-font-family);
+    font-weight: var(--display-small-font-weight);
+    font-size: var(--display-small-font-size);
+    letter-spacing: var(--display-small-letter-spacing);
+    line-height: var(--display-small-line-height);
+    font-style: var(--display-small-font-style);
+}
+body {
+background-color: var(--color-body);
+font-family: 'Quicksand', sans-serif;
+display: inline-flex;
+flex-direction: column;
+align-items: flex-start;
+position: relative;
+width: 100%;
+overflow-x: hidden; /* Esto evita que se desborde horizontalmente */
+}
+
+h2 {
+    display: block; /* Por defecto, el <h1> ya es display: block, pero puedes modificarlo si lo deseas */
+    margin-block-start: 0; /* Modificar el margen superior */
+    margin-block-end: 0; /* Modificar el margen inferior */
+    margin-inline-start: 0; /* Modificar el margen izquierdo */
+    margin-inline-end: 0; /* Modificar el margen derecho */
+    unicode-bidi: normal; /* Modificar el valor de unicode-bidi si es necesario */
+
+    color: var(--color-gris-oscuro);
+    font-family: var(--heading-large-font-family);
+    font-weight: var(--heading-large-font-weight);
+    font-size: var(--heading-large-font-size);
+    letter-spacing: var(--heading-large-letter-spacing);
+    line-height: var(--heading-large-line-height);
+    font-style: var(--heading-large-font-style);
+}
+
+h3 {
+    display: block; /* Por defecto, el <h1> ya es display: block, pero puedes modificarlo si lo deseas */
+    margin-block-start: 0; /* Modificar el margen superior */
+    margin-block-end: 0; /* Modificar el margen inferior */
+    margin-inline-start: 0; /* Modificar el margen izquierdo */
+    margin-inline-end: 0; /* Modificar el margen derecho */
+    unicode-bidi: normal; /* Modificar el valor de unicode-bidi si es necesario */
+
+    color: var(--color-negro);
+    font-family: var(--body-large-font-family);
+    font-weight: var(--body-large-font-weight);
+    font-size: var(--body-large-font-size);
+    letter-spacing: var(--body-large-letter-spacing);
+    line-height: var(--body-large-line-height);
+    font-style: var(--body-large-font-style);
+}
+
+* {
+    width: auto;
+    box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el cálculo del tamaño */
+  }
