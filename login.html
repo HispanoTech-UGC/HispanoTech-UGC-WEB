@@ -2,86 +2,79 @@
 <html lang="es">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - HispanoTech</title>
-    <meta name="description" content="Inicia sesión en HispanoTech para acceder a tus herramientas de asistencia tecnológica policial.">
-    <meta name="robots" content="noindex, nofollow"> <!-- login no se indexa -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - HispanoTech</title>
+  <meta name="description" content="Inicia sesión en HispanoTech para acceder a tus herramientas de asistencia tecnológica policial.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#000">
+  <link rel="icon" href="assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
 
-    <meta name="theme-color" content="#000">
-    <link rel="icon" href="assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
+  <!-- Fonts y estilos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 
-    <!-- Fonts y estilos -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/páginas/loginRegistro.css">
+  <link rel="stylesheet" href="css/páginas/meshgradient.css">
 
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/páginas/loginRegistro.css">
-    <link rel="stylesheet" href="css/páginas/meshgradient.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+  <!-- 2. Cargar supabaseClient.js -->
+
 </head>
 
 <body class="body">
-    <!-- Contenedor de fondo con gradiente -->
-    <div class="gradient-container">
-        <header class="header-landing">
-            <img class="logoLanding" src="assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech">        <div class="frame botones-header" >
-            <div class="headerFrame">
-                <button class="producto-button">Producto</button>
-                <button class="login-button"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg"></img></button>
-            </div>
+  <div class="gradient-container">
+    <header class="header-landing">
+      <img class="logoLanding" src="assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech">
+      <div class="frame botones-header">
+        <div class="headerFrame">
+          <button class="producto-button">Producto</button>
+          <button class="login-button"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg" alt="login"></button>
         </div>
+      </div>
     </header>
 
     <main>
-        <div class="body">
+      <div class="body">
+        <div class="div">
           <div class="div">
-            <div class="div">
-              <div class="bienvenido"><div class="text-wrapper">Bienvenido</div></div>
-              <p class="p">Las cuentas son creadas por el administrador de su cuerpo de policías.</p>
-              <div class="inputs">
-                <div class="frame">
-                    <div class="frame-wrapper">
-                      <input type="text" class="input" id="nombre-email" placeholder="Nombre o correo" />
-                    </div>
-                    <div class="frame-wrapper">
-                      <input type="text" class="input" id="codigo-robot" placeholder="Id del robot" />
-                    </div>
-                    <div class="frame-wrapper">
-                      <input type="password" class="input" id="contraseña" placeholder="Contraseña" />
-                    </div>
-                  </div>
-                  
-                <div class="botn"><div class="text-wrapper-2">Iniciar Sesión</div></div>
-                <div class="frame-2">
-                  <div class="separador">
-                    <img class="line" src="assets/imágenes/Line 1@2x.svg" />
-                    <div class="text-wrapper-3">o</div>
-                    <img class="img" src="assets/imágenes/Line 2@2x.svg" />
-                  </div>
-                  <div class="alternativas">
-                    <div class="GMA">
-                      <img class="img-2" src="assets/imágenes/iconos/mdi_google-blanco.svg" />
-                      <div class="value"></div>
-                    </div>
-                    <div class="GMA">
-                      <img class="img-2" src="assets/imágenes/iconos/mdi_microsoft-blanco.svg" />
-                      <div class="value"></div>
-                    </div>
-                    <div class="GMA">
-                      <img class="img-2" src="assets/imágenes/iconos/ic_baseline-apple-blanco.svg" />
-                      <div class="value"></div>
-                    </div>
-                  </div>
+            <div class="bienvenido"><div class="text-wrapper">Bienvenido</div></div>
+            <p class="p">Las cuentas son creadas por el administrador de su cuerpo de policías.</p>
+            <div class="inputs">
+              <div class="frame">
+                <div class="frame-wrapper">
+                  <input type="text" class="input" id="nombre-email" placeholder="Número de Placa" />
+                </div>
+                <div class="frame-wrapper">
+                  <input type="text" class="input" id="codigo-robot" placeholder="Id del robot" />
+                </div>
+                <div class="frame-wrapper">
+                  <input type="password" class="input" id="contraseña" placeholder="Contraseña" />
                 </div>
               </div>
-              <div class="div-wrapper"><div class="text-wrapper-4">Olvidé mi contraseña</div></div>
+
+              <button class="botn" id="loginBtn"><div class="text-wrapper-2">Iniciar Sesión</div></button>
+              <div id="mensaje" style="margin-top: 1rem; font-size: 1rem;"></div>
+
+              <div class="frame-2">
+                <div class="separador">
+                  <img class="line" src="assets/imágenes/Line 1@2x.svg" />
+                  <div class="text-wrapper-3">o</div>
+                  <img class="img" src="assets/imágenes/Line 2@2x.svg" />
+                </div>
+              </div>
             </div>
+            <div class="div-wrapper"><div class="text-wrapper-4">Olvidé mi contraseña</div></div>
           </div>
         </div>
-      </main>
-    </div> <!-- Fin de gradient-container -->
-</body>
+      </div>
+    </main>
+  </div>
 
+  <!-- Script de login -->
+  <script type="module" src="js/login.js"></script>
+</body>
 </html>

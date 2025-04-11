@@ -30,6 +30,9 @@ position: relative;
 width: 100%;
 overflow-x: hidden; /* Esto evita que se desborde horizontalmente */
 }
+body.loading{
+    display: none;
+}
 
 h2 {
     display: block; /* Por defecto, el <h1> ya es display: block, pero puedes modificarlo si lo deseas */
