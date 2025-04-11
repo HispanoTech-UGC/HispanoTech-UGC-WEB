@@ -35,8 +35,29 @@ export async function loginUsuario(numPlaca, password) {
   }
 }
 
-export function generarHash(password) {
-  // Generamos el hash de la contraseña usando SHA-256
-  const hash = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
-  return hash;
+export async function registrarUsuario(numPlaca, password, cuerpo, rol = 2) {
+  // Hasheamos la contraseña con SHA-256 en Base64
+  const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
+
+  // Creamos el objeto de nuevo usuario
+  const nuevoUsuario = {
+    num_placa: numPlaca,
+    password: hashedPassword,
+    cuerpo: cuerpo,
+    rol: rol,
+    ultima_sesion: new Date().toISOString(), // opcional si tienes esta columna
+  };
+
+  // Insertamos el usuario en la base de datos
+  const { data, error } = await supabase
+      .from('usuarios')
+      .insert([nuevoUsuario])
+      .select(); // para obtener el usuario insertado
+
+  if (error) {
+    return { success: false, message: 'Error al registrar el usuario.', error };
+  }
+
+  return { success: true, message: 'Usuario registrado correctamente.', usuario: data[0] };
 }
+
