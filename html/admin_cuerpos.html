@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
 
+
   <style>
     :root {
       --color-primario: #0367FD;
@@ -51,9 +52,10 @@
     }
   </style>
 </head>
-<body class="body">
+<body class="body loading">
   <header class="header">
     <h1 class="text-body-large">Administración de Usuarios</h1>
+    <button onclick="logOut()">Log Out</button>
   </header>
 
   <main class="container mt-4">
@@ -92,5 +94,6 @@
 
   <!-- Script principal -->
   <script type="module" src="../js/admin.js"></script>
+  <script src="../js/control-acceso.js" data-roles-restringidos="2"></script>
 </body>
 </html>
