@@ -13,7 +13,7 @@ async function displayUsers(result) {
         let rol = parseInt(user.rol, 10);
 
         // Espera el cuerpo de la base de datos
-        const cuerpo = await getCuerpoId(user.rol);  // Suponiendo que 'user.rol' es el id para el cuerpo
+        const cuerpo = await getCuerpoId(user.cuerpo);  // Suponiendo que 'user.rol' es el id para el cuerpo
 
         console.log(cuerpo);  // Puedes verificar el resultado de getCuerpoId
 
@@ -126,11 +126,13 @@ async function borrarUser(placa) {
   }
   
 
-async function filtrar(cuerpo){
-    const users = await getUsersByCuerpo(cuerpo);
+async function filtrar(){
+    const cuerpo = JSON.parse(localStorage.getItem('usuario'));
+    const users = await getUsersByCuerpo(cuerpo.cuerpo);
+    console.log(users)
     displayUsers(users);
   }
-  
+  filtrar()
   //displayUsers();
   getAllCuerpos();
   
