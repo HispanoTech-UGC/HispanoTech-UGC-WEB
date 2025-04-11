@@ -19,6 +19,10 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/páginas/loginRegistro.css">
   <link rel="stylesheet" href="css/páginas/meshgradient.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+  <!-- 2. Cargar supabaseClient.js -->
+
 </head>
 
 <body class="body">
@@ -28,7 +32,7 @@
       <div class="frame botones-header">
         <div class="headerFrame">
           <button class="producto-button">Producto</button>
-          <button class="login-button"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg"></img></button>
+          <button class="login-button"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg" alt="login"></button>
         </div>
       </div>
     </header>
@@ -71,56 +75,6 @@
   </div>
 
   <!-- Script de login -->
-  <script type="module">
-   import { loginUsuario } from './services/supa_auth.js';
-
-const loginBtn = document.getElementById('loginBtn');
-const mensajeDiv = document.getElementById('mensaje');
-
-loginBtn.addEventListener('click', async () => {
-  const numPlaca = document.getElementById('nombre-email').value.trim();
-  const password = document.getElementById('contraseña').value.trim();
-
-  mensajeDiv.textContent = '';
-  mensajeDiv.style.color = '';
-
-  if (!numPlaca || !password) {
-    mensajeDiv.textContent = 'Rellena todos los campos.';
-    mensajeDiv.style.color = 'red';
-    return;
-  }
-
-  const resultado = await loginUsuario(numPlaca, password);
-
-  if (resultado.success) {
-    mensajeDiv.textContent = '✅ Login correcto';
-    mensajeDiv.style.color = 'green';
-
-    const usuario = resultado.usuario;
-
-    // Guardamos los datos en localStorage
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-
-    // Redirección según el rol
-    switch (usuario.rol) {
-      case 1:
-        window.location.href = './html/admin_cuerpos.html';
-        break;
-      case 2:
-        window.location.href = 'agente.html';
-        break;
-      default:
-        mensajeDiv.textContent = 'Rol no reconocido.';
-        mensajeDiv.style.color = 'red';
-        break;
-    }
-
-  } else {
-    mensajeDiv.textContent = `❌ ${resultado.message}`;
-    mensajeDiv.style.color = 'red';
-  }
-});
-
-  </script>
+  <script type="module" src="js/login.js"></script>
 </body>
 </html>

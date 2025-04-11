@@ -1,47 +1,63 @@
 function draw_occupancy_grid(canvas, map_data, robotPosition) {
-    canvasMap = document.getElementById("map");
+    const container = canvas.parentElement;
+    const ctx = canvas.getContext("2d");
+    robotPosition = {
+        x:0,
+        y:0
+    }
+    // Ajustar el tamaño del canvas al tamaño del contenedor
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
 
-    var ctx = canvas.getContext("2d");
-    //document.querySelector('canvas'); //canvas.getContext("2d");
+    const map = map_data;
+    const mapWidth = map.info.width;
+    const mapHeight = map.info.height;
 
-    var map = map_data;
-    var pointSize = 1;
+    // Escalado para ajustar el mapa al canvas
+    const scaleX = canvas.width / mapWidth;
+    const scaleY = canvas.height / mapHeight;
 
-    canvas.width = map.info.width;
-    canvas.height = map.info.height;
+    const pointSize = 1;
 
-    for (let i = 0; i < map.info.height; i++) {
-        for (let j = 0; j < map.info.width; j++) {
-
-            let posX = j;
-            let posY = i;
-            let pos = map.info.width * i + j;
-
+    for (let i = 0; i < mapHeight; i++) {
+        for (let j = 0; j < mapWidth; j++) {
+            let pos = mapWidth * i + j;
             let gridValue = map.data[pos];
+            let color = evaluarGradiente(gridValue);
 
-            var color = evaluarGradiente(gridValue);
+            // Posición y escala
+            const posX = j * scaleX;
+            const posY = i * scaleY;
 
-            ctx.beginPath();
-            ctx.fillRect(posX, posY, pointSize, pointSize);
             ctx.fillStyle = color;
-            ctx.stroke();
+            ctx.fillRect(posX, posY, scaleX, scaleY);
         }
     }
+    
 
     if(robotPosition) {
         let robotSize = {
             width:4,
             height:4,
         }
-        let posX = robotPosition.x + canvas.width/2 - robotSize.width/2;
-        let posY = robotPosition.y + canvas.height/2 - robotSize.height/2;
+        const res = map.info.resolution;
+        const origin = map.info.origin;
 
-        // console.log(posX, posY)
+        // Posición en celdas del mapa
+        const mapX = (robotPosition.x - origin.position.x) / res;
+        const mapY = (robotPosition.y - origin.position.y) / res;
 
-        // ctx.beginPath();
-        // ctx.fillStyle = 'green';
-        // ctx.fillRect(posX, posY, robotSize.width, robotSize.height);
-        // ctx.stroke();
+        // Posición en píxeles en el canvas (invertimos eje Y si es necesario)
+        const posX = mapX * scaleX;
+        const posY = canvas.height - mapY * scaleY; // Invertir Y si tu mapa lo necesita
+
+
+        console.log(posX, posY)
+
+        ctx.beginPath();
+        ctx.fillStyle = 'green';
+        ctx.fillRect(posX, posY, robotSize.width, robotSize.height);
+        ctx.stroke();
 
         ctx.beginPath();
         ctx.fillStyle = 'green';
