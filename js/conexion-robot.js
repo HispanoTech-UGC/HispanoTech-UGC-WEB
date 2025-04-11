@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', event => {
     console.log("entro en la pagina")
 
+    canvasMap = document.getElementById("map");
+
     // Agregar control con el teclado (WASD)
     document.addEventListener("keydown", (event) => {
         switch (event.key.toLowerCase()) {
@@ -44,6 +46,17 @@ document.addEventListener('DOMContentLoaded', event => {
             data.connected = true
             /*estado.textContent = 'Conectado';
             estado.style.background = 'green';*/
+            //Subscribe to the map topic
+            var mapTopic = new ROSLIB.Topic({
+                ros: data.ros,
+                name: '/map',
+                messageType: 'nav_msgs/msg/OccupancyGrid'
+            });
+
+            mapTopic.subscribe((message) => {
+                console.log('suscrito a map')
+                draw_occupancy_grid(canvasMap, message, 0);
+            });
             updateCameraFeed();
             console.log("Conexion con ROSBridge correcta")
         })
