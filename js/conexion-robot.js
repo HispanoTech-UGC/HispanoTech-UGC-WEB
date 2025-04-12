@@ -28,16 +28,16 @@ document.addEventListener('DOMContentLoaded', event => {
         rosbridge_address: 'ws://127.0.0.1:9090/',
         connected: false,
         // service information 
-	    service_busy: false, 
-	    service_response: ''
+        service_busy: false, 
+        service_response: ''
     }
     connect();
 
     function connect(){
-	      console.log("Clic en connect")
-          //console.log(direccionBridge)
+        console.log("Clic en connect")
+        //console.log(direccionBridge)
 
-	      data.ros = new ROSLIB.Ros({
+        data.ros = new ROSLIB.Ros({
                 url: 'ws://127.0.0.1:9090/',
         })
 
@@ -58,7 +58,17 @@ document.addEventListener('DOMContentLoaded', event => {
                 draw_occupancy_grid(canvasMap, message, 0);
             });
             updateCameraFeed();
+            console.log("Conexión camara correcta")
+
+            // Para cuando los topicos /battery_state y /wifi_state estén creados
+            // subscribeBattery();
+            // console.log("Conexión batería correcta")
+
+            // subscribeWifi();
+            // console.log("Conexión wifi correcto")
+
             console.log("Conexion con ROSBridge correcta")
+
         })
         data.ros.on("error", (error) => {
             console.log("Se ha producido algun error mientras se intentaba realizar la conexion")
@@ -71,10 +81,10 @@ document.addEventListener('DOMContentLoaded', event => {
     }
 
     function disconnect(){
-	      data.ros.close()
-	      data.connected = false
-          estado.textContent = 'Desconectado';
-          estado.style.background = 'red';
+        data.ros.close()
+        data.connected = false
+        estado.textContent = 'Desconectado';
+        estado.style.background = 'red';
         console.log('Clic en botón de desconexión')
     }
 
@@ -149,23 +159,23 @@ document.addEventListener('DOMContentLoaded', event => {
 
     function subscribeService(){
         // define the service to be called
-       let service = new ROSLIB.Service({
-          ros : data.ros,
-          name : '/move',
-          serviceType : 'rossrv/Type',
+        let service = new ROSLIB.Service({
+            ros : data.ros,
+            name : '/move',
+            serviceType : 'rossrv/Type',
         })
         // define the request
         let request = new ROSLIB.ServiceRequest({
-          param1 : 123,
-          param2 : 'example of parameter',
+            param1 : 123,
+            param2 : 'example of parameter',
         })
         // define a callback
         service.callService(request, (result) => {
-          console.log('This is the response of the service ')
-          console.log(result)
+            console.log('This is the response of the service ')
+            console.log(result)
 
         }, (error) => {
-          console.error(error)
+            console.error(error)
         }) 
     }
 
@@ -190,4 +200,64 @@ document.addEventListener('DOMContentLoaded', event => {
     //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
     }
 
+    function subscribeBattery() {
+        // Define el tópico de la batería (ajusta el nombre si fuera necesario)
+        var batteryTopic = new ROSLIB.Topic({
+            ros: data.ros,
+            name: '/battery_state',  // Verifica que este sea el nombre correcto
+            messageType: 'sensor_msgs/msg/BatteryState'
+        });
+
+        batteryTopic.subscribe(function (message) {
+            // Se asume que la propiedad 'percentage' viene como un valor entre 0 y 1
+            let batteryPercentage = message.percentage * 100;
+            console.log("Nivel de batería:", batteryPercentage + "%");
+
+            // Actualiza el número de batería en el HTML
+            document.getElementById("batteryStatus").textContent = Math.round(batteryPercentage) + "%";
+
+            // Actualiza el ícono de la batería según el nivel (ajusta las rutas a tus imágenes)
+            var batteryIcon = document.getElementById("batteryIcon");
+            if (batteryPercentage >= 80) {
+                batteryIcon.src = "assets/imágenes/iconos/batería06.svg";
+            } else if (batteryPercentage >= 60) {
+                batteryIcon.src = "assets/imágenes/iconos/batería05.svg";
+            } else if (batteryPercentage >= 40) {
+                batteryIcon.src = "assets/imágenes/iconos/batería04.svg";
+            } else if (batteryPercentage >= 20) {
+                batteryIcon.src = "assets/imágenes/iconos/batería03.svg";
+            } else if (batteryPercentage >= 5) {
+                batteryIcon.src = "assets/imágenes/iconos/batería02.svg";
+            } else {
+                batteryIcon.src = "assets/imágenes/iconos/batería01.svg";
+            }
+        });
+    }
+
+    function subscribeWifi() {
+        // Define el tópico de WiFi, asegurándote que el nombre y el tipo del mensaje sean correctos.
+        var wifiTopic = new ROSLIB.Topic({
+            ros: data.ros,
+            name: '/wifi_state',  // Este tópico debe estar publicando la calidad de WiFi.
+            messageType: 'std_msgs/msg/Float64'  // Se espera un valor numérico, por ejemplo entre 0 y 100.
+        });
+
+        wifiTopic.subscribe(function (message) {
+            // Suponemos que message.data contiene un valor entre 0 y 100 representando la calidad.
+            let wifiQuality = message.data;
+            console.log("Calidad de WiFi:", wifiQuality);
+
+            // Actualiza el elemento de WiFi en tu HTML.
+            var wifiIcon = document.querySelector(".img.wifi");
+
+            // Actualiza la imagen según el valor de wifiQuality.
+            if (wifiQuality >= 70) {
+                wifiIcon.src = "assets/imágenes/iconos/Property 1=100wifi.svg";  // Conexión excelente
+            }else if (wifiQuality >= 40) {
+                wifiIcon.src = "assets/imágenes/iconos/Property 1=50wifi.svg";    // Conexión baja
+            } else {
+                wifiIcon.src = "assets/imágenes/iconos/Property 1=20wifi.svg";    // Conexión muy baja o sin señal
+            }
+        });
+    }
 });
