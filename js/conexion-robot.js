@@ -78,60 +78,45 @@ document.addEventListener('DOMContentLoaded', event => {
         console.log('Clic en botón de desconexión')
     }
 
-    function move() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
+    // Probar con esto en vez del anterior
+    const cmdVelTopic = new ROSLIB.Topic({
+        ros: data.ros,
+        name: '/cmd_vel',
+        messageType: 'geometry_msgs/msg/Twist'
+    });
+    /**
+     * Publica movimiento en /cmd_vel.
+     *  linearX - Velocidad lineal en el eje X.
+     *  angularZ - Velocidad angular en el eje Z.
+     */
+    function publishMovement(linearX, angularZ) {
         let message = new ROSLIB.Message({
-            linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: -0.2, },
-        })
-        topic.publish(message)
-        subscribe(message)
+            linear: {x: linearX, y: 0, z: 0},
+            angular: {x: 0, y: 0, z: angularZ},
+        });
+        cmdVelTopic.publish(message);
+        updateOdom(message);  // Renombrado para mayor claridad
+    }
+
+    function move() {
+        // Avanza y gira ligeramente a la izquierda
+        publishMovement(0.1, -0.2);
     }
 
     function stop() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.0, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        // Detiene el robot
+        publishMovement(0.0, 0.0);
     }
 
     function right() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        // Avanza sin giro, o si quieres girar a la derecha, ajusta angularZ
+        // Por ejemplo, para girar a la derecha: angularZ positivo
+        publishMovement(0.1, 0.0);
     }
 
     function left() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: -0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        // Retrocede o avanza hacia atrás, según cómo quieras que se comporte, aquí se mueve hacia la izquierda (linear negativo)
+        publishMovement(-0.1, 0.0);
     }
 
     function subscribe(message){
@@ -142,8 +127,8 @@ document.addEventListener('DOMContentLoaded', event => {
         })
         topic.subscribe((message) => {
             data.position = message.pose.pose.position
-                document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
-                document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2)
+            document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
+            document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2)
         })
     }
 
@@ -169,16 +154,16 @@ document.addEventListener('DOMContentLoaded', event => {
         }) 
     }
 
-        // Versión usando librería MJPEGCANVAS (requiere cargarla)
+    // Versión usando librería MJPEGCANVAS (requiere cargarla)
     function setCamera(){
         console.log("setting the camera")
-    var viewer = new MJPEGCANVAS.Viewer({
-        divID : 'mjpeg',
-        host : 'localhost',
-        width : 640,
-        height : 480,
-        topic : '/camera/image_raw',
-        interval : 200
+        var viewer = new MJPEGCANVAS.Viewer({
+            divID : 'mjpeg',
+            host : 'localhost',
+            width : 640,
+            height : 480,
+            topic : '/camera/image_raw',
+            interval : 200
         })
     }
 
