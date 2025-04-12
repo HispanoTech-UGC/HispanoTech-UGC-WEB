@@ -29,10 +29,11 @@
     </head>
 
     <header class="header-landing">
-            <img class="logoLanding" src="assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech">        <div class="frame botones-header" >
+            <img class="logoLanding" src="assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech" onclick="window.location.href='./index.html'">
+            <div class="frame botones-header" >
             <div class="headerFrame">
-                <button class="producto-button">Producto</button>
-                <button class="login-button"><img class="loginIcono" src="./assets/imágenes/iconos/solar_login-linear-blanco.svg"></img></button>
+                <button class="producto-button" onclick="window.location.href='./producto.html'">Producto</button>
+                <button class="login-button" onclick="window.location.href='./login.html'"><img class="loginIcono" src="./assets/imágenes/iconos/solar_login-linear-blanco.svg"></img></button>
             </div>
         </div>
     </header>
@@ -54,9 +55,12 @@
                         <a href="./login.html" id="CTA" >Adquirir</a>
                     <!-- Botones secundarios -->
                     <div class="botones-colaboraciones-frame">
-                        <button class="botones-colaboraciones">Guardia Civil</button>
-                        <button class="botones-colaboraciones">G.E.O.</button>
-                        <button class="botones-colaboraciones">U.E.I</button>
+                        <a class="botones-colaboraciones" href="https://www.guardiacivil.es/es/index.html">Guardia Civil</a>
+                        <a class="botones-colaboraciones"
+                            href="https://www.policia.es/_es/tupolicia_conocenos_estructura_dao_especialidades_geo.php#">G.E.O.</a>
+                        <a class="botones-colaboraciones"
+                            href="https://especialidadesguardiacivil.es/uei-unidad-especial-de-intervencion/">U.E.I</a>
+                        </div>
                         </div>
                     </div>
                 </section>    
@@ -88,18 +92,18 @@
 
         <!-- Subtítulo -->
         <section class="rectanguloHorizontal">
-          <h2 class="subtitle">Seguridad y tecnología</h2>
+            <h2 class="subtitle">Seguridad y tecnología</h2>
         </section>
 
         <!-- Video-Imagen + texto -->
         <section class="media-section">
             <figure>
-              <video autoplay loop muted playsinline poster="assets/imágenes/robot foto.png" width="100%">
+                <video autoplay loop muted playsinline poster="assets/imágenes/robot foto.png" width="100%">
                 <source src="ruta/landing-video.mp4" type="video/mp4">
                 Tu navegador no soporta la etiqueta de video.
-              </video>
+                </video>
             </figure>
-          </section>
+        </section>
 
 
         <!-- Lista de funcionalidades con botones -->
