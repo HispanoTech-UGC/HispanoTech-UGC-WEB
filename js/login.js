@@ -33,7 +33,7 @@ loginBtn.addEventListener('click', async () => {
                 window.location.href = './html/admin_cuerpos.html';
                 break;
             case 2:
-                window.location.href = 'agente.html';
+                window.location.href = 'operador.html';
                 break;
             default:
                 mensajeDiv.textContent = 'Rol no reconocido.';
