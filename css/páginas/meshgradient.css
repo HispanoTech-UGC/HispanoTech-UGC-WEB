@@ -1,0 +1,37 @@
+.gradient-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(at 16% 16%, hsla(227,100%,70%,1.00) 0px, transparent 40%),
+    radial-gradient(at 50% 50%, hsla(180,100%,95%,1.00) 0px, transparent 40%),
+    radial-gradient(at 79% 20%, hsla(180,100%,79%,1.00) 0px, transparent 40%),
+    radial-gradient(at 28% 80%, hsla(216,98%,50%,1.00) 0px, transparent 40%),
+    radial-gradient(at 100% 100%, hsla(0,0%,100%,1.00) 0px, transparent 40%),
+    radial-gradient(at 0% 40%, hsla(206,100%,86%,0.6) 0px, transparent 60%);  /* Azul difuso */
+  
+  background-size: 200% 200%;
+  animation: gradient-rebound 15s ease-in-out infinite;
+}
+
+@keyframes gradient-rebound {
+  0% {
+    background-position: 16% 16%;  /* Esquina superior izquierda */
+  }
+  20% {
+    background-position: 50% 10%;  /* Parte central superior */
+  }
+  40% {
+    background-position: 80% 20%;  /* Parte derecha media */
+  }
+  60% {
+    background-position: 10% 80%;  /* Parte izquierda inferior */
+  }
+  80% {
+    background-position: 40% 90%;  /* Parte central inferior */
+  }
+  100% {
+    background-position: 16% 16%;  /* Regresa a la esquina superior izquierda */
+  }
+}

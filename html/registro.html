@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - HispanoTech</title>
+  <meta name="description" content="Registra nuevos usuarios en HispanoTech para que accedan a las herramientas de asistencia tecnológica policial.">
+  <meta name="robots" content="noindex, nofollow"> <!-- login no se indexa -->
+
+  <meta name="theme-color" content="#000">
+  <link rel="icon" href="../assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
+
+  <!-- Fonts y estilos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/páginas/loginRegistro.css">
+  <link rel="stylesheet" href="../css/páginas/meshgradient.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+
+</head>
+
+<body class="body">
+<div class="gradiente-overlay"></div>
+    <!-- Contenedor de fondo con gradiente -->
+    <div class="gradient-container">
+        <header class="header-landing">
+            <img class="logoLanding" src="../assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech" onclick="window.location.href='index.html'">
+            <div class="frame botones-header" >
+            <div class="headerFrame">
+                <button class="producto-button" onclick="window.location.href='../producto.html'">Producto</button>
+                <button class="login-button" onclick="window.location.href='index.html'"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg"></img></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="body">
+          <div class="div">
+            <div class="div">
+              <div class="bienvenido"><div class="text-wrapper">Registro</div></div>
+              <p class="p">Rellena el registro para crear una cuenta a los futuros operadores</p>
+              <div class="inputs">
+                <div class="frame">
+                    <!--<div class="frame-wrapper">
+                      <input type="text" class="input" id="nombre-email" placeholder="Nombre del solicitante" />
+                    </div>-->
+                    <div class="frame-wrapper">
+                      <input type="text" class="input" id="codigo-robot" placeholder="Número de placa" />
+                    </div>
+                    <div class="frame-wrapper">
+                      <input type="password" class="input" id="contraseña" placeholder="Contraseña" />
+                    </div>
+                    <div class="frame-wrapper">
+                        <input type="password" class="input" id="confirmar-contraseña" placeholder="Confirmar contraseña" />
+                      </div>
+                  </div>
+                  
+                <div class="botn" id="registroBtn"><div class="text-wrapper-2">Registrar Cuenta</div></div>
+                  <p id="mensaje-registro"></p>
+                <!--<div class="frame-2">
+                  <div class="separador">
+                    <img class="line" src="../assets/imágenes/Line%201@2x.svg" />
+                    <div class="text-wrapper-3">o</div>
+                    <img class="img" src="../assets/imágenes/Line%202@2x.svg" />
+                  </div>
+                  <div class="alternativas">
+                    <div class="GMA">
+                      <img class="img-2" src="../assets/imágenes/iconos/mdi_google-blanco.svg" />
+                      <div class="value"></div>
+                    </div>
+                    <div class="GMA">
+                      <img class="img-2" src="../assets/imágenes/iconos/mdi_microsoft-blanco.svg" />
+                      <div class="value"></div>
+                    </div>
+                    <div class="GMA">
+                      <img class="img-2" src="../assets/imágenes/iconos/ic_baseline-apple-blanco.svg" />
+                      <div class="value"></div>
+                    </div>
+                  </div>
+                </div>-->
+              </div>
+              <div class="div-wrapper"><div class="text-wrapper-4">¿Deseas iniciar sesión?</div></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div> <!-- Fin de gradient-container -->
+    <script type="module" src="../js/registro.js"></script>
+    <script src="../js/control-acceso.js" data-roles-restringidos="2"></script>
+
+</body>
+
+</html>
