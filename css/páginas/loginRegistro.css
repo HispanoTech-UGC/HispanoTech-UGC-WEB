@@ -209,6 +209,11 @@ height: 100%;
   position: relative;
   background-color: #2750f3;
   border-radius: 100px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.body .botn:hover { /*Hover del boton*/
+  background-color: #ffffff;
 }
 
 .body .text-wrapper-2 {
@@ -221,6 +226,10 @@ height: 100%;
   letter-spacing: 0;
   line-height: 34.8px;
   white-space: nowrap;
+}
+
+.body .botn:hover .text-wrapper-2 { /*Hover del boton*/
+  color: #2750f3;
 }
 
 .body .frame-2 {
