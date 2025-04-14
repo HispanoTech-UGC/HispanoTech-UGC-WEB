@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', event => {
 
     function move() {
         // Avanza y gira ligeramente a la izquierda
-        publishMovement(0.1, -0.2);
+        publishMovement(0.1, 0.0);
     }
 
     function stop() {
@@ -111,12 +111,12 @@ document.addEventListener('DOMContentLoaded', event => {
     function right() {
         // Avanza sin giro, o si quieres girar a la derecha, ajusta angularZ
         // Por ejemplo, para girar a la derecha: angularZ positivo
-        publishMovement(0.1, 0.0);
+        publishMovement(0.0, 0.2);
     }
 
     function left() {
         // Retrocede o avanza hacia atrás, según cómo quieras que se comporte, aquí se mueve hacia la izquierda (linear negativo)
-        publishMovement(-0.1, 0.0);
+        publishMovement(0.0, -0.2);
     }
 
     function subscribe(message){
