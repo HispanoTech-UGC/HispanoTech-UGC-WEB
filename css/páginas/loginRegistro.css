@@ -13,6 +13,9 @@ html, body {
   z-index: 2;
   opacity: 0.5;
 }
+hr{
+  width: 10vw;
+}
 .header-landing{
     display: flex;
     width: 100%;

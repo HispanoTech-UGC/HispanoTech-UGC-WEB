@@ -21,6 +21,30 @@ export async function getUsers() {
   return data;
 }
 
+export async function editUser(updatedUser) {
+    const { num_placa, rol, cuerpo } = updatedUser;
+
+    if (!num_placa) {
+        return { success: false, message: 'El campo num_placa es obligatorio para editar el usuario.' };
+    }
+
+    const { data, error } = await supabase
+        .from('usuarios')
+        .update({ rol, cuerpo })
+        .eq('num_placa', num_placa)
+        .select();
+
+    if (error) {
+        return { success: false, message: 'Error al actualizar el usuario.', details: error };
+    }
+
+    if (!data || data.length === 0) {
+        return { success: false, message: 'No se encontró ningún usuario con ese num_placa.' };
+    }
+
+    return { success: true, message: 'Usuario actualizado correctamente.', user: data[0] };
+}
+
 export async function getCuerpos() {
     const { data, error } = await supabase
       .from('cuerpos')

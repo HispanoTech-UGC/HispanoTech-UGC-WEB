@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', event => {
     console.log("entro en la pagina")
+    event.preventDefault();
 
-    canvasMap = document.getElementById("map");
+    let canvasMap = document.getElementById("map");
 
     // Agregar control con el teclado (WASD)
     document.addEventListener("keydown", (event) => {
@@ -85,8 +86,8 @@ document.addEventListener('DOMContentLoaded', event => {
             messageType: 'geometry_msgs/msg/Twist'
         })
         let message = new ROSLIB.Message({
-            linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: -0.2, },
+            linear: {x: 0.2, y: 0, z: 0, },
+            angular: {x: 0, y: 0, z: 0.0, },
         })
         topic.publish(message)
         subscribe(message)
@@ -114,7 +115,7 @@ document.addEventListener('DOMContentLoaded', event => {
         })
         let message = new ROSLIB.Message({
             linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
+            angular: {x: 0, y: 0, z: -0.5, },
         })
         topic.publish(message)
         subscribe(message)
@@ -127,8 +128,8 @@ document.addEventListener('DOMContentLoaded', event => {
             messageType: 'geometry_msgs/msg/Twist'
         })
         let message = new ROSLIB.Message({
-            linear: {x: -0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
+            linear: {x: 0, y: 0, z: 0, },
+            angular: {x: 0, y: 0, z: 0.5, },
         })
         topic.publish(message)
         subscribe(message)
@@ -147,7 +148,7 @@ document.addEventListener('DOMContentLoaded', event => {
         })
     }
 
-    function subscribeService(){
+    /*function subscribeService(){
         // define the service to be called
        let service = new ROSLIB.Service({
           ros : data.ros,
@@ -167,10 +168,10 @@ document.addEventListener('DOMContentLoaded', event => {
         }, (error) => {
           console.error(error)
         }) 
-    }
+    }*/
 
         // Versión usando librería MJPEGCANVAS (requiere cargarla)
-    function setCamera(){
+    /*function setCamera(){
         console.log("setting the camera")
     var viewer = new MJPEGCANVAS.Viewer({
         divID : 'mjpeg',
@@ -180,12 +181,12 @@ document.addEventListener('DOMContentLoaded', event => {
         topic : '/camera/image_raw',
         interval : 200
         })
-    }
+    }*/
 
     // otro ejemplo de función (simple para prueba inicial)
     function updateCameraFeed() {
     const img = document.getElementById("cameraFeed");
-    const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
+    //const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
     img.src = `http://127.0.0.1:8080/stream?topic=/camera/image_raw`;
     //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
     }
