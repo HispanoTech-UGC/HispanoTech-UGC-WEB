@@ -10,10 +10,15 @@
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Tus estilos base -->
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/registro.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+
 
 
   <style>
@@ -22,6 +27,9 @@
       --color-blanco: #ffffff;
     }
 
+    main{
+      display: none;
+    }
     body {
       font-family: 'Quicksand', sans-serif;
       background-color: var(--color-body, #f8f9fa);
@@ -54,25 +62,54 @@
 </head>
 <body class="body loading">
   <header class="header">
-    <h1 class="text-body-large">Administración de Usuarios</h1>
+    <h1 class="text-body-large">Bienvenido/a</h1>
     <button onclick="logOut()">Log Out</button>
   </header>
+  <div id="contenedor-pagina">
 
-  <main class="container mt-4">
+  <!-- Menú página admin -->
+  <div class="container" id="menu">
+    <div class="container mt-5 sibling-fade">
+      <div class="row sibling-fade justify-content-center">
+        <div class="col-md-3">
+          <div class="game-button glow">
+            <i class="bi bi-person-vcard"></i>
+            <h4>Administrar Usuarios</h4>
+            <button class="btn btn-primary btn-block" onclick="">PLAY</button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="game-button glow" onclick="">
+            <i class="bi bi-person-add"></i>
+            <h4>Registrar Usuarios</h4>
+            <button class="btn btn-primary btn-block" onclick="">PLAY</button>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="game-button glow" onclick="">
+            <i class="bi bi-file-earmark-text"></i>
+            <h4>Administrar Informes</h4>
+            <button class="btn btn-primary btn-block" onclick="">PLAY</button>
+          </div>
+        </div>
+        <!--<div class="col-md-3">
+          <div class="game-button glow" onclick="">
+            <img src="#" alt="Game 4">
+            <h4>opcion 4</h4>
+            <button class="btn btn-primary btn-block" onclick="">PLAY</button>
+          </div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+
+  <!-- Gestión usuarios -->
+  <main class="container mt-4" id="gestionar-usuarios">
+    <button class="retroceder"><i class="bi bi-arrow-left"></i></button>
     <h2 class="text-subtitle mb-3" id="cuerpo-titulo">Usuarios por cuerpo</h2>
-
-    <!--<div class="mb-3">
-      <label for="filtro-cuerpo" class="form-label">Filtrar por cuerpo:</label>
-      <select id="filtro-cuerpo" class="form-select w-auto d-inline-block">
-        <option value="todos">Todos</option>
-        <option value="1">Cuerpo Nacional De Policía</option>
-        <option value="2">Guardia Civil</option>
-        <option value="3">Policía Local</option>
-        <option value="4">Mossos d'Esquadra</option>
-        <option value="5">Ertzaintza</option>
-        <option value="6">Policía Foral</option>
-      </select>
-    </div>-->
+    <label for="placa">
+      <input type="text" name="placa" id="placa" placeholder="Busca por placa">
+    </label>
 
     <!-- Tabla moderna con Bootstrap -->
     <div class="table-responsive">
@@ -92,8 +129,66 @@
     </div>
   </main>
 
+  <!-- Registro de usuarios-->
+  <main class="container" id="registrar-usuarios">
+    <button class="retroceder"><i class="bi bi-arrow-left"></i></button>
+    <div class="body">
+        <div class="div">
+          <div class="div">
+            <div class="inputs">
+              <form class="frame">
+                <h2>Registro</h2>
+                <p class="p">Rellena el registro para crear una cuenta a los futuros operadores</p>
+                <!--<div class="frame-wrapper">
+                  <input type="text" class="input" id="nombre-email" placeholder="Nombre del solicitante" />
+                </div>-->
+                <div class="input-container">
+                  <label for="codigo-robot"></label><input type="text" class="input" id="codigo-robot" placeholder="Número de placa" />
+                </div>
+                <div class="input-container">
+                  <label for="contraseña"></label><input type="password" class="input" id="contraseña" placeholder="Contraseña" />
+                </div>
+                <div class="input-container">
+                  <label for="confirmar-contraseña"></label><input type="password" class="input" id="confirmar-contraseña" placeholder="Confirmar contraseña" />
+                </div>
+                <div class="botn" id="registroBtn"><div class="text-wrapper-2">Registrar Cuenta</div></div>
+              </form>
+
+              <p id="mensaje-registro"></p>
+              <!--<div class="frame-2">
+                <div class="separador">
+                  <img class="line" src="../assets/imágenes/Line%201@2x.svg" />
+                  <div class="text-wrapper-3">o</div>
+                  <img class="img" src="../assets/imágenes/Line%202@2x.svg" />
+                </div>
+                <div class="alternativas">
+                  <div class="GMA">
+                    <img class="img-2" src="../assets/imágenes/iconos/mdi_google-blanco.svg" />
+                    <div class="value"></div>
+                  </div>
+                  <div class="GMA">
+                    <img class="img-2" src="../assets/imágenes/iconos/mdi_microsoft-blanco.svg" />
+                    <div class="value"></div>
+                  </div>
+                  <div class="GMA">
+                    <img class="img-2" src="../assets/imágenes/iconos/ic_baseline-apple-blanco.svg" />
+                    <div class="value"></div>
+                  </div>
+                </div>
+              </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+  </div>
   <!-- Script principal -->
   <script type="module" src="../js/admin.js"></script>
+  <script type="module" src="../js/registro.js"></script>
   <script src="../js/control-acceso.js" data-roles-restringidos="2"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

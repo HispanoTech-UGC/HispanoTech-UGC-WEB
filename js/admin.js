@@ -1,4 +1,4 @@
-import { getUsers, getCuerpoId, editUser, deleteUser, getCuerpos, getUsersByCuerpo} from "../services/supa_admin.js";
+import {deleteUser, editUser, getCuerpoId, getUserByPlaca, getCuerpos, getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
 
 
 async function displayUsers(result) {
@@ -33,14 +33,15 @@ async function displayUsers(result) {
         // Crear los botones de "Editar" y "Eliminar"
         const btnEditar = document.createElement("button");
         btnEditar.classList.add("btn", "btn-sm", "btn-outline-primary", "me-1");
-        btnEditar.textContent = "Editar";
+        btnEditar.innerHTML = '<i class="bi bi-pencil"></i>';
 
         // Asignar el evento de clic al botón de "Editar"
         btnEditar.addEventListener("click", () => activarEdicionUsuario(user, tr));
 
         const btnEliminar = document.createElement("button");
         btnEliminar.classList.add("btn", "btn-sm", "btn-outline-danger");
-        btnEliminar.textContent = "Eliminar";
+        btnEliminar.innerHTML = '<i class="bi bi-person-x"></i>';
+
 
         // Asignar el evento de clic al botón de "Eliminar"
         btnEliminar.addEventListener("click", () => borrarUser(user.num_placa));
@@ -125,7 +126,7 @@ async function getAllCuerpos() {
 }
 
 
-function activarEdicionUsuario(user, tr) {
+async function activarEdicionUsuario(user, tr) {
     // Guardamos los valores originales por si se cancela
     const originalHTML = tr.innerHTML;
 
@@ -136,17 +137,34 @@ function activarEdicionUsuario(user, tr) {
     tdPlaca.textContent = user.num_placa;
 
     const tdRol = document.createElement("td");
-    const inputRol = document.createElement("input");
-    inputRol.type = "number";
+    const inputRol = document.createElement("select");
     inputRol.classList.add("form-control");
-    inputRol.value = user.rol;
+
+    // Opciones de rol (ajustá según lo que manejes en tu backend)
+    const roles = [
+        {value: 1, label: "Administrador"},
+        {value: 2, label: "Agente"},
+    ];
+
+    roles.forEach(role => {
+        const option = document.createElement("option");
+        option.value = role.value;
+        option.textContent = role.label;
+
+        // Seleccionar la opción actual del usuario
+        if (role.value === user.rol) {
+            option.selected = true;
+        }
+
+        inputRol.appendChild(option);
+    });
     tdRol.appendChild(inputRol);
 
     const tdCuerpo = document.createElement("td");
     const inputCuerpo = document.createElement("input");
     inputCuerpo.type = "text";
     inputCuerpo.classList.add("form-control");
-    inputCuerpo.value = user.cuerpo;
+    inputCuerpo.value = await getCuerpoId(user.cuerpo);
     tdCuerpo.appendChild(inputCuerpo);
 
     const tdAcciones = document.createElement("td");
@@ -159,7 +177,7 @@ function activarEdicionUsuario(user, tr) {
         const updatedUser = {
             num_placa: user.num_placa,
             rol: parseInt(inputRol.value),
-            cuerpo: inputCuerpo.value
+            //cuerpo: inputCuerpo.value
         };
 
         const result = await editUser(updatedUser);
@@ -198,7 +216,107 @@ async function filtrar(){
     console.log(users)
     await displayUsers(users);
   }
-  filtrar().then(r => r)
+  /*filtrar().then(r => r)
   //displayUsers();
-  getAllCuerpos();
+  getAllCuerpos();*/
+
+asignarFuncionalidadBotones();
+
+async function opcionSeleccionadaMenu(target){
+    const contenido = document.getElementById(target);
+    const menu = document.getElementById('menu');
+
+    contenido.style.display = 'block';
+    menu.style.display = 'none';
+
+    if (target==='gestionar-usuarios'){
+        await filtrar();
+        //getAllCuerpos();
+    }
+}
+
+function retroceder(target){
+    const contenido = document.getElementById(target);
+    const menu = document.getElementById('menu');
+
+    contenido.style.display = 'none';
+    menu.style.display = 'block';
+}
+
+function asignarFuncionalidadBotones(){
+    const botones = document.querySelectorAll('.game-button');
+    const retrocesos = document.querySelectorAll('.retroceder');
+
+    botones.forEach((boton, index) => {
+        let opcion = '';
+
+        switch (index) {
+            case 0:
+                opcion = 'gestionar-usuarios';
+                break;
+            case 1:
+                opcion = 'registrar-usuarios';
+                break;
+            case 2:
+                opcion = 'administrar-informes';
+                break;
+            default:
+                opcion = 'opcion-desconocida';
+        }
+
+        boton.addEventListener('click', () => {
+            opcionSeleccionadaMenu(opcion).then(r => r);
+        });
+    });
+
+    retrocesos.forEach((boton, index) => {
+        let opcion = '';
+
+        switch (index) {
+            case 0:
+                opcion = 'gestionar-usuarios';
+                break;
+            case 1:
+                opcion = 'registrar-usuarios';
+                break;
+            case 2:
+                opcion = 'administrar-informes';
+                break;
+            default:
+                opcion = 'opcion-desconocida';
+        }
+
+        boton.addEventListener('click', () => {
+            retroceder(opcion);
+        });
+    });
+}
+
+
+
+let debounceTimeout;
+
+document.getElementById('placa').addEventListener('input', (e) => {
+    clearTimeout(debounceTimeout);  // Limpiar cualquier timeout previo
+
+    debounceTimeout = setTimeout(async () => {
+        const valor = e.target.value.trim();
+
+        if (valor.length >= 4) {
+            const resultado = await getUserByPlaca(valor);
+
+            const tbody = document.getElementById('tabla-usuarios');
+            tbody.innerHTML = '';
+
+            if (resultado.success && resultado.message.length > 0) {
+                await displayUsers(resultado.message);  // ← Asegurate de usar `.data`
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No se encontró ningún usuario con esa placa.</td></tr>';
+            }
+        } else {
+            await filtrar();  // Volver a mostrar los usuarios normales si no hay suficiente input
+        }
+    }, 400);  // Espera 400ms desde el último input
+});
+
   
