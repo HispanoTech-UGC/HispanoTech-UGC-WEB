@@ -152,7 +152,7 @@ height: 100%;
 }
 
 .body .frame-wrapper {
-  width: 471px;
+  width: 40vw;
   gap: 10px;
   padding: 10px 20px;
   background-color: #ffffff;
@@ -219,7 +219,7 @@ height: 100%;
 
 .body .botn {
   display: flex;
-  width: 473px;
+  width: 40vw;
   height: 64px;
   align-items: center;
   justify-content: center;
@@ -369,4 +369,14 @@ height: 100%;
     border: none; /* Elimina el borde */
     outline: none; /* Elimina el contorno al hacer clic */
     background: transparent; /* Si también quieres que el fondo sea transparente */
+}
+
+@media (max-width: 645px) {
+  .body .frame-wrapper {
+    width: 60vw;
+  }
+
+  .body .botn{
+    width: 60vw;
+  }
 }
