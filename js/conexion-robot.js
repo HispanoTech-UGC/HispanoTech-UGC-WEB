@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', event => {
 	      console.log("Clic en connect")
           //console.log(direccionBridge)
 
-	      data.ros = new ROSLIB.Ros({ url: rosbridge_address })
+	      data.ros = new ROSLIB.Ros({ url: data.rosbridge_address })
 
         // Define callbacks
         data.ros.on("connection", () => {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', event => {
 
             // Topic cmd_vel
             cmdVelTopic = new ROSLIB.Topic({
-                ros: data_ros,
+                ros: data.ros,
                 name: '/cmd_vel',
                 messageType: '/geometry_msgs/msg/Twist'
             });
