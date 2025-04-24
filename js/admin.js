@@ -1,4 +1,7 @@
 import {deleteUser, editUser, getCuerpoId, getUserByPlaca, getCuerpos, getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
+const user = JSON.parse(localStorage.getItem('usuario'));
+const textoHeader = document.getElementById('texto-bienvenida');
+textoHeader.textContent = 'Bienvenido '+user.num_placa;
 
 
 async function displayUsers(result) {
@@ -8,9 +11,6 @@ async function displayUsers(result) {
     const cuerpoTexto = document.getElementById('cuerpo-titulo');
     for (const user of result) {
         const tr = document.createElement("tr");
-        // Asegurarse de que el rol sea un número (si es necesario)
-        //let rol = parseInt(user.rol, 10);
-
         // Espera el cuerpo de la base de datos
         const cuerpo = await getCuerpoId(user.cuerpo);  // Suponiendo que 'user.rol' es el id para el cuerpo
         cuerpoTexto.textContent = 'Usuarios de '+cuerpo;

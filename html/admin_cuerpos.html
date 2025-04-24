@@ -15,7 +15,7 @@
   <!-- Tus estilos base -->
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/layout.css" />
-  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/registro.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
 
@@ -39,7 +39,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #0a0a0a;
+      background-color: transparent;
       color: white;
       padding: 1rem 2rem;
     }
@@ -61,9 +61,12 @@
   </style>
 </head>
 <body class="body loading">
-  <header class="header">
-    <h1 class="text-body-large">Bienvenido/a</h1>
-    <button onclick="logOut()">Log Out</button>
+  <header class="header navber fixed-top">
+    <h1 class="text-body-large" id="texto-bienvenida">Bienvenido/a</h1>
+    <div id="header-derecha">
+      <span id="reloj" class="me-3 text-light"></span>
+      <a onclick="logOut()" id="logout"><i class="bi bi-box-arrow-right"></i></a>
+    </div>
   </header>
   <div id="contenedor-pagina">
 
@@ -187,6 +190,7 @@
   <!-- Script principal -->
   <script type="module" src="../js/admin.js"></script>
   <script type="module" src="../js/registro.js"></script>
+  <script type="module" src="../js/reloj.js"></script>
   <script src="../js/control-acceso.js" data-roles-restringidos="2"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

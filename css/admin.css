@@ -57,12 +57,27 @@ body{
 
 .game-button:hover {
     transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
-    color: black; /* Cambiar el color del texto en hover */
+    color: var(--color-primario); /* Cambiar el color del texto en hover */
     background: white;
 }
 
 header h1{
     color: white;
+}
+
+header #logout{
+    background: none;
+    border: none;
+    color: red;
+    padding: 10px;
+    font-size: 3vw;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+header #logout:hover{
+    color: white;
+    transform: scale(1.2);
 }
 
 #gestionar-usuarios h2{
