@@ -164,6 +164,9 @@ async function activarEdicionUsuario(user, tr) {
     const inputCuerpo = document.createElement("input");
     inputCuerpo.type = "text";
     inputCuerpo.classList.add("form-control");
+    inputCuerpo.disabled = true;  // 👈 Esto lo bloquea
+    inputCuerpo.style.border = 'none';
+    inputCuerpo.style.background = 'none';
     inputCuerpo.value = await getCuerpoId(user.cuerpo);
     tdCuerpo.appendChild(inputCuerpo);
 
@@ -171,7 +174,7 @@ async function activarEdicionUsuario(user, tr) {
     tdAcciones.classList.add("text-end");
 
     const btnConfirmar = document.createElement("button");
-    btnConfirmar.textContent = "Confirmar";
+    btnConfirmar.innerHTML = "<i class=\"bi bi-check-lg\"></i>";
     btnConfirmar.classList.add("btn", "btn-sm", "btn-success", "me-1");
     btnConfirmar.addEventListener("click", async () => {
         const updatedUser = {
@@ -190,7 +193,7 @@ async function activarEdicionUsuario(user, tr) {
     });
 
     const btnCancelar = document.createElement("button");
-    btnCancelar.textContent = "Cancelar";
+    btnCancelar.innerHTML = "<i class=\"bi bi-x-lg\"></i>";
     btnCancelar.classList.add("btn", "btn-sm", "btn-secondary");
     btnCancelar.addEventListener("click", () => {
         tr.innerHTML = originalHTML;

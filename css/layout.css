@@ -4,6 +4,10 @@ header {
     width: 100%;
 }
 
+header .logoLanding{
+    cursor: pointer;
+}
+
 header #header-derecha{
     display: flex;
     flex-direction: row;
