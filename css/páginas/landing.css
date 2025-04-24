@@ -1,3 +1,7 @@
+body{
+    margin: 0 auto;
+    max-height: 100vh;
+}
 .header-landing{
   display: flex;
   width: 100%;
@@ -10,16 +14,16 @@
 }
 
 .logoLanding{
-position: relative;
-flex: 0 0 auto;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 .headerFrame{
-display: inline-flex;
-align-items: center;
-gap: 8px;
-position: relative;
-flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 .producto-button{
@@ -45,16 +49,16 @@ flex: 0 0 auto;
 }
 
 .login-button{
-display: inline-flexbox;
-width:50px;
-height: 50px;
-align-items: center;
-justify-content: center;
-gap: 10px;
-padding: relative;
-flex: 0 0 auto;
-background-color: var(--color-negro);
-border-radius: 100px;
+    display: inline-flex;
+    width:50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: relative;
+    flex: 0 0 auto;
+    background-color: var(--color-negro);
+    border-radius: 100px;
 }
 
 .hero
@@ -71,14 +75,16 @@ border-radius: 100px;
     padding: 0px 42px;
     position: relative;
 }
-
+main{
+    height: 100%;
+}
 .CTAContenedor{
-flex-direction: column;
-align-items: flex-start;
-justify-content: center;
-display: inline-flex;
-position: relative;
-flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    display: inline-flex;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 #CTA {
@@ -134,7 +140,7 @@ position: relative;
   font-family: var(--body-medium-font-family);
   font-weight: var(--body-medium-font-weight);
   color: var(--color-negro);
-  font-size: (--body-medium-font-size);
+  font-size: var(--body-medium-font-size);
   letter-spacing: var(--body-medium-letter-spacing);
   line-height: var(--body-medium-line-height);
   font-style: var(--body-medium-font-style);
@@ -334,25 +340,25 @@ border-radius: 30px;
 }
 
 .ellipse{
-position: relative;
-width: 50px;
-height: 50px;
-background-image: url(/assets/imágenes/modelo3000.png);
-background-size: cover;
-background-position: 50% 50%;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    /*background-image: url('/assets/imágenes/modelo3000.png');*/
+    background-size: cover;
+    background-position: 50% 50%;
 }
 
 .feature-buttons{
-position:relative;
-width: fit-content;
-margin-top: -1.00px;
-font-family: var(--body-large-font-family);
-font-weight: var(--body-large-font-weight);
-color: var(--color-negro);
-font-size: var(--body-large-font-size);
-letter-spacing: var(--body-large-letter-spacing);
-line-height: var(--body-large-line-height);
-font-style: var(--body-large-font-style);
+    position:relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: var(--body-large-font-family);
+    font-weight: var(--body-large-font-weight);
+    color: var(--color-negro);
+    font-size: var(--body-large-font-size);
+    letter-spacing: var(--body-large-letter-spacing);
+    line-height: var(--body-large-line-height);
+    font-style: var(--body-large-font-style);
 }
 
 main{
