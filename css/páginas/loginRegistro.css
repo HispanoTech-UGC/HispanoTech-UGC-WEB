@@ -1,3 +1,18 @@
+body{
+  margin: 0 auto;
+}
+html, body {
+  overflow: hidden;
+  height: 100vh;
+}
+.gradiente-overlay{
+  position: absolute;
+  background: black;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0.5;
+}
 .header-landing{
     display: flex;
     width: 100%;
@@ -6,6 +21,7 @@
     justify-content: space-between;
     padding: 0px 14px;
     position: relative;
+  z-index: 3;
   }
   
   .logoLanding{
@@ -62,6 +78,7 @@ height: 100%;
   justify-content: center;
   gap: 10px;
   position: relative;
+  z-index: 3;
 }
 
 .body .div {
@@ -99,7 +116,6 @@ height: 100%;
 
 .body .p {
   position: relative;
-  width: 600px;
   opacity: 0.6;
   font-family: var(--body-large-font-family);
   font-weight: var(--body-large-font-weight);
@@ -109,6 +125,7 @@ height: 100%;
   letter-spacing: var(--body-large-letter-spacing);
   line-height: var(--body-large-line-height);
   font-style: var(--body-large-font-style);
+  margin-top: 0;
 }
 
 .body .inputs {
@@ -133,7 +150,6 @@ height: 100%;
 
 .body .frame-wrapper {
   width: 471px;
-  height: 64px;
   gap: 10px;
   padding: 10px 20px;
   background-color: #ffffff;
@@ -209,6 +225,11 @@ height: 100%;
   position: relative;
   background-color: #2750f3;
   border-radius: 100px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.body .botn:hover { /*Hover del boton*/
+  background-color: #ffffff;
 }
 
 .body .text-wrapper-2 {
@@ -221,6 +242,10 @@ height: 100%;
   letter-spacing: 0;
   line-height: 34.8px;
   white-space: nowrap;
+}
+
+.body .botn:hover .text-wrapper-2 { /*Hover del boton*/
+  color: #2750f3;
 }
 
 .body .frame-2 {
@@ -327,7 +352,8 @@ height: 100%;
   margin-top: -1.00px;
   font-family: var(--display-small-font-family);
   font-weight: 700;
-  color: #2750f3;
+  color: black;
+  /*color: #2750f3;*/
   font-size: 18px;
   letter-spacing: 0;
   line-height: 26.1px;
