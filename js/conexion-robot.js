@@ -4,25 +4,6 @@ document.addEventListener('DOMContentLoaded', event => {
 
     let canvasMap = document.getElementById("map");
 
-    // Agregar control con el teclado (WASD)
-    document.addEventListener("keydown", (event) => {
-        switch (event.key.toLowerCase()) {
-            case "w":
-                move();
-                break;
-            case "s":
-                stop();
-                break;
-            case "a":
-                left();
-                break;
-            case "d":
-                right();
-                break;
-        }
-    });
-
-
     data = {
         // ros connection
         ros: null,
@@ -32,15 +13,16 @@ document.addEventListener('DOMContentLoaded', event => {
 	    service_busy: false, 
 	    service_response: ''
     }
+
+    let cmdVelTopic; // <------- Instancia única de movimiento
+
     connect();
 
     function connect(){
 	      console.log("Clic en connect")
           //console.log(direccionBridge)
 
-	      data.ros = new ROSLIB.Ros({
-                url: 'ws://127.0.0.1:9090/',
-        })
+	      data.ros = new ROSLIB.Ros({ url: rosbridge_address })
 
         // Define callbacks
         data.ros.on("connection", () => {
@@ -48,6 +30,8 @@ document.addEventListener('DOMContentLoaded', event => {
             /*estado.textContent = 'Conectado';
             estado.style.background = 'green';*/
             //Subscribe to the map topic
+            console.log("Conexión ROSBridge correcta")
+
             var mapTopic = new ROSLIB.Topic({
                 ros: data.ros,
                 name: '/map',
@@ -58,12 +42,22 @@ document.addEventListener('DOMContentLoaded', event => {
                 console.log('suscrito a map')
                 draw_occupancy_grid(canvasMap, message, 0);
             });
+
+            // Topic cmd_vel
+            cmdVelTopic = new ROSLIB.Topic({
+                ros: data_ros,
+                name: '/cmd_vel',
+                messageType: '/geometry_msgs/msg/Twist'
+            });
+
             updateCameraFeed();
             console.log("Conexion con ROSBridge correcta")
+            // suscribeBattery(); <-- No está el topic creado
+            // suscribeWifi(); <-- No está el topic creado
         })
+
         data.ros.on("error", (error) => {
-            console.log("Se ha producido algun error mientras se intentaba realizar la conexion")
-            console.log(error)
+            console.log("Error en ROSBridge: ", error)
         })
         data.ros.on("close", () => {
             data.connected = false
@@ -79,61 +73,50 @@ document.addEventListener('DOMContentLoaded', event => {
         console.log('Clic en botón de desconexión')
     }
 
+
+    function publishMovement(linearX, angularZ) {
+        if (!cmdVelTopic) {
+            console.warn("cmdVelTopic aún no inicializado");
+            return;
+        }
+        const msg = new ROSLIB.Message({
+          linear:  { x: linearX, y: 0, z: 0 },
+          angular: { x: 0, y: 0, z: angularZ }
+        });
+        cmdVelTopic.publish(msg);
+        subscribe(msg);
+        //suscribeOdom();
+      }
+
+    // Linea Recta
     function move() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.2, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        publishMovement(0.1, 0.0);
     }
 
+    // Para el robot
     function stop() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.0, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        publishMovement(0.0, 0.0);
     }
 
+    // Sentido horario
     function right() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: -0.5, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        publishMovement(0.0, -0.2);
     }
 
+    // Sentido antihorario
     function left() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.5, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        publishMovement(0.0, 2.0);
     }
+
+    // Agregar control con el teclado (WASD)
+    document.addEventListener("keydown", (event) => {
+        switch (event.key.toLowerCase()) {
+            case "w": move(); break;
+            case "s": stop(); break;
+            case "a": left(); break;
+            case "d": right(); break;
+        }
+    });
 
     function subscribe(message){
         let topic = new ROSLIB.Topic({
@@ -141,6 +124,7 @@ document.addEventListener('DOMContentLoaded', event => {
             name: '/odom',
             messageType: 'nav_msgs/msg/Odometry'
         })
+        
         topic.subscribe((message) => {
             data.position = message.pose.pose.position
                 document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
