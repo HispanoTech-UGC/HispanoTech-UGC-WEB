@@ -5,7 +5,7 @@
     const user = JSON.parse(localStorage.getItem('usuario'));
 
     if (!user) {
-        location.href = '../login.html';
+        location.href = 'login.html';
         return;
     }
 
@@ -17,7 +17,7 @@
             const rolesRestringidos = script.dataset.rolesRestringidos.split(',').map(Number);
             if (roles.some(rol => rolesRestringidos.includes(rol))) {
                 //alert('Permisos insuficientes para acceder a la página');
-                location.href = '../login.html';
+                location.href = 'login.html';
                 return;
             }
         }
@@ -38,5 +38,5 @@
 //---------------------logOut()------------------------
 function logOut(){
     localStorage.clear();  //borra el almacenamiento local
-    location.href = '../login.html';  //redirige a login
+    location.href = 'login.html';  //redirige a login
 }

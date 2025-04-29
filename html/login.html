@@ -8,17 +8,17 @@
   <meta name="description" content="Inicia sesión en HispanoTech para acceder a tus herramientas de asistencia tecnológica policial.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#000">
-  <link rel="icon" href="assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
 
   <!-- Fonts y estilos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/páginas/loginRegistro.css">
-  <link rel="stylesheet" href="css/páginas/meshgradient.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/páginas/loginRegistro.css">
+  <link rel="stylesheet" href="../css/páginas/meshgradient.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
   <!-- 2. Cargar supabaseClient.js -->
@@ -26,13 +26,14 @@
 </head>
 
 <body class="body">
+<div class="gradiente-overlay"></div>
   <div class="gradient-container">
     <header class="header-landing">
-      <img class="logoLanding" src="assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech">
+      <img class="logoLanding" src="../assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech" onclick="window.location.href='../index.html'">
       <div class="frame botones-header">
         <div class="headerFrame">
-          <button class="producto-button">Producto</button>
-          <button class="login-button"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg" alt="login"></button>
+          <button class="producto-button" onclick="window.location.href='../producto.html'">Producto</button>
+          <button class="login-button" onclick="window.location.href='login.html'"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg" alt="login"></button>
         </div>
       </div>
     </header>
@@ -46,24 +47,24 @@
             <div class="inputs">
               <div class="frame">
                 <div class="frame-wrapper">
-                  <input type="text" class="input" id="nombre-email" placeholder="Número de Placa" />
+                  <label for="nombre-email"><input type="text" class="input" id="nombre-email" placeholder="Número de Placa" /></label>
                 </div>
-                <div class="frame-wrapper">
+                <!--<div class="frame-wrapper">
                   <input type="text" class="input" id="codigo-robot" placeholder="Id del robot" />
-                </div>
+                </div>-->
                 <div class="frame-wrapper">
-                  <input type="password" class="input" id="contraseña" placeholder="Contraseña" />
+                  <label for="contraseña"><input type="password" class="input" id="contraseña" placeholder="Contraseña" /></label>
                 </div>
               </div>
 
-              <button class="botn" id="loginBtn"><div class="text-wrapper-2">Iniciar Sesión</div></button>
+              <a class="botn" id="loginBtn"><div class="text-wrapper-2">Iniciar Sesión</div></a>
               <div id="mensaje" style="margin-top: 1rem; font-size: 1rem;"></div>
 
               <div class="frame-2">
                 <div class="separador">
-                  <img class="line" src="assets/imágenes/Line 1@2x.svg" />
+                  <hr>
                   <div class="text-wrapper-3">o</div>
-                  <img class="img" src="assets/imágenes/Line 2@2x.svg" />
+                  <hr>
                 </div>
               </div>
             </div>
@@ -75,6 +76,6 @@
   </div>
 
   <!-- Script de login -->
-  <script type="module" src="js/login.js"></script>
+  <script type="module" src="../js/login.js"></script>
 </body>
 </html>

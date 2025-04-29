@@ -1,25 +1,28 @@
-'giro-dirección-AD'
+//'giro-dirección-AD'
 const direccionIcon = document.querySelector('.direccion');
 let currentRotation = 0;
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'a' || e.key === 'A') {
+    if (e.key === 'a' || e.key === 'A') {
     currentRotation -= 15;
-  } else if (e.key === 'd' || e.key === 'D') {
+    } else if (e.key === 'd' || e.key === 'D') {
     currentRotation += 15;
-  }
+    }
 
-  direccionIcon.style.transform = `rotate(${currentRotation}deg)`;
+    direccionIcon.style.transform = `rotate(${currentRotation}deg)`;
+
+    // Actualiza el texto del elemento con id "angleText-8"
+    document.getElementById('angleText-8').textContent = currentRotation + 'º';
 });
 
-'AWSDX-botones'
+//'AWSDX-botones'
 document.addEventListener('DOMContentLoaded', () => {
     const buttonW = document.querySelector('.WASD.W');
     const buttonA = document.querySelector('.WASD.A');
     const buttonS = document.querySelector('.WASD.S');
     const buttonD = document.querySelector('.WASD.D');
     const buttonX = document.querySelector('.WASD.X');
-  
+
     const mostrarDatos = (key) => {
         // Aquí puedes calcular la velocidad y el ángulo, o bien solo mostrar los valores
         const velocidad = 10;  // Aquí iría tu cálculo de velocidad
@@ -63,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mostrarDatos('X');
         }
     });
-  
+
     document.addEventListener('keyup', (e) => {
         const key = e.key.toLowerCase();
     
@@ -101,8 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
         buttonX.classList.add('active');
         mostrarDatos('X');
     });
+
+
 });
-
-
-    
-  

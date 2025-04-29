@@ -1,3 +1,7 @@
+body{
+    margin: 0 auto;
+    max-height: 100vh;
+}
 .header-landing{
   display: flex;
   width: 100%;
@@ -10,44 +14,51 @@
 }
 
 .logoLanding{
-position: relative;
-flex: 0 0 auto;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 .headerFrame{
-display: inline-flex;
-align-items: center;
-gap: 8px;
-position: relative;
-flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 .producto-button{
-display: flex;
-width: 140px;
-height: 50px;
-align-items: center;
-justify-content: center;
-gap:6px;
-padding: 10px 20px;
-position: relative;
-border-radius: 100px;
-background-color: var(--color-blanco);
-border: none; 
-outline: none; 
+  display: flex;
+  width: 140px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap:6px;
+  padding: 10px 20px;
+  position: relative;
+  border-radius: 100px;
+  background-color: var(--color-blanco);
+  border: none; 
+  outline: none; 
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.producto-button:hover{
+    background-color: var(--color-negro);
+      color: var(--color-blanco);
+      text-decoration: none;
 }
 
 .login-button{
-display: inline-flexbox;
-width:50px;
-height: 50px;
-align-items: center;
-justify-content: center;
-gap: 10px;
-padding: relative;
-flex: 0 0 auto;
-background-color: var(--color-negro);
-border-radius: 100px;
+    display: inline-flex;
+    width:50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: relative;
+    flex: 0 0 auto;
+    background-color: var(--color-negro);
+    border-radius: 100px;
 }
 
 .hero
@@ -64,14 +75,16 @@ border-radius: 100px;
     padding: 0px 42px;
     position: relative;
 }
-
+main{
+    height: 100%;
+}
 .CTAContenedor{
-flex-direction: column;
-align-items: flex-start;
-justify-content: center;
-display: inline-flex;
-position: relative;
-flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    display: inline-flex;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 #CTA {
@@ -93,8 +106,17 @@ flex: 0 0 auto;
     border-radius: 60px;
     text-decoration: none; 
     box-sizing: border-box;
-     border: none; 
+    border: none; 
     outline: none; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+      /* Transición suave */
+}
+
+#CTA:hover {
+  background-color: var(--color-blanco, white);
+  /* Fondo blanco al hacer hover */
+  color: var(--color-primario);
+  /* Texto azul al hacer hover */
 }
 
 .botones-colaboraciones-frame{
@@ -105,54 +127,63 @@ position: relative;
 }
 
 .botones-colaboraciones{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 6px 14px;
-    position: relative;
-    background-color: var(--color-blanco);
-    border-radius: 30px;
-    border: 1px solid;
-    border-color: var(--color-negro);
-    font-family: var(--body-medium-font-family);
-    font-weight: var(--body-medium-font-weight);
-    color: var(--color-negro);
-    font-size: (--body-medium-font-size);
-    letter-spacing: var(--body-medium-letter-spacing);
-    line-height: var(--body-medium-line-height);
-    font-style: var(--body-medium-font-style);}
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 14px;
+  position: relative;
+  background-color: var(--color-blanco);
+  border-radius: 30px;
+  border: 1px solid;
+  border-color: var(--color-negro);
+  font-family: var(--body-medium-font-family);
+  font-weight: var(--body-medium-font-weight);
+  color: var(--color-negro);
+  font-size: var(--body-medium-font-size);
+  letter-spacing: var(--body-medium-letter-spacing);
+  line-height: var(--body-medium-line-height);
+  font-style: var(--body-medium-font-style);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+}
+
+.botones-colaboraciones:hover{
+  background-color: var(--color-negro);
+  color: var(--color-blanco);
+  text-decoration: none;
+}
 
 .textosTitulo-frame{
-display: inline-flex;
-flex-direction: column;
-align-items: flex-start;
-position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
 }
 
 .offsetArriba{
-display: inline-flex;
-align-items: center;
-gap: 16px;
-padding: 0px 35px;
-position: relative;
-flex: 0 0 auto;
-margin-top: -20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0px 35px;
+  position: relative;
+  flex: 0 0 auto;
+  margin-top: -20px;
 }
 
 .span{
-    color: var(--color-primario);
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500; /* Medium */
+  color: var(--color-primario);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500; /* Medium */
 }
 
 .botonesContenedor{
-display: inline-flex;
-flex-direction: column;
-align-items: center;
-gap: 10px;
-padding: 0px 152px;
-position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 152px;
+  position: relative;
 }
 
 .intro-text
@@ -309,25 +340,25 @@ border-radius: 30px;
 }
 
 .ellipse{
-position: relative;
-width: 50px;
-height: 50px;
-background-image: url(/assets/imágenes/modelo3000.png);
-background-size: cover;
-background-position: 50% 50%;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    /*background-image: url('/assets/imágenes/modelo3000.png');*/
+    background-size: cover;
+    background-position: 50% 50%;
 }
 
 .feature-buttons{
-position:relative;
-width: fit-content;
-margin-top: -1.00px;
-font-family: var(--body-large-font-family);
-font-weight: var(--body-large-font-weight);
-color: var(--color-negro);
-font-size: var(--body-large-font-size);
-letter-spacing: var(--body-large-letter-spacing);
-line-height: var(--body-large-line-height);
-font-style: var(--body-large-font-style);
+    position:relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: var(--body-large-font-family);
+    font-weight: var(--body-large-font-weight);
+    color: var(--color-negro);
+    font-size: var(--body-large-font-size);
+    letter-spacing: var(--body-large-letter-spacing);
+    line-height: var(--body-large-line-height);
+    font-style: var(--body-large-font-style);
 }
 
 main{
