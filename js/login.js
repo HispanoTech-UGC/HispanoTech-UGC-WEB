@@ -46,3 +46,14 @@ loginBtn.addEventListener('click', async () => {
         mensajeDiv.style.color = 'red';
     }
 });
+
+const togglePassword = document.getElementById('toggle-password');
+const inputPassword = document.getElementById('contraseña');
+
+togglePassword.addEventListener('click', () => {
+    const isHidden = inputPassword.type === 'password';
+    inputPassword.type = isHidden ? 'text' : 'password';
+    togglePassword.classList.toggle('bi-eye');
+    togglePassword.classList.toggle('bi-eye-slash');
+});
+
