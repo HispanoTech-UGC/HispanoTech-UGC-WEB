@@ -1,6 +1,7 @@
 body{
     margin: 0 auto;
-    max-height: 100vh;
+    height: 100vh;
+    overflow-y: hidden;
 }
 .header-landing{
   display: flex;
@@ -9,8 +10,8 @@ body{
   align-items: center;
   justify-content: space-between;
   padding: 0px 14px;
-  position: relative;
-  background-color: var(--color-blanco);
+  /*position: relative;*/
+  background-color: white;
 }
 
 .logoLanding{
@@ -44,8 +45,8 @@ body{
 
 .producto-button:hover{
     background-color: var(--color-negro);
-      color: var(--color-blanco);
-      text-decoration: none;
+    color: var(--color-blanco);
+    text-decoration: none;
 }
 
 .login-button{
@@ -74,8 +75,9 @@ body{
     justify-content: center;
     padding: 0px 42px;
     position: relative;
+
 }
-main{
+.main{
     height: 100%;
 }
 .CTAContenedor{
@@ -85,6 +87,7 @@ main{
     display: inline-flex;
     position: relative;
     flex: 0 0 auto;
+    width: 50vw;
 }
 
 #CTA {
@@ -120,10 +123,10 @@ main{
 }
 
 .botones-colaboraciones-frame{
-align-items: flex-start;
-gap: 4px;
-display: inline-flex;
-position: relative;
+    align-items: flex-start;
+    gap: 4px;
+    display: inline-flex;
+    position: relative;
 }
 
 .botones-colaboraciones{
@@ -200,9 +203,10 @@ position: relative;
     flex-direction: column;
     width: 324px;
     align-items: flex-start;
-    gap: 676px;
     position: relative;
-    margin-right: 8px;
+    right: 0;
+    justify-content: space-evenly;
+    height: 100%;
 }
 
 .servicio {
@@ -265,41 +269,41 @@ position: relative;
 
 
 .modelo{
-display: flex;
-flex-direction: column;
-width: 324px;
-height: 84px;
-align-items: flex-end;
-padding: 0px 38px;
-position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 324px;
+    height: 84px;
+    align-items: flex-end;
+    padding: 0px 38px;
+    position: relative;
 }
 
 .copyrirghtFrame{
-display: inline-flex;
-align-items: center;
-gap: 3px;
-position: relative;
-flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    position: relative;
+    flex: 0 0 auto;
 }
 
 .tdesign-copyright{
-position: relative;
-width: 13px;
-height: 13px;
+    position: relative;
+    width: 13px;
+    height: 13px;
 }
 
 .text-wrapper-copyright{
-position: relative;
-width: fit-content;
-margin-top: -1.00px;
-font-family: var(--body-medium-font-family);
-font-weight: var(--body-medium-font-weight);
-color: var(--color-negro);
-font-size: var(--body-medium-font-size);
-letter-spacing: var(--body-medium-letter-spacing);
-line-height: var(--body-medium-line-height);
-white-space: nowrap;
-font-style: var(--body-medium-font-style);
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: var(--body-medium-font-family);
+    font-weight: var(--body-medium-font-weight);
+    color: var(--color-negro);
+    font-size: var(--body-medium-font-size);
+    letter-spacing: var(--body-medium-letter-spacing);
+    line-height: var(--body-medium-line-height);
+    white-space: nowrap;
+    font-style: var(--body-medium-font-style);
 }
 
 .modelo-robot
@@ -309,34 +313,36 @@ font-style: var(--body-medium-font-style);
 
 .features{
     position: absolute;
-    top: 850px;
+    bottom: 0;
     margin-left: 12px;
+    background-color: var(--color-body);
 }
 .heading-medium
 {}
 
 
 .feature-buttons-frame{
-display: inline-flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 4px;
-padding: 0px 0px 0px 0px;
-position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 0px 0px 0px 0px;
+    position: relative;
+    margin-bottom: unset;
 }
 
 .modeloImagen{
-display:flex;
-height: 54px;
-align-items: center;
-justify-content: center;
-gap: 8px;
-padding: 2px 12px 2px 2px;
-position: relative;
-align-self: stretch;
-width: 100%;
-background-color: var(--color-blanco);
-border-radius: 30px;
+    display:flex;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 2px 12px 2px 2px;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    background-color: var(--color-blanco);
+    border-radius: 30px;
 }
 
 .ellipse{
@@ -369,7 +375,7 @@ main{
 .columnasDI {
     display: flex;
     width: 100%; /* Asegura que ocupe todo el ancho disponible */
-    height: 932px;
+    height: 100%; /* Asegura que ocupe todo el ancho disponible */
     align-items: center;
     justify-content: space-between; /* Maximiza el espacio entre los elementos */
     position: relative; /* Corrige la sintaxis */
@@ -377,31 +383,90 @@ main{
 
 
 .rectanguloHorizontal{
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 10px;
-padding: 57px 0px 57px 472px;
-position: absolute;
-top: 850px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /*padding: 57px 0px 57px 472px;*/
+    position: absolute;
+    bottom: 20px;
+    justify-self: anchor-center;
+}
+
+.rectanguloHorizontal h2{
+    font-size: 35px;
 }
 
 .media-section{
-position: absolute;
-top: 76px;
-right: 8px;
-z-index: -1;
-width: 890px;
-height: 956px;
-object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    object-fit: cover;
+}
+
+.media-section figure{
+    margin-bottom: unset;
+    height: 100%;
+}
+
+.media-section figure video{
+    height: 100%;
 }
 
 .imagenFondo {
     position: absolute;
     top: 0;
     left: 0;
-    width: auto;
+    width: 100vw;
     height: 100%;
     object-fit: cover;
     z-index: -2; /* o 0 si no hace falta ponerla detrás de nadie */
+}
+
+
+@media (max-width: 818px) {
+    .features{
+        display: none;
+    }
+    .columnasDI{
+        justify-content: center;
+    }
+    .rectanguloverticalI{
+        padding: unset;
+    }
+    .rectanguloverticalD{
+        display: none;
+    }
+    .CTAContenedor{
+        width: max-content;
+        text-align: center;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+    }
+    .CTAContenedor .offsetArriba{
+        padding: unset;
+    }
+    .CTAContenedor h1{
+        font-size: 8vw;
+        width: 100%;
+    }
+
+    .CTAContenedor .botonesContenedor{
+        padding: unset;
+    }
+
+    .rectanguloHorizontal{
+        background-color: white;
+        bottom: 0;
+        height: 13vh;
+        border-radius: 60px 60px 0 0;
+        padding: 2%;
+    }
+
+    .rectanguloHorizontal h2{
+        font-size: 4vw;
+    }
 }
