@@ -1,0 +1,58 @@
+#registrar-usuarios input{
+    font-size: var(--body-large-font-size);
+    font-family: var(--body-large-font-family);
+    border: none; /* Elimina el borde */
+    outline: none; /* Elimina el contorno al hacer clic */
+    background: transparent; /* Si también quieres que el fondo sea transparente */
+}
+#registrar-usuarios form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 50vh;
+
+    /*background: white;*/
+    color: white;
+    border-radius: 30px;
+}
+
+#registrar-usuarios form h2{
+    color: white;
+}
+#registrar-usuarios form .input-container{
+    width: 30%;
+}
+
+#registrar-usuarios form input{
+    background: white;
+    border-radius: 30px;
+    border: 2px solid black;
+    padding: 3% 5%;
+    width: 100%;
+}
+
+#registrar-usuarios form label{
+    display: none;
+}
+
+#registrar-usuarios form .botn {
+    cursor: pointer;
+    display: flex;
+    height: 12%;
+    width: 20%;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    background-color: var(--color-secundario);
+    border-radius: 100px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: black;
+}
+
+#registrar-usuarios .botn:hover { /*Hover del boton*/
+    background-color: #ffffff;
+    color: black;
+}

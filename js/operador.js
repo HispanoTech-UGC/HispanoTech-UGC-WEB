@@ -1,4 +1,4 @@
-'giro-dirección-AD'
+//'giro-dirección-AD'
 const direccionIcon = document.querySelector('.direccion');
 let currentRotation = 0;
 
@@ -15,7 +15,7 @@ document.addEventListener('keydown', (e) => {
     document.getElementById('angleText-8').textContent = currentRotation + 'º';
 });
 
-'AWSDX-botones'
+//'AWSDX-botones'
 document.addEventListener('DOMContentLoaded', () => {
     const buttonW = document.querySelector('.WASD.W');
     const buttonA = document.querySelector('.WASD.A');

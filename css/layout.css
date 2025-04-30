@@ -4,6 +4,16 @@ header {
     width: 100%;
 }
 
+header .logoLanding{
+    cursor: pointer;
+}
+
+header #header-derecha{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 h1 {
     display: block; /* Por defecto, el <h1> ya es display: block, pero puedes modificarlo si lo deseas */
     margin-block-start: 0; /* Modificar el margen superior */

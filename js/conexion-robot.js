@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', event => {
     console.log("entro en la pagina")
+    event.preventDefault();
 
-    canvasMap = document.getElementById("map");
+    let canvasMap = document.getElementById("map");
 
     data = {
         // ros connection
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', event => {
 	      console.log("Clic en connect")
           //console.log(direccionBridge)
 
-	      data.ros = new ROSLIB.Ros({ url: rosbridge_address })
+	      data.ros = new ROSLIB.Ros({ url: data.rosbridge_address })
 
         // Define callbacks
         data.ros.on("connection", () => {
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', event => {
 
             // Topic cmd_vel
             cmdVelTopic = new ROSLIB.Topic({
-                ros: data_ros,
+                ros: data.ros,
                 name: '/cmd_vel',
                 messageType: '/geometry_msgs/msg/Twist'
             });
@@ -131,7 +132,7 @@ document.addEventListener('DOMContentLoaded', event => {
         })
     }
 
-    function subscribeService(){
+    /*function subscribeService(){
         // define the service to be called
        let service = new ROSLIB.Service({
           ros : data.ros,
@@ -151,10 +152,10 @@ document.addEventListener('DOMContentLoaded', event => {
         }, (error) => {
           console.error(error)
         }) 
-    }
+    }*/
 
         // Versión usando librería MJPEGCANVAS (requiere cargarla)
-    function setCamera(){
+    /*function setCamera(){
         console.log("setting the camera")
     var viewer = new MJPEGCANVAS.Viewer({
         divID : 'mjpeg',
@@ -164,12 +165,12 @@ document.addEventListener('DOMContentLoaded', event => {
         topic : '/camera/image_raw',
         interval : 200
         })
-    }
+    }*/
 
     // otro ejemplo de función (simple para prueba inicial)
     function updateCameraFeed() {
     const img = document.getElementById("cameraFeed");
-    const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
+    //const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
     img.src = `http://127.0.0.1:8080/stream?topic=/camera/image_raw`;
     //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
     }

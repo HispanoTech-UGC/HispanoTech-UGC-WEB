@@ -9,7 +9,7 @@
   <meta name="robots" content="noindex, nofollow"> <!-- La página no debe ser indexada por motores de búsqueda -->
 
   <meta name="theme-color" content="#000">
-  <link rel="icon" href="assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/imágenes/LogoReduccion04.svg" type="image/svg+xml">
 
   <!-- Fonts y estilos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,11 +17,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 
   <!-- Archivos CSS -->
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/minimapa.css">
-  <link rel="stylesheet" href="css/páginas/operador.css">
-  <link rel="stylesheet" href="css/páginas/meshgradient.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/minimapa.css">
+  <link rel="stylesheet" href="../css/páginas/operador.css">
+  <link rel="stylesheet" href="../css/páginas/meshgradient.css">
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -30,31 +31,30 @@
   <script src="https://cdn.jsdelivr.net/npm/easeljs@1/lib/easeljs.min.js"></script>
   <script src=" https://cdn.jsdelivr.net/npm/eventemitter2@6.4.9/lib/eventemitter2.min.js "></script>
   <script src="https://cdn.jsdelivr.net/npm/ros2d@0.10.0/build/ros2d.min.js"></script>
-  <script src="js/draw_occupancy_grid.js"></script>
+  <script src="../js/draw_occupancy_grid.js"></script>
 </head>
 <style>
   #cameraFeed{
-      width: 100%;
-      height: 100%;
-      border-radius: 60px;
+      width: 100vw;
+      height: 100vh;
+      /*border-radius: 60px;*/
   }
 </style>
-<header class="header-landing">
-    <img class="logoLanding" src="assets/imágenes/LogoReduccion04.svg" alt="Logo HispanoTech">
-  <div class="frame botones-header" >
-    <div class="headerFrame">
-        <label class="placa">GC-54789</label>
-        <button class="login-button" onclick="window.location.href='./index.html'"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg"></button>
-    </div>
-</div>
-</header>
-
 <body>
+  <header class="navbar fixed-top">
+    <img class="logoLanding" src="../assets/imágenes/LogoReduccion04.svg" alt="Logo HispanoTech" onclick="window.location.href='../index.html'">
+    <div class="frame botones-header" >
+      <div class="headerFrame">
+        <label class="placa">GC-54789</label>
+        <button class="login-button" onclick="window.location.href='login.html'"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg"></button>
+      </div>
+    </div>
+  </header>
     <div class="body">
       <div id="minimap-container">
         <canvas id="map" height="inherit" style="border-radius: 100%;"></canvas>
     </div>
-      <img class="subtract" id="cameraFeed" src="assets/imágenes/subtract.png" />
+      <img class="subtract" id="cameraFeed" src="../assets/imágenes/subtract.png" alt="cámara"/>
       <div class="frame">
         <div class="div">
           <div class="frame-wrapper">
@@ -63,11 +63,11 @@
                 <div class="img">
                   <div class="overlap-group">
                     <div class="rectangle"></div>
-                    <img id='batteryIcon' class="vector" src="assets/imágenes/iconos/batería03.svg" />
-                    <div id="batteryStatus" class="numeroBateria">--</div>
+                    <img class="vector" src="assets/imágenes/iconos/batería03.svg" />
+                    <div class="numeroBateria">40</div>
                   </div>
                 </div>
-                <img class="img wifi" src="assets/imágenes/iconos/Property 1=100wifi.svg" alt="Estado de WiFi" />
+                <img class="img wifi" src="assets/imágenes/iconos/Property 1=100wifi.svg" />
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@
                 <li>Atracador 3 (A3) – Secuaz</li>
               </ul>
             </div>
-            <img class="line" src="assets/imágenes/iconos/Line 2.svg" />
+            <img class="line" src="../assets/imágenes/iconos/Line%202.svg" />
             <div class="contenedor-c">
               <div class="negociacin">
                 <div class="dilogo">
@@ -232,7 +232,7 @@
                 </div>
               </div>
             </div>
-            <img class="line" src="assets/imágenes/iconos/Line 3.svg" />
+            <img class="line" src="../assets/imágenes/iconos/Line%203.svg" />
             <div class="contadores">
               <div class="contador">
                 <div class="frame-6">
@@ -242,10 +242,10 @@
                 <div class="frame-7">
                   <div class="img">
                     <div class="overlap-group-2">
-                      <img class="img" src="assets/imágenes/iconos/plus.svg" />
+                      <img class="img" src="../assets/imágenes/iconos/plus.svg" />
                     </div>
                   </div>
-                  <img class="img" src="assets/imágenes/iconos/minus.svg" />
+                  <img class="img" src="../assets/imágenes/iconos/minus.svg" />
                 </div>
               </div>
               <div class="contador">
@@ -256,10 +256,10 @@
                 <div class="frame-7">
                   <div class="img">
                     <div class="overlap-group-2">
-                      <img class="img" src="assets/imágenes/iconos/plus.svg" /> 
+                      <img class="img" src="../assets/imágenes/iconos/plus.svg" />
                     </div>
                   </div>
-                  <img class="img" src="assets/imágenes/iconos/minus.svg" />
+                  <img class="img" src="../assets/imágenes/iconos/minus.svg" />
                 </div>
               </div>
             </div>
@@ -295,11 +295,11 @@
               <div class="centro"><div class="text-wrapper-9">0º</div></div>
               <div class="group-3">
                 <div class="group-4">
-                  <img class="vector-4" src="assets/imágenes/iconos/Vector16.svg" />
+                  <img class="vector-4" src="../assets/imágenes/iconos/Vector16.svg" />
                   <div class="overlap-3">
                     <div class="ellipse"></div>
                     <div class="ellipse-2"></div>
-                    <img class="line-2" src="assets/imágenes/iconos/Vector15.svg" />
+                    <img class="line-2" src="../assets/imágenes/iconos/Vector15.svg" />
                     <div class="AWSD-wrapper">
                       <div class="AWSD">
                         <button class="WASD W">
@@ -311,7 +311,7 @@
                               </button>
                                                         <div class="flecha">
                             <div class="girar">
-                              <img class="direccion" src="assets/imágenes/iconos/dirección.svg">
+                              <img class="direccion" src="../assets/imágenes/iconos/dirección.svg">
                               </img>
                               <div class="frame-13">
                                 <div class="overlap-group-wrapper">
@@ -334,7 +334,7 @@
                       </div>
                     </div>
                   </div>
-                  <img class="vector-5" src="assets/imágenes/iconos/Vector15.svg" />
+                  <img class="vector-5" src="../assets/imágenes/iconos/Vector15.svg" />
                 </div>
               </div>
             </div>
@@ -342,10 +342,10 @@
           </div>
         </div>
       </div>
-      <div class="rectangle-4"></div>
     </div>
-    <script src="js/operador.js"></script>
-    <script src="js/conexion-robot.js"></script>
-    <script src="./js/control-acceso.js" data-roles-restringidos=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="../js/operador.js"></script>
+    <script src="../js/conexion-robot.js"></script>
+    <script src="../js/control-acceso.js" data-roles-restringidos=""></script>
   </body>
 </html>

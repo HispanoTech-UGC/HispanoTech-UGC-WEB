@@ -30,7 +30,7 @@ loginBtn.addEventListener('click', async () => {
         // Redirección según el rol
         switch (usuario.rol) {
             case 1:
-                window.location.href = './html/admin_cuerpos.html';
+                window.location.href = './admin_cuerpos.html';
                 break;
             case 2:
                 window.location.href = 'operador.html';
@@ -46,3 +46,14 @@ loginBtn.addEventListener('click', async () => {
         mensajeDiv.style.color = 'red';
     }
 });
+
+const togglePassword = document.getElementById('toggle-password');
+const inputPassword = document.getElementById('contraseña');
+
+togglePassword.addEventListener('click', () => {
+    const isHidden = inputPassword.type === 'password';
+    inputPassword.type = isHidden ? 'text' : 'password';
+    togglePassword.classList.toggle('bi-eye');
+    togglePassword.classList.toggle('bi-eye-slash');
+});
+

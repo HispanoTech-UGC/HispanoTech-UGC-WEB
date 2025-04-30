@@ -1,3 +1,14 @@
+
+body{
+  max-height: 100vh;
+  width: 100vw;
+  background: black;
+  overflow: hidden;
+}
+html, body {
+  overflow: hidden;
+  height: 100vh;
+}
 .test{
     color: #2b56ff;
 }
@@ -21,7 +32,10 @@
     padding: 0px 14px;
     position: relative;
   }
-  
+  header .placa{
+    color: white;
+    background: linear-gradient(black, transparent);
+  }
   .logoLanding{
   position: relative;
   flex: 0 0 auto;
@@ -70,8 +84,8 @@
   height: 100%;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
-  padding: 10px;
+  /*gap: 10px;
+  padding: 10px;*/
   position: relative;
 }
 
@@ -84,23 +98,19 @@
 
 .body .frame {
   display: flex;
-  width: 300px;
-  height: 922px;
+  width: 25%;
+  height: 100vh;
   align-items: flex-end;
   justify-content: center;
   gap: 10px;
   position: absolute;
-  top: 14px;
-  left: 1130px;
-  border-left-width: 1px;
-  border-left-style: solid;
-  border-color: #ffffff;
+  right: 1%;
 }
 
 .body .div {
   display: flex;
   flex-direction: column;
-  width: 298px;
+  width: 100%;
   align-items: center;
   position: relative;
   align-self: stretch;
@@ -109,12 +119,12 @@
 .body .frame-wrapper {
   display: flex;
   flex-direction: column;
-  width: 298px;
+  width: 100%;
   height: 49px;
   align-items: flex-start;
   justify-content: center;
   gap: 10px;
-  padding: 0px 1px 70px 22px;
+  /*padding: 0px 1px 70px 22px;*/
   position: relative;
 }
 
@@ -179,11 +189,14 @@
 .body .columna {
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
+  /*gap: 20px;*/
   position: relative;
   flex: 0 0 auto;
-  padding: 0px 0px 0px 80px
+  /*padding: 0px 0px 0px 80px;*/
+  height: 100vh;
+  width: 100%;
+  justify-content: space-evenly;
 }
 
 .body .log {
@@ -193,6 +206,7 @@
   gap: 2px;
   position: relative;
   flex: 0 0 auto;
+  width: 100%;
 }
 
 .body .frame-3 {
@@ -257,6 +271,7 @@
   height: 2px;
   margin-left: -1.00px;
   margin-right: -1.00px;
+  display: none;
 }
 
 .body .contenedor-c {
@@ -266,15 +281,16 @@
   justify-content: center;
   position: relative;
   flex: 0 0 auto;
+  width: 100%;
+  height: 50%;
 }
 
 .body .negociacin {
   display: flex;
   flex-direction: column;
-  width: 256px;
-  height: 545px;
   align-items: flex-start;
-  gap: 21px;
+  height: 100%;
+  /*gap: 21px;*/
   position: relative;
   overflow: hidden;
   overflow-y: scroll;
@@ -338,9 +354,10 @@
   font-family: var(--body-medium);
   font-weight: 400;
   color: var(--color-blanco);
-  font-size: 18px;
+  font-size: 2vh;
   letter-spacing: 0;
   line-height: 26.1px;
+  width: 100%;
 }
 
 .body .autor-2 {
@@ -379,11 +396,13 @@
 
 .body .contadores {
   display: inline-flex;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: flex-end;
+  /*gap: 10px;*/
   position: relative;
   flex: 0 0 auto;
   border-radius: 60px;
+  width: 100%;
+  bottom: 0;
 }
 
 .body .contador {
@@ -393,12 +412,13 @@
   gap: 6px;
   position: relative;
   flex: 0 0 auto;
+  width: 50%;
 }
 
 .body .frame-6 {
   display: flex;
   flex-direction: column;
-  width: 103px;
+  /*width: 103px;*/
   align-items: center;
   justify-content: center;
   position: relative;
@@ -472,8 +492,9 @@
   align-items: center;
   gap: 10px;
   position: absolute;
-  top: 696px;
+  bottom: 0;
   left: 22px;
+  flex: 1 1 0;
 }
 
 .body .group {
