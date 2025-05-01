@@ -23,6 +23,13 @@ html, body {
     background-color: var(--color-blanco);
   }
 
+.retroceder{
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  top: 10vh;
+}
+
   .header-landing{
     display: flex;
     width: 100%;
