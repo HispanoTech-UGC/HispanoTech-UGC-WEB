@@ -16,6 +16,10 @@ body{
     align-content: center;
 }
 
+main{
+    display: none;
+}
+
 .retroceder{
     background: none;
     border: none;

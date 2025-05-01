@@ -107,3 +107,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
+
+
+
+
+
+
+
+// menu PDA operador
+
+asignarFuncionalidadBotones();
+
+async function opcionSeleccionadaMenu(target){
+    const contenido = document.getElementById(target);
+    const menu = document.getElementById('menu');
+    const retro = document.getElementById('retroceder');
+
+    contenido.style.display = 'block';
+    contenido.style.height = '100vh';
+    menu.style.display = 'none';
+
+    if (target==='robot'){
+        //await filtrar();
+        //getAllCuerpos();
+    }
+}
+
+function retroceder(target){
+    const contenido = document.getElementById(target);
+    const menu = document.getElementById('menu');
+
+    contenido.style.display = 'none';
+    menu.style.display = 'block';
+}
+
+function asignarFuncionalidadBotones(){
+    const botones = document.querySelectorAll('.game-button');
+    const retrocesos = document.querySelectorAll('.retroceder');
+
+    botones.forEach((boton, index) => {
+        let opcion = '';
+
+        switch (index) {
+            case 0:
+                opcion = 'robot';
+                break;
+            case 1:
+                opcion = 'mis-informes';
+                break;
+            default:
+                opcion = 'opcion-desconocida';
+        }
+
+        boton.addEventListener('click', () => {
+            opcionSeleccionadaMenu(opcion).then(r => r);
+        });
+    });
+
+    retrocesos.forEach((boton, index) => {
+        let opcion = '';
+
+        switch (index) {
+            case 0:
+                opcion = 'robot';
+                break;
+            case 1:
+                opcion = 'mis-informes';
+                break;
+            default:
+                opcion = 'opcion-desconocida';
+        }
+
+        boton.addEventListener('click', () => {
+            retroceder(opcion);
+        });
+    });
+}
