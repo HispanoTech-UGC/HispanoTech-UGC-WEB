@@ -58,10 +58,12 @@ document.addEventListener('DOMContentLoaded', event => {
 
         data.ros.on("error", (error) => {
             console.log("Error en ROSBridge: ", error)
+            alert("¡Error al conectar con el robot!\nComprueba que ROSBridge esté levantado en " + data.rosbridge_address);
         })
         data.ros.on("close", () => {
             data.connected = false
             console.log("Conexion con ROSBridge cerrada")
+            alert("La conexión con el robot se ha cerrado.");
         })
     }
 
