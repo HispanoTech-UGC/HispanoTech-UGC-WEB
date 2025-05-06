@@ -10,6 +10,7 @@ export function setPath()
         const randomCode = Math.floor(1000 + Math.random() * 9000)
         path = `${user.num_placa}/${randomCode}`
         alert(`Path establecido: ${path}`)
+        localStorage.setItem('path', path);
     } else {
         alert('No se pudo establecer path: usuario no definido')
     }
@@ -17,11 +18,13 @@ export function setPath()
 
 export function removePath(){
     path = null
+    localStorage.removeItem('path');
     alert('Path eliminado')
 }
 
 export function hacerFoto() {
-    if (!path) {
+    const pathBucket = localStorage.getItem('path');
+    if (!pathBucket) {
         alert('Primero establece un path.')
         return
     }
@@ -46,7 +49,7 @@ export function hacerFoto() {
     canvas.toBlob(async (blob) => {
         if (blob) {
             try {
-                await subirImagenASupabase(blob, `${path}/${fileName}`)
+                await subirImagenASupabase(blob, `${pathBucket}/${fileName}`)
             } catch (err) {
                 alert('Error al subir la imagen.')
                 console.error(err)
