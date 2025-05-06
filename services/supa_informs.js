@@ -48,6 +48,7 @@ export async function finalizarInforme(informeId) {
         console.error('Error al finalizar informe:', error);
         return { success: false, message: 'No se pudo finalizar el informe.' };
     }
+    localStorage.removeItem('informe');
 
     /* ------ Éxito ------ */
     return {
