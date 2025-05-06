@@ -1,4 +1,4 @@
-import { subirImagenASupabase } from '../services/supa_operator'
+import { subirImagenASupabase } from '../services/supa_operator.js'
 
 const user = JSON.parse(localStorage.getItem('usuario'))
 let path = null

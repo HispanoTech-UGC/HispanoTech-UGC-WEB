@@ -289,9 +289,9 @@
           </div>
         </div>
       </div>
-        <button id="set-path" style="z-index: 1050; position: absolute">Establecer path</button>
-        <button id="clear-path" style="z-index: 1050; position: absolute">Borrar path</button>
-        <button class="hacer-foto"><i class="bi bi-camera"></i></button>
+        <button id="set-path" onclick="setPath()" style="z-index: 1050; position: absolute">Establecer path</button>
+        <button id="clear-path" onclick="" style="z-index: 1050; position: absolute">Borrar path</button>
+        <button class="hacer-foto" onclick="hacerFoto()" id="foto"><i class="bi bi-camera"></i></button>
         <div class="controlador">
           <div class="gradient-fondo"></div>
         <div class="group">
@@ -375,12 +375,6 @@
     <script src="../js/operador.js"></script>
     <script src="../js/conexion-robot.js"></script>
   <script type="module" src="../js/camera.js"></script>
-  <script type="module">
-    import {setPath} from "../js/camera";
-    document.getElementById('set-path').addEventListener('click', () => {
-      setPath()
-    })
-  </script>
   <script type="module" src="../js/reloj.js"></script>
   <script src="../js/control-acceso.js" data-roles-restringidos=""></script>
 </body>
