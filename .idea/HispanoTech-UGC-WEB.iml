@@ -7,5 +7,7 @@
     <orderEntry type="library" name="@supabase" level="application" />
     <orderEntry type="library" name="bcryptjs" level="application" />
     <orderEntry type="library" name="crypto-js" level="application" />
+    <orderEntry type="library" name="ros2d" level="application" />
+    <orderEntry type="library" name="easeljs" level="application" />
   </component>
 </module>
