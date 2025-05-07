@@ -32,15 +32,32 @@ document.addEventListener('DOMContentLoaded', event => {
             //Subscribe to the map topic
             console.log("Conexión ROSBridge correcta")
 
-            var mapTopic = new ROSLIB.Topic({
+            // Suscribirse al tópico del mapa para actualizar dinámicamente
+            const mapTopic = new ROSLIB.Topic({
                 ros: data.ros,
                 name: '/map',
-                messageType: 'nav_msgs/msg/OccupancyGrid'
+                messageType: 'nav_msgs/OccupancyGrid'
             });
 
             mapTopic.subscribe((message) => {
-                console.log('suscrito a map')
-                draw_occupancy_grid(canvasMap, message, 0);
+                console.log('Datos del mapa recibidos:', message);
+                console.log('Posición del robot antes de dibujar:', data.position);
+                draw_occupancy_grid(canvasMap, message, data.position);
+            });
+
+            // Suscribirse al tópico de odometría para actualizar la posición del robot
+            const odomTopic = new ROSLIB.Topic({
+                ros: data.ros,
+                name: '/odom',
+                messageType: 'nav_msgs/Odometry'
+            });
+
+            odomTopic.subscribe((message) => {
+                data.position = message.pose.pose.position;
+                console.log('Posición del robot actualizada:', data.position);
+
+                // Llamar a la función updateRobotPosition del archivo mapa.js
+                updateRobotPosition(data.position.x, data.position.y);
             });
 
             // Topic cmd_vel
