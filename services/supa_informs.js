@@ -58,3 +58,24 @@ export async function finalizarInforme(informeId) {
     };
 }
 
+
+export async function getMisInformes(id) {
+    const { data, error } = await supabase
+        .from('informes')
+        .select('*')  // Selecciona solo el campo 'cuerpo'
+        .eq('num_placa', id);  // Filtra por el ID del cuerpo
+
+    console.log('ID solicitado:', id);  // Verificar qué ID se está pasando
+    console.log('Datos obtenidos:', data);  // Ver qué datos se obtienen de la consulta
+
+    if (error) {
+        return { success: false, message: 'Error al acceder a la base de datos.' };
+    }
+
+    if (!data || data.length === 0) {
+        return { success: false, message: 'No se encontraron datos de informes.' };
+    }
+
+    return data;  // Retorna solo el valor del cuerpo
+}
+
