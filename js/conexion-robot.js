@@ -1,13 +1,13 @@
-document.addEventListener('DOMContentLoaded', event => {
     console.log("entro en la pagina")
-    event.preventDefault();
+    //event.preventDefault();
 
     let canvasMap = document.getElementById("map");
+    let popupInput = document.getElementById("popupInput");
 
     data = {
         // ros connection
         ros: null,
-        rosbridge_address: 'ws://127.0.0.1:9090/',
+        rosbridge_address: popupInput.value,
         connected: false,
         // service information 
 	    service_busy: false, 
@@ -16,61 +16,70 @@ document.addEventListener('DOMContentLoaded', event => {
 
     let cmdVelTopic; // <------- Instancia única de movimiento
 
-    connect();
 
-    function connect(){
-	      console.log("Clic en connect")
-          //console.log(direccionBridge)
-
-	      data.ros = new ROSLIB.Ros({ url: data.rosbridge_address })
-
-        // Define callbacks
-        data.ros.on("connection", () => {
-            data.connected = true
-            /*estado.textContent = 'Conectado';
-            estado.style.background = 'green';*/
-            //Subscribe to the map topic
-            console.log("Conexión ROSBridge correcta")
-
+    async function connect() {
+        console.log("Clic en connect");
+      
+        return new Promise((resolve, reject) => {
+          data.ros = new ROSLIB.Ros({ url: data.rosbridge_address });
+      
+          data.ros.on("connection", () => {
+            data.connected = true;
+            localStorage.setItem("robot", popupInput.value);
+            console.log("Conexión ROSBridge correcta");
+      
+            // Suscribirse a /map
             var mapTopic = new ROSLIB.Topic({
-                ros: data.ros,
-                name: '/map',
-                messageType: 'nav_msgs/msg/OccupancyGrid'
+              ros: data.ros,
+              name: '/map',
+              messageType: 'nav_msgs/msg/OccupancyGrid'
             });
-
+      
             mapTopic.subscribe((message) => {
-                console.log('suscrito a map')
-                draw_occupancy_grid(canvasMap, message, 0);
+              console.log('Suscrito a /map');
+              draw_occupancy_grid(canvasMap, message, 0);
             });
-
-            // Topic cmd_vel
+      
+            // Publicador cmd_vel
             cmdVelTopic = new ROSLIB.Topic({
-                ros: data.ros,
-                name: '/cmd_vel',
-                messageType: '/geometry_msgs/msg/Twist'
+              ros: data.ros,
+              name: '/cmd_vel',
+              messageType: '/geometry_msgs/msg/Twist'
             });
-
+      
             updateCameraFeed();
-            console.log("Conexion con ROSBridge correcta")
-            // suscribeBattery(); <-- No está el topic creado
-            // suscribeWifi(); <-- No está el topic creado
-        })
-
-        data.ros.on("error", (error) => {
-            console.log("Error en ROSBridge: ", error)
-        })
-        data.ros.on("close", () => {
-            data.connected = false
-            console.log("Conexion con ROSBridge cerrada")
-        })
-    }
+            resolve(true);
+          });
+      
+          data.ros.on("error", (error) => {
+            console.log("Error en ROSBridge: ", error);
+            resolve(false);  // Rechazar también sería válido: reject(error)
+          });
+      
+          data.ros.on("close", () => {
+            data.connected = false;
+            console.log("Conexión ROSBridge cerrada");
+            resolve(false);
+          });
+        });
+      }
+      
 
     function disconnect(){
-	      data.ros.close()
-	      data.connected = false
-          estado.textContent = 'Desconectado';
-          estado.style.background = 'red';
-        console.log('Clic en botón de desconexión')
+	    return new Promise((resolve) => {
+            if (data.ros) {
+              data.ros.on("close", () => {
+                data.connected = false;
+                console.log("Conexión cerrada");
+                localStorage.removeItem("robot");
+                resolve();
+              });
+              data.ros.close();
+              console.log("Clic en botón de desconexión");
+            } else {
+              resolve(); // Si ya está desconectado
+            }
+          });
     }
 
 
@@ -175,4 +184,4 @@ document.addEventListener('DOMContentLoaded', event => {
     //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
     }
 
-});
+
