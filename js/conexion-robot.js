@@ -65,6 +65,17 @@
       }
       
 
+        data.ros.on("error", (error) => {
+            console.log("Error en ROSBridge: ", error)
+            alert("¡Error al conectar con el robot!\nComprueba que ROSBridge esté levantado en " + data.rosbridge_address);
+        })
+        data.ros.on("close", () => {
+            data.connected = false
+            console.log("Conexion con ROSBridge cerrada")
+            alert("La conexión con el robot se ha cerrado.");
+        })
+    }
+
     function disconnect(){
 	    return new Promise((resolve) => {
             if (data.ros) {
@@ -97,15 +108,21 @@
         //suscribeOdom();
       }
 
-    // Linea Recta
+    // Linea Recta Delante
     function move() {
         publishMovement(0.1, 0.0);
+    }
+
+    // Linea Recta Atras
+    function back() {
+        publishMovement(-0.1, 0.0);
     }
 
     // Para el robot
     function stop() {
         publishMovement(0.0, 0.0);
     }
+    
 
     // Sentido horario
     function right() {
@@ -124,6 +141,7 @@
             case "s": stop(); break;
             case "a": left(); break;
             case "d": right(); break;
+            case "x": back(); break;
         }
     });
 
