@@ -10,6 +10,12 @@ function initializeMapCanvas() {
         console.error("Canvas element with id 'map' not found.");
         return;
     }
+    mapCanvas.style.position = "absolute";
+    mapCanvas.style.top = "10px";
+    mapCanvas.style.left = "10px";
+    mapCanvas.style.zIndex = "100";
+    mapCanvas.style.width = "200px"; // Limitar el ancho del minimapa
+    mapCanvas.style.height = "200px"; // Limitar la altura del minimapa
     mapContext = mapCanvas.getContext("2d");
 }
 
@@ -85,11 +91,14 @@ function updateRobotPosition(newX, newY) {
     drawRobot();
 }
 
+// Attach updateRobotPosition to the global window object
+window.updateRobotPosition = updateRobotPosition;
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeMapCanvas();
 
     const ros = new ROSLIB.Ros({
-        url: 'ws://127.0.0.1:9090/'
+        url: 'ws://192.168.0.95:9090/' // Ensure this matches the correct IP and port
     });
 
     const odomTopic = new ROSLIB.Topic({
@@ -117,6 +126,45 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Map data updated. Redrawing map...");
         drawMap(); // Redraw the map when new data is received
         drawRobot(); // Draw the robot on the updated map
+    });
+
+    // Suscribirse al tópico del escáner láser
+    const scanTopic = new ROSLIB.Topic({
+        ros: ros,
+        name: '/scan', // Cambiar si el tópico tiene otro nombre
+        messageType: 'sensor_msgs/LaserScan'
+    });
+
+    scanTopic.subscribe((message) => {
+        const angleMin = message.angle_min;
+        const angleIncrement = message.angle_increment;
+        const ranges = message.ranges;
+
+        if (!mapInfo || !mapContext) {
+            console.error("Map info or context is not initialized for scan data.");
+            return;
+        }
+
+        const res = mapInfo.resolution;
+        const origin = mapInfo.origin;
+        const height = mapInfo.height;
+
+        // Dibujar obstáculos detectados
+        ranges.forEach((range, index) => {
+            if (range < message.range_max) { // Filtrar valores válidos
+                const angle = angleMin + index * angleIncrement;
+                const x = robotPosition.x + range * Math.cos(angle);
+                const y = robotPosition.y + range * Math.sin(angle);
+
+                const px = Math.round((x - origin.position.x) / res);
+                const py = Math.round(height - (y - origin.position.y) / res); // Invertir eje Y
+
+                if (px >= 0 && px < mapInfo.width && py >= 0 && py < height) {
+                    mapContext.fillStyle = "red"; // Color para obstáculos detectados
+                    mapContext.fillRect(px, py, 1, 1);
+                }
+            }
+        });
     });
 
     ros.on('connection', () => {

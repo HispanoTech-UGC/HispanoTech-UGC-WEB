@@ -31,13 +31,28 @@
   <script src="https://cdn.jsdelivr.net/npm/easeljs@1/lib/easeljs.min.js"></script>
   <script src=" https://cdn.jsdelivr.net/npm/eventemitter2@6.4.9/lib/eventemitter2.min.js "></script>
   <script src="https://cdn.jsdelivr.net/npm/ros2d@0.10.0/build/ros2d.min.js"></script>
+  <script src="../js/libs/mjpegcanvas.min.js"></script>
   <script src="../js/draw_occupancy_grid.js"></script>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
 </head>
 <style>
   #cameraFeed{
       width: 100vw;
       height: 100vh;
       /*border-radius: 60px;*/
+  }
+
+  #cameraCanvas {
+      display: block;
+      margin: 20px auto;
+      border: 2px solid #000;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 </style>
 <body>
@@ -54,7 +69,7 @@
       <div id="minimap-container">
         <canvas id="map" height="inherit" style="border-radius: 100%;"></canvas>
     </div>
-      <img class="subtract" id="cameraFeed" src="../assets/imágenes/subtract.png" alt="cámara"/>
+      <canvas id="cameraCanvas" style="width: 100vw; height: 100vh; border: none; display: block; margin: 0;"></canvas>
       <div class="frame">
         <div class="div">
           <div class="frame-wrapper">
@@ -349,6 +364,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script src="../js/operador.js"></script>
+    <script src="../js/mapa.js"></script>
     <script src="../js/conexion-robot.js"></script>
     <script src="../js/control-acceso.js" data-roles-restringidos=""></script>
   </body>

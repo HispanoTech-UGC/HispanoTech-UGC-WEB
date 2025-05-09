@@ -1,95 +1,50 @@
 document.addEventListener('DOMContentLoaded', event => {
-    console.log("entro en la pagina")
+    console.log("Entrando en la página");
     event.preventDefault();
 
     let canvasMap = document.getElementById("map");
 
     data = {
-        // ros connection
         ros: null,
-        rosbridge_address: 'ws://127.0.0.1:9090/',
+        rosbridge_address: 'ws://192.168.0.95:9090', // Dirección IP del robot
         connected: false,
-        // service information 
-	    service_busy: false, 
-	    service_response: ''
-    }
-
-    let cmdVelTopic; // <------- Instancia única de movimiento
+        service_busy: false,
+        service_response: ''
+    };
 
     connect();
 
-    function connect(){
-	      console.log("Clic en connect")
-          //console.log(direccionBridge)
+    function connect() {
+        console.log("Intentando conectar a ROSBridge en:", data.rosbridge_address);
+        data.ros = new ROSLIB.Ros({ url: data.rosbridge_address });
 
-	      data.ros = new ROSLIB.Ros({ url: data.rosbridge_address })
-
-        // Define callbacks
         data.ros.on("connection", () => {
-            data.connected = true
-            /*estado.textContent = 'Conectado';
-            estado.style.background = 'green';*/
-            //Subscribe to the map topic
-            console.log("Conexión ROSBridge correcta")
+            console.log("Conectado a ROSBridge en:", data.rosbridge_address);
+            data.connected = true;
 
-            // Suscribirse al tópico del mapa para actualizar dinámicamente
-            const mapTopic = new ROSLIB.Topic({
-                ros: data.ros,
-                name: '/map',
-                messageType: 'nav_msgs/OccupancyGrid'
-            });
-
-            mapTopic.subscribe((message) => {
-                console.log('Datos del mapa recibidos:', message);
-                console.log('Posición del robot antes de dibujar:', data.position);
-                draw_occupancy_grid(canvasMap, message, data.position);
-            });
-
-            // Suscribirse al tópico de odometría para actualizar la posición del robot
-            const odomTopic = new ROSLIB.Topic({
-                ros: data.ros,
-                name: '/odom',
-                messageType: 'nav_msgs/Odometry'
-            });
-
-            odomTopic.subscribe((message) => {
-                data.position = message.pose.pose.position;
-                console.log('Posición del robot actualizada:', data.position);
-
-                // Llamar a la función updateRobotPosition del archivo mapa.js
-                updateRobotPosition(data.position.x, data.position.y);
-            });
-
-            // Topic cmd_vel
-            cmdVelTopic = new ROSLIB.Topic({
-                ros: data.ros,
-                name: '/cmd_vel',
-                messageType: '/geometry_msgs/msg/Twist'
-            });
-
+            // Actualiza el feed de la cámara después de la conexión
             updateCameraFeed();
-            console.log("Conexion con ROSBridge correcta")
-            // suscribeBattery(); <-- No está el topic creado
-            // suscribeWifi(); <-- No está el topic creado
-        })
+            console.log("Conexión ROSBridge exitosa");
+        });
 
         data.ros.on("error", (error) => {
-            console.log("Error en ROSBridge: ", error)
-        })
+            console.error("Error al conectar con ROSBridge:", error);
+            console.warn("Verifica que el servidor ROSBridge esté corriendo en la IP:", data.rosbridge_address);
+        });
+
         data.ros.on("close", () => {
-            data.connected = false
-            console.log("Conexion con ROSBridge cerrada")
-        })
+            console.log("Conexión a ROSBridge cerrada.");
+            data.connected = false;
+        });
     }
 
     function disconnect(){
-	      data.ros.close()
-	      data.connected = false
-          estado.textContent = 'Desconectado';
-          estado.style.background = 'red';
-        console.log('Clic en botón de desconexión')
+        data.ros.close();
+        data.connected = false;
+        estado.textContent = 'Desconectado';
+        estado.style.background = 'red';
+        console.log('Clic en botón de desconexión');
     }
-
 
     function publishMovement(linearX, angularZ) {
         if (!cmdVelTopic) {
@@ -97,20 +52,19 @@ document.addEventListener('DOMContentLoaded', event => {
             return;
         }
         const msg = new ROSLIB.Message({
-          linear:  { x: linearX, y: 0, z: 0 },
-          angular: { x: 0, y: 0, z: angularZ }
+            linear: { x: linearX, y: 0, z: 0 },
+            angular: { x: 0, y: 0, z: angularZ }
         });
         cmdVelTopic.publish(msg);
         subscribe(msg);
-        //suscribeOdom();
-      }
+    }
 
-    // Linea Recta
+    // Movimiento recto
     function move() {
         publishMovement(0.1, 0.0);
     }
 
-    // Para el robot
+    // Detener el robot
     function stop() {
         publishMovement(0.0, 0.0);
     }
@@ -125,7 +79,7 @@ document.addEventListener('DOMContentLoaded', event => {
         publishMovement(0.0, 2.0);
     }
 
-    // Agregar control con el teclado (WASD)
+    // Control con el teclado (WASD)
     document.addEventListener("keydown", (event) => {
         switch (event.key.toLowerCase()) {
             case "w": move(); break;
@@ -140,56 +94,64 @@ document.addEventListener('DOMContentLoaded', event => {
             ros: data.ros,
             name: '/odom',
             messageType: 'nav_msgs/msg/Odometry'
-        })
-        
+        });
+
         topic.subscribe((message) => {
-            data.position = message.pose.pose.position
-                document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
-                document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2)
-        })
+            data.position = message.pose.pose.position;
+            document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2);
+            document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2);
+        });
     }
 
-    /*function subscribeService(){
-        // define the service to be called
-       let service = new ROSLIB.Service({
-          ros : data.ros,
-          name : '/move',
-          serviceType : 'rossrv/Type',
-        })
-        // define the request
-        let request = new ROSLIB.ServiceRequest({
-          param1 : 123,
-          param2 : 'example of parameter',
-        })
-        // define a callback
-        service.callService(request, (result) => {
-          console.log('This is the response of the service ')
-          console.log(result)
-
-        }, (error) => {
-          console.error(error)
-        }) 
-    }*/
-
-        // Versión usando librería MJPEGCANVAS (requiere cargarla)
-    /*function setCamera(){
-        console.log("setting the camera")
-    var viewer = new MJPEGCANVAS.Viewer({
-        divID : 'mjpeg',
-        host : 'localhost',
-        width : 640,
-        height : 480,
-        topic : '/camera/image_raw',
-        interval : 200
-        })
-    }*/
-
-    // otro ejemplo de función (simple para prueba inicial)
+    // Función para mostrar el feed de la cámara en la página
     function updateCameraFeed() {
-    const img = document.getElementById("cameraFeed");
-    //const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
-    img.src = `http://127.0.0.1:8080/stream?topic=/camera/image_raw`;
-    //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
-    }
+        const canvas = document.getElementById("cameraCanvas");
 
+        if (!canvas) {
+            console.error("Elemento <canvas> con id 'cameraCanvas' no encontrado en el DOM.");
+            return;
+        }
+
+        const context = canvas.getContext("2d");
+
+        // Verificar la conexión al topic /image
+        const cameraTopic = new ROSLIB.Topic({
+            ros: data.ros,
+            name: '/image',
+            messageType: 'sensor_msgs/msg/Image',
+            qos: {
+                reliability: ROSLIB.QOS_POLICY_RELIABILITY_BEST_EFFORT,
+                durability: ROSLIB.QOS_POLICY_DURABILITY_VOLATILE
+            }
+        });
+
+        cameraTopic.subscribe((message) => {
+            //console.log("Mensaje recibido del topic /image:", message);
+
+            try {
+                // Decodificar los datos de la imagen
+                const binaryData = atob(message.data);
+                const bgrBuffer = new Uint8ClampedArray(binaryData.length);
+
+                for (let i = 0; i < binaryData.length; i++) {
+                    bgrBuffer[i] = binaryData.charCodeAt(i);
+                }
+
+                // Convertir de BGR a RGBA
+                const rgbaBuffer = new Uint8ClampedArray(message.width * message.height * 4);
+                for (let i = 0, j = 0; i < bgrBuffer.length; i += 3, j += 4) {
+                    rgbaBuffer[j] = bgrBuffer[i + 2];     // R
+                    rgbaBuffer[j + 1] = bgrBuffer[i + 1]; // G
+                    rgbaBuffer[j + 2] = bgrBuffer[i];     // B
+                    rgbaBuffer[j + 3] = 255;              // A (opacidad)
+                }
+
+                // Crear ImageData y dibujar en el canvas
+                const imageData = new ImageData(rgbaBuffer, message.width, message.height);
+                context.putImageData(imageData, 0, 0);
+            } catch (error) {
+                console.error("Error al procesar los datos de la imagen:", error);
+            }
+        });
+    }
 });
