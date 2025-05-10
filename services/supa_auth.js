@@ -1,5 +1,4 @@
 import { supabase } from '../config/supabaseClient.js';
-import CryptoJS      from 'crypto-js';          // ← ya lo estabas usando
 
 export async function loginUsuario(numPlaca, password) {
   // 1) Buscamos el usuario: si no hay fila, data === null
