@@ -1,4 +1,5 @@
 import {deleteUser, editUser, getCuerpoId, getUserByPlaca, getCuerpos, getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
+import {getInformesCuerpo} from "../services/supa_informs.js";
 const user = JSON.parse(localStorage.getItem('usuario'));
 const textoHeader = document.getElementById('texto-bienvenida');
 textoHeader.textContent = 'Bienvenido '+user.num_placa;
@@ -261,7 +262,7 @@ function asignarFuncionalidadBotones(){
                 opcion = 'registrar-usuarios';
                 break;
             case 2:
-                opcion = 'administrar-informes';
+                opcion = 'informes';
                 break;
             default:
                 opcion = 'opcion-desconocida';
@@ -283,7 +284,7 @@ function asignarFuncionalidadBotones(){
                 opcion = 'registrar-usuarios';
                 break;
             case 2:
-                opcion = 'administrar-informes';
+                opcion = 'informes';
                 break;
             default:
                 opcion = 'opcion-desconocida';
@@ -321,5 +322,76 @@ document.getElementById('placa').addEventListener('input', (e) => {
         }
     }, 400);  // Espera 400ms desde el último input
 });
+
+
+async function displayInformesCuerpo() {
+    const placa = user.num_placa;
+    const abreviatura = placa.match(/^[A-Za-z]+/)[0];
+    let result = await getInformesCuerpo(abreviatura);
+    const tbody = document.getElementById('tabla-informes');
+    tbody.innerHTML = '';
+    //const cuerpoTexto = document.getElementById('cuerpo-titulo');
+    for (const informe of result) {
+        console.log(informe)
+        const tr = document.createElement("tr");
+        // Espera el cuerpo de la base de datos
+        //const cuerpo = await getCuerpoId(informe.cuerpo);  // Suponiendo que 'user.rol' es el id para el cuerpo
+        /*cuerpoTexto.textContent = 'Informes de '+cuerpo;
+        console.log(cuerpo);  // Puedes verificar el resultado de getCuerpoId*/
+
+        // Crear celdas para la fila
+        const tdInformeId = document.createElement("td");
+        tdInformeId.textContent = informe.informe_id;
+
+        const tdPlaca = document.createElement("td");
+        tdPlaca.textContent = informe.num_placa;
+
+
+        const tdRobot = document.createElement("td");
+        tdRobot.textContent = informe.robot_id;
+
+        const tdInicio = document.createElement("td");
+        tdInicio.textContent = informe.fecha_ini;
+
+        const tdFinal = document.createElement("td");
+        tdFinal.textContent = informe.fecha_fin;
+
+        // Crear la celda de acciones
+        const tdAcciones = document.createElement("td");
+        tdAcciones.classList.add("text-end");
+
+        // Crear los botones de "Editar" y "Eliminar"
+        const btnVerInforme = document.createElement("button");
+        btnVerInforme.classList.add("btn", "btn-sm", "btn-outline-primary", "me-1");
+        btnVerInforme.innerHTML = '<i class="bi bi-eye"></i>';
+
+        // Asignar el evento de clic al botón de "Editar"
+        btnVerInforme.addEventListener("click", async () => await activarVerInforme(informe));
+
+        const btnEliminar = document.createElement("button");
+        btnEliminar.classList.add("btn", "btn-sm", "btn-outline-danger");
+        btnEliminar.innerHTML = '<i class="bi bi-person-x"></i>';
+
+
+        // Asignar el evento de clic al botón de "Eliminar"
+        //btnEliminar.addEventListener("click", () => borrarUser(user.num_placa));
+
+        // Añadir los botones a la celda de acciones
+        tdAcciones.appendChild(btnVerInforme);
+        tdAcciones.appendChild(btnEliminar);
+
+        // Añadir las celdas a la fila
+        tr.appendChild(tdInformeId);
+        tr.appendChild(tdPlaca);
+        tr.appendChild(tdRobot);
+        tr.appendChild(tdInicio);
+        tr.appendChild(tdFinal);
+        tr.appendChild(tdAcciones);
+
+        // Agregar la fila al cuerpo de la tabla
+        tbody.appendChild(tr);
+    }
+}
+
 
   
