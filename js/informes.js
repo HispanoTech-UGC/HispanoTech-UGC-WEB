@@ -143,7 +143,7 @@ export function cerrarInforme() {
 
 export function editarInforme(boton, parte) {
     const apartado = document.getElementById(parte);
-    const id = document.getElementById('id-informe').value;
+    // const id = document.getElementById('id-informe').value;
     const divBtns = document.getElementById('botones-' + parte);
     boton.style.display = 'none';
 

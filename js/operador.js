@@ -1,7 +1,6 @@
 //'giro-dirección-AD'
-import { getMisInformes, getInformesImages, getIncidenteByInforme, actualizarIncidente, actualizarInforme } from "../services/supa_informs.js";
-import {cerrarInforme, displayInformes, editarInforme, guardarIncidente, guardarInforme} from "./informes.js";
-//import {editUser, getCuerpoId} from "../services/supa_admin";
+import { getMisInformes } from "../services/supa_informs.js";
+import { displayInformes } from "./informes.js";
 asignarFuncionalidadBotones();
 
 const user = JSON.parse(localStorage.getItem('usuario'));
@@ -118,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function opcionSeleccionadaMenu(target){
     const contenido = document.getElementById(target);
     const menu = document.getElementById('menu');
-    const retro = document.getElementById('retroceder');
+    /*const retro = document.getElementById('retroceder');*/
 
     contenido.style.display = 'block';
     contenido.style.height = '100vh';

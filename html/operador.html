@@ -79,7 +79,7 @@
         <div id="popup" style="display: none;" class="popup-overlay">
           <div class="popup-box">
             <h3>Conectar</h3>
-            <input type="text" value="ws://127.0.0.1:9090/" id="popupInput" placeholder="Ingresa algo..." />
+            <label for="popupInput"></label><input type="text" value="ws://127.0.0.1:9090/" id="popupInput" placeholder="Ingresa algo..." />
             <div class="popup-buttons">
               <button onclick="onConectar()">Conectar</button>
               <button onclick="cerrarPopup()">Cancelar</button>
@@ -127,7 +127,7 @@
                 <li>Atracador 3 (A3) – Secuaz</li>
               </ul>
             </div>
-            <img class="line" src="../assets/imágenes/iconos/Line%202.svg" />
+            <img class="line" src="../assets/imágenes/iconos/Line%202.svg"  alt="linea"/>
             <div class="contenedor-c">
               <div class="negociacin">
                 <div class="dilogo">
@@ -268,7 +268,7 @@
                 </div>
               </div>
             </div>
-            <img class="line" src="../assets/imágenes/iconos/Line%203.svg" />
+            <img class="line" src="../assets/imágenes/iconos/Line%203.svg"  alt="linea"/>
             <div class="contadores">
               <div class="contador">
                 <div class="frame-6">
@@ -278,10 +278,10 @@
                 <div class="frame-7">
                   <div class="img">
                     <div class="overlap-group-2">
-                      <img class="img" src="../assets/imágenes/iconos/plus.svg" />
+                      <img class="img" src="../assets/imágenes/iconos/plus.svg"  alt="+"/>
                     </div>
                   </div>
-                  <img class="img" src="../assets/imágenes/iconos/minus.svg" />
+                  <img class="img" src="../assets/imágenes/iconos/minus.svg"  alt="-"/>
                 </div>
               </div>
               <div class="contador">
@@ -292,10 +292,10 @@
                 <div class="frame-7">
                   <div class="img">
                     <div class="overlap-group-2">
-                      <img class="img" src="../assets/imágenes/iconos/plus.svg" />
+                      <img class="img" src="../assets/imágenes/iconos/plus.svg"  alt="+"/>
                     </div>
                   </div>
-                  <img class="img" src="../assets/imágenes/iconos/minus.svg" />
+                  <img class="img" src="../assets/imágenes/iconos/minus.svg"  alt="-"/>
                 </div>
               </div>
             </div>
@@ -333,11 +333,11 @@
               <div class="centro"><div class="text-wrapper-9">0º</div></div>
               <div class="group-3">
                 <div class="group-4">
-                  <img class="vector-4" src="../assets/imágenes/iconos/Vector16.svg" />
+                  <img class="vector-4" src="../assets/imágenes/iconos/Vector16.svg"  alt="vector"/>
                   <div class="overlap-3">
                     <div class="ellipse"></div>
                     <div class="ellipse-2"></div>
-                    <img class="line-2" src="../assets/imágenes/iconos/Vector15.svg" />
+                    <img class="line-2" src="../assets/imágenes/iconos/Vector15.svg"  alt="vector"/>
                     <div class="AWSD-wrapper">
                       <div class="AWSD">
                         <button class="WASD W">
@@ -349,8 +349,7 @@
                               </button>
                                                         <div class="flecha">
                             <div class="girar">
-                              <img class="direccion" src="../assets/imágenes/iconos/dirección.svg">
-                              </img>
+                              <img class="direccion" src="../assets/imágenes/iconos/dirección.svg" alt="dirección">
                               <div class="frame-13">
                                 <div class="overlap-group-wrapper">
                                   <div class="overlap-group-3">
@@ -372,7 +371,7 @@
                       </div>
                     </div>
                   </div>
-                  <img class="vector-5" src="../assets/imágenes/iconos/Vector15.svg" />
+                  <img class="vector-5" src="../assets/imágenes/iconos/Vector15.svg"  alt="vector"/>
                 </div>
               </div>
             </div>
@@ -472,7 +471,7 @@
   <script type="module" src="../js/reloj.js"></script>
   <script>
     const direccion = localStorage.getItem("robot");
-    if(direccion && direccion != ''){
+    if(direccion && direccion !== ''){
       cerrarPopup();
       connect();
       document.getElementById('desconectar').style.display = 'block';
@@ -492,7 +491,6 @@
       let conn = await connect();
       console.log(conn)
       if(conn === true){
-        conn;
         document.getElementById('desconectar').style.display = 'block';
         await setPath();
       }

@@ -4,9 +4,9 @@ function drawMapAndRobot() {
     if (!mapInfo || !mapData) return;
     let canvas = document.getElementById("map");
     let ctx = canvas.getContext("2d");
-    
-    let mapInfo = null;
-    let mapData = null;
+
+    let mapInfo;
+    let mapData;
     let robotPosition = {x: 0, y: 0};
     // Ajustar tamaño canvas
     canvas.width = mapInfo.width;

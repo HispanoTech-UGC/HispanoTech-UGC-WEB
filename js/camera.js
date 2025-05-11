@@ -32,7 +32,7 @@ export function removePath(){
     const informe_id = localStorage.getItem('informe');
     path = null
     localStorage.removeItem('path');
-    finalizarInforme(informe_id);
+    finalizarInforme(informe_id).then(r => r);
     alert('Path eliminado')
 }
 

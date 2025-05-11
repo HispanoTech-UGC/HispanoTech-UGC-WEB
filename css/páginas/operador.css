@@ -18,7 +18,7 @@ html, body {
     height: 92px;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 14px;
+    padding: 0 14px;
     position: relative;
     background-color: var(--color-blanco);
   }
@@ -67,7 +67,7 @@ html, body {
     height: 92px;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 14px;
+    padding: 0 14px;
     position: relative;
   }
   header .placa{
@@ -103,13 +103,13 @@ html, body {
   }
   
   .login-button{
-  display: inline-flexbox;
+  display: flex;
+  flex-direction: row;
   width:50px;
   height: 50px;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: relative;
   flex: 0 0 auto;
   background-color: var(--color-negro);
   border-radius: 100px;
@@ -170,7 +170,7 @@ html, body {
   display: inline-flex;
   flex-direction: column;
   width: 220px;
-  height: 0px;
+  height: 0;
   align-items: center;
   gap: 10px;
   padding: 10px;
@@ -214,11 +214,11 @@ html, body {
   height: 14px;
   top: 0;
   left: 0;
-  font-family: "Quicksand-Medium", Helvetica;
+  font-family: "Quicksand-Medium", Helvetica, serif;
   font-weight: 500;
   color: var(--color-blanco);
   font-size: 11px;
-  line-height: 16.0px;
+  line-height: 16px;
   white-space: nowrap;
   text-align: center;
   letter-spacing: 0;
@@ -261,12 +261,12 @@ html, body {
   position: relative;
   width: fit-content;
   margin-top: -1.00px;
-  font-family: "Quicksand-SemiBold", Helvetica;
+  font-family: "Quicksand-SemiBold", Helvetica, serif;
   font-weight: 600;
   color: var(--color-blanco);
   font-size: 14px;
   letter-spacing: 0;
-  line-height: 20.3px;
+  line-height: 20px;
   white-space: nowrap;
 }
 
@@ -377,11 +377,11 @@ html, body {
   position: relative;
   width: fit-content;
   margin-top: -1.00px;
-  font-family: "Quicksand-Regular", Helvetica;
+  font-family: "Quicksand-Regular", Helvetica, serif;
   font-weight: 400;
   font-size: 18px;
   letter-spacing: 0;
-  line-height: 26.1px;
+  line-height: 26px;
   white-space: nowrap;
 }
 
@@ -389,12 +389,12 @@ html, body {
   flex: 1;
   position: relative;
   margin-top: -1.00px;
-  font-family: var(--body-medium);
+  font-family: var(--body-medium-font-family);
   font-weight: 400;
   color: var(--color-blanco);
   font-size: 2vh;
   letter-spacing: 0;
-  line-height: 26.1px;
+  line-height: 26px;
   width: 100%;
 }
 
@@ -403,11 +403,11 @@ html, body {
   position: relative;
   width: fit-content;
   margin-top: -1.00px;
-  font-family: "Quicksand-Regular", Helvetica;
+  font-family: "Quicksand-Regular", Helvetica, serif;
   font-weight: 400;
   font-size: 18px;
   letter-spacing: 0;
-  line-height: 26.1px;
+  line-height: 26px;
   white-space: nowrap;
 }
 
@@ -424,12 +424,12 @@ html, body {
   white-space: nowrap;
   position: relative;
   margin-top: -1.00px;
-  font-family: "Quicksand-Regular", Helvetica;
+  font-family: "Quicksand-Regular", Helvetica, serif;
   font-weight: 400;
   color: var(--color-blanco);
   font-size: 18px;
   letter-spacing: 0;
-  line-height: 26.1px;
+  line-height: 26px;
 }
 
 .body .contadores {
@@ -577,8 +577,8 @@ html, body {
   position: absolute;
   opacity: 0.5;
 
-  -webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);
-  mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);
+  /*-webkit-mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%);*/
 }
 
 
@@ -610,10 +610,7 @@ html, body {
 
 .body .text-wrapper-6 {
   width: fit-content;
-  margin-top: -2.50px;
-  margin-bottom: -0.50px;
-  margin-left: -5.50px;
-  margin-right: -5.50px;
+  margin: -2.50px -5.50px -0.50px;
   color: var(--color-body);
   white-space: nowrap;
   position: relative;
@@ -650,7 +647,7 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 0px 10px;
+  padding: 0 10px;
   position: relative;
 }
 
@@ -710,7 +707,7 @@ html, body {
   height: 23px;
   align-items: center;
   justify-content: center;
-  padding: 0px 16px;
+  padding: 0 16px;
   position: relative;
   align-self: stretch;
   width: 100%;
@@ -730,7 +727,7 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 0px 10px;
+  padding: 0 10px;
   position: relative;
   margin-right: -8.00px;
 }
@@ -956,8 +953,7 @@ html, body {
   margin-right: -1.00px;
   background-color: #ffffff;
   border-radius: 3px;
-  border: 1px solid;
-  border-color: #2f2f36;
+  border: 1px solid #2f2f36;
 }
 
 .body .ellipse-4 {
@@ -969,8 +965,7 @@ html, body {
   margin-right: -1.00px;
   background-color: #ffffff;
   border-radius: 3px;
-  border: 1px solid;
-  border-color: #2f2f36;
+  border: 1px solid #2f2f36;
 }
 
 .body .frame-13 {
@@ -1049,10 +1044,7 @@ html, body {
 
 .body .text-wrapper-11 {
   width: fit-content;
-  margin-top: -2.50px;
-  margin-bottom: -0.50px;
-  margin-left: -2.50px;
-  margin-right: -2.50px;
+  margin: -2.50px -2.50px -0.50px;
   color: var(--color-body);
   white-space: nowrap;
   position: relative;
@@ -1096,7 +1088,6 @@ ul.intervinientes-list {
     right: 1px;
     font-family: var(--micro-font-family);
     font-size: var(--micro-font-size);
-    font-family: var(--micro-font-family);
 }
 
 .direccion {

@@ -1,4 +1,4 @@
-import {deleteUser, editUser, getCuerpoId, getUserByPlaca, getCuerpos, getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
+import {deleteUser, editUser, getCuerpoId, getUserByPlaca, /*getCuerpos ,*/ getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
 import {getInformesCuerpo} from "../services/supa_informs.js";
 import {displayInformes} from "./informes.js";
 const user = JSON.parse(localStorage.getItem('usuario'));
@@ -91,7 +91,7 @@ async function borrarUser(placa) {
     }
   }
 
-async function getAllCuerpos() {
+/*async function getAllCuerpos() {
     // Obtener los cuerpos desde la base de datos
     const cuerpos = await getCuerpos();  // Supongo que esta función devuelve los datos de cuerpos
     
@@ -127,7 +127,7 @@ async function getAllCuerpos() {
       await displayUsers();
     }
   });
-}
+}*/
 
 
 async function activarEdicionUsuario(user, tr) {
@@ -190,7 +190,7 @@ async function activarEdicionUsuario(user, tr) {
         const result = await editUser(updatedUser);
         if (result.success) {
             alert("Usuario actualizado correctamente.");
-            filtrar(); // Refrescar la tabla
+            await filtrar(); // Refrescar la tabla
         } else {
             alert(result.message || "Error al actualizar.");
         }
