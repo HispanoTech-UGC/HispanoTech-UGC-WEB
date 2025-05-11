@@ -52,8 +52,24 @@ document.addEventListener('DOMContentLoaded', event => {
 
             updateCameraFeed();
             console.log("Conexion con ROSBridge correcta")
-            // suscribeBattery(); <-- No está el topic creado
-            // suscribeWifi(); <-- No está el topic creado
+            // Comprueba qué topics hay disponibles
+            data.ros.getTopics(topicsInfo => {
+                const available = topicsInfo.topics;
+                if (available.includes('/battery_state')) {
+                    subscribeBattery();
+                } else {
+                    alert('El topic /battery_state no está creado aún.');
+                }
+                if (available.includes('/wifi_strength')) {
+                    subscribeWifi();
+                } else {
+                    alert('El topic /wifi_strength no está creado aún.');
+                }
+
+                // --------------
+                // ESTOS TÓPICS NO ESTÁN CREADOS
+                // --------------
+            });
         })
 
         data.ros.on("error", (error) => {
@@ -184,4 +200,37 @@ document.addEventListener('DOMContentLoaded', event => {
     //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
     }
 
+    // Sólo se notificará una vez por sesión
+    data.batteryLowNotified = false;
+    data.wifiLowNotified = false;
+
+    function subscribeBattery() {
+        let batteryTopic = new ROSLIB.Topic({
+            ros: data.ros,
+            name: '/battery_state',
+            messageType: 'sensor_msgs/msg/BatteryState'
+        });
+        batteryTopic.subscribe(msg => {
+            const pct = msg.percentage; // 0.0 … 1.0
+            if (pct < 0.2 && !data.batteryLowNotified) {
+                data.batteryLowNotified = true;
+                alert(`Nivel de batería bajo: ${(pct * 100).toFixed(0)}%`);
+            }
+        });
+    }
+
+    function subscribeWifi() {
+        let wifiTopic = new ROSLIB.Topic({
+            ros: data.ros,
+            name: '/wifi_strength',
+            messageType: 'std_msgs/msg/Float32'
+        });
+        wifiTopic.subscribe(msg => {
+            const level = msg.data; // por ejemplo, -80 dBm
+            if (level < -70 && !data.wifiLowNotified) {
+                data.wifiLowNotified = true;
+                alert(`Señal Wi-Fi débil: ${level.toFixed(0)} dBm`);
+            }
+        });
+    }
 });
