@@ -1,10 +1,12 @@
 //'giro-dirección-AD'
-import {getCuerpoId, getUsers} from "../services/supa_admin";
-import { getMisInformes } from "../services/supa_informs";
+import { getMisInformes } from "../services/supa_informs.js";
+import { displayInformes } from "./informes.js";
+asignarFuncionalidadBotones();
 
+const user = JSON.parse(localStorage.getItem('usuario'));
 const direccionIcon = document.querySelector('.direccion');
 let currentRotation = 0;
-
+const placa = user.num_placa;
 document.addEventListener('keydown', (e) => {
     if (e.key === 'a' || e.key === 'A') {
     currentRotation -= 15;
@@ -110,30 +112,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
-
-
-
-
-
-
-
-
 // menu PDA operador
-
-asignarFuncionalidadBotones();
 
 async function opcionSeleccionadaMenu(target){
     const contenido = document.getElementById(target);
     const menu = document.getElementById('menu');
-    const retro = document.getElementById('retroceder');
+    /*const retro = document.getElementById('retroceder');*/
 
     contenido.style.display = 'block';
     contenido.style.height = '100vh';
     menu.style.display = 'none';
 
-    if (target==='robot'){
+    if (target==='mis-informes'){
+        contenido.style.height = 'auto';
         //await filtrar();
         //getAllCuerpos();
+        let result = await getMisInformes(placa);
+        displayInformes(result);
     }
 }
 
@@ -186,64 +181,4 @@ function asignarFuncionalidadBotones(){
             retroceder(opcion);
         });
     });
-}
-
-
-
-async function displayMisInformes(result) {
-    if(!result){result = await getMisInformes();}
-    
-    const tbody = document.getElementById('tabla-informes');
-    tbody.innerHTML = '';
-    const cuerpoTexto = document.getElementById('cuerpo-titulo');
-    for (const user of result) {
-        const tr = document.createElement("tr");
-        // Espera el cuerpo de la base de datos
-        const cuerpo = await getCuerpoId(user.cuerpo);  // Suponiendo que 'user.rol' es el id para el cuerpo
-        cuerpoTexto.textContent = 'Informes de '+cuerpo;
-        console.log(cuerpo);  // Puedes verificar el resultado de getCuerpoId
-
-        // Crear celdas para la fila
-        const tdPlaca = document.createElement("td");
-        tdPlaca.textContent = user.num_placa;
-
-        const tdRol = document.createElement("td");
-        tdRol.textContent = renderRol(user.rol);
-
-        const tdCuerpo = document.createElement("td");
-        tdCuerpo.textContent = cuerpo ? cuerpo : "N/A";  // Mostrar el cuerpo o "N/A" si no existe
-
-        // Crear la celda de acciones
-        const tdAcciones = document.createElement("td");
-        tdAcciones.classList.add("text-end");
-
-        // Crear los botones de "Editar" y "Eliminar"
-        const btnEditar = document.createElement("button");
-        btnEditar.classList.add("btn", "btn-sm", "btn-outline-primary", "me-1");
-        btnEditar.innerHTML = '<i class="bi bi-pencil"></i>';
-
-        // Asignar el evento de clic al botón de "Editar"
-        btnEditar.addEventListener("click", () => activarEdicionUsuario(user, tr));
-
-        const btnEliminar = document.createElement("button");
-        btnEliminar.classList.add("btn", "btn-sm", "btn-outline-danger");
-        btnEliminar.innerHTML = '<i class="bi bi-person-x"></i>';
-
-
-        // Asignar el evento de clic al botón de "Eliminar"
-        btnEliminar.addEventListener("click", () => borrarUser(user.num_placa));
-
-        // Añadir los botones a la celda de acciones
-        tdAcciones.appendChild(btnEditar);
-        tdAcciones.appendChild(btnEliminar);
-
-        // Añadir las celdas a la fila
-        tr.appendChild(tdPlaca);
-        tr.appendChild(tdRol);
-        tr.appendChild(tdCuerpo);
-        tr.appendChild(tdAcciones);
-
-        // Agregar la fila al cuerpo de la tabla
-        tbody.appendChild(tr);
-    }
 }

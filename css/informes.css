@@ -1,0 +1,130 @@
+#informe {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background: white;
+    width: 80vw;
+    height: 80vh;
+    padding: 2%;
+    z-index: 1030;
+    animation: zoom-in 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes zoom-in {
+    0% {
+        transform: scale(0.33);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes zoom-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.33);
+        opacity: 0;
+    }
+}
+
+#informe.zoom-out {
+    animation: zoom-out 0.5s ease forwards;
+}
+
+#informe form{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+    gap: 1rem; /* Espacio entre los elementos */
+}
+
+#informe #cabecera-informe{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#informe #datos-incidente {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;         /* Permite que los elementos bajen en pantalla pequeña */
+    gap: 1rem;               /* Espaciado entre elementos */
+    justify-content: center;
+}
+
+#informe #datos-informe {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;         /* Permite que los elementos bajen en pantalla pequeña */
+    gap: 1rem;               /* Espaciado entre elementos */
+    justify-content: center;
+}
+
+#informe form div{
+    display: flex;
+    flex-direction: column;
+    margin-right: 1vw;
+    width: 100%;
+}
+
+#informe form div input{
+    width: 100%;
+}
+
+#informe form div label{
+    font-size: 15px;
+}
+
+#informe #close-informe{
+    width: fit-content;
+    align-self: start;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#informe #slider{
+    height: 40vh;
+    width: 70vh;
+}
+
+@media (max-width: 1015px) {
+    #informe{
+        width: 90vw;
+        height: 90vh;
+    }
+}
+
+@media (max-width: 780px){
+    tbody{
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 661px){
+    h3{
+        font-size: 18px;
+    }
+    #informe #datos-incidente {
+        display: flex;
+        flex-direction: row;
+    }
+    #informe #datos-incidente form{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas iguales */
+        gap: 1rem; /* Espacio entre los elementos */
+    }
+    #informe #datos-incidente form div{
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #informe #datos-incidente form input{
+    }
+}
