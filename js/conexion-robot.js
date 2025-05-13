@@ -1,13 +1,13 @@
-document.addEventListener('DOMContentLoaded', event => {
     console.log("entro en la pagina")
-    event.preventDefault();
+    //event.preventDefault();
 
     let canvasMap = document.getElementById("map");
+    let popupInput = document.getElementById("popupInput");
 
     data = {
         // ros connection
         ros: null,
-        rosbridge_address: 'ws://127.0.0.1:9090/',
+        rosbridge_address: popupInput.value,
         connected: false,
         // service information 
 	    service_busy: false, 
@@ -16,221 +16,232 @@ document.addEventListener('DOMContentLoaded', event => {
 
     let cmdVelTopic; // <------- Instancia única de movimiento
 
-    connect();
 
-    function connect(){
-	      console.log("Clic en connect")
-          //console.log(direccionBridge)
-
-	      data.ros = new ROSLIB.Ros({ url: data.rosbridge_address })
-
-        // Define callbacks
-        data.ros.on("connection", () => {
-            data.connected = true
-            /*estado.textContent = 'Conectado';
-            estado.style.background = 'green';*/
-            //Subscribe to the map topic
-            console.log("Conexión ROSBridge correcta")
-
-            var mapTopic = new ROSLIB.Topic({
+    async function connect() {
+        console.log("Clic en connect");
+      
+        return new Promise((resolve, reject) => {
+            data.ros = new ROSLIB.Ros({ url: data.rosbridge_address });
+      
+            data.ros.on("connection", () => {
+                data.connected = true;
+                localStorage.setItem("robot", popupInput.value);
+                console.log("Conexión ROSBridge correcta");
+        
+                // Suscribirse a /map
+                var mapTopic = new ROSLIB.Topic({
                 ros: data.ros,
                 name: '/map',
                 messageType: 'nav_msgs/msg/OccupancyGrid'
-            });
-
-            mapTopic.subscribe((message) => {
-                console.log('suscrito a map')
+                });
+        
+                mapTopic.subscribe((message) => {
+                console.log('Suscrito a /map');
                 draw_occupancy_grid(canvasMap, message, 0);
-            });
-
-            // Topic cmd_vel
-            cmdVelTopic = new ROSLIB.Topic({
+                });
+        
+                // Publicador cmd_vel
+                cmdVelTopic = new ROSLIB.Topic({
                 ros: data.ros,
                 name: '/cmd_vel',
                 messageType: '/geometry_msgs/msg/Twist'
-            });
-
-            updateCameraFeed();
-            console.log("Conexion con ROSBridge correcta")
-            // Comprueba qué topics hay disponibles
-            data.ros.getTopics(topicsInfo => {
-                const available = topicsInfo.topics;
-                if (available.includes('/battery_state')) {
-                    subscribeBattery();
-                } else {
-                    alert('El topic /battery_state no está creado aún.');
-                }
-                if (available.includes('/wifi_strength')) {
-                    subscribeWifi();
-                } else {
-                    alert('El topic /wifi_strength no está creado aún.');
-                }
-
-                // --------------
-                // ESTOS TÓPICS NO ESTÁN CREADOS
-                // --------------
-            });
-        })
-
-        data.ros.on("error", (error) => {
-            console.log("Error en ROSBridge: ", error)
-            alert("¡Error al conectar con el robot!\nComprueba que ROSBridge esté levantado en " + data.rosbridge_address);
-        })
-        data.ros.on("close", () => {
-            data.connected = false
-            console.log("Conexion con ROSBridge cerrada")
-            alert("La conexión con el robot se ha cerrado.");
-        })
-    }
-
-    function disconnect(){
-	      data.ros.close()
-	      data.connected = false
-          estado.textContent = 'Desconectado';
-          estado.style.background = 'red';
-        console.log('Clic en botón de desconexión')
-    }
-
-
-    function publishMovement(linearX, angularZ) {
-        if (!cmdVelTopic) {
-            console.warn("cmdVelTopic aún no inicializado");
-            return;
-        }
-        const msg = new ROSLIB.Message({
-          linear:  { x: linearX, y: 0, z: 0 },
-          angular: { x: 0, y: 0, z: angularZ }
-        });
-        cmdVelTopic.publish(msg);
-        subscribe(msg);
-        //suscribeOdom();
-      }
-
-    // Linea Recta Delante
-    function move() {
-        publishMovement(0.1, 0.0);
-    }
-
-    // Linea Recta Atras
-    function back() {
-        publishMovement(-0.1, 0.0);
-    }
-
-    // Para el robot
-    function stop() {
-        publishMovement(0.0, 0.0);
-    }
-    
-
-    // Sentido horario
-    function right() {
-        publishMovement(0.0, -0.2);
-    }
-
-    // Sentido antihorario
-    function left() {
-        publishMovement(0.0, 2.0);
-    }
-
-    // Agregar control con el teclado (WASD)
-    document.addEventListener("keydown", (event) => {
-        switch (event.key.toLowerCase()) {
-            case "w": move(); break;
-            case "s": stop(); break;
-            case "a": left(); break;
-            case "d": right(); break;
-            case "x": back(); break;
-        }
-    });
-
-    function subscribe(message){
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/odom',
-            messageType: 'nav_msgs/msg/Odometry'
-        })
+                });
         
-        topic.subscribe((message) => {
-            data.position = message.pose.pose.position
-                document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
-                document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2)
-        })
-    }
+                updateCameraFeed();
+                resolve(true);
+        
+                console.log("Conexion con ROSBridge correcta")
+                // Comprueba qué topics hay disponibles
+                data.ros.getTopics(topicsInfo => {
+                    const available = topicsInfo.topics;
+                    if (available.includes('/battery_state')) {
+                        subscribeBattery();
+                    } else {
+                        alert('El topic /battery_state no está creado aún.');
+                    }
+                    if (available.includes('/wifi_strength')) {
+                        subscribeWifi();
+                    } else {
+                        alert('El topic /wifi_strength no está creado aún.');
+                    }
 
-    /*function subscribeService(){
-        // define the service to be called
-       let service = new ROSLIB.Service({
-          ros : data.ros,
-          name : '/move',
-          serviceType : 'rossrv/Type',
-        })
-        // define the request
-        let request = new ROSLIB.ServiceRequest({
-          param1 : 123,
-          param2 : 'example of parameter',
-        })
-        // define a callback
-        service.callService(request, (result) => {
-          console.log('This is the response of the service ')
-          console.log(result)
+                    // --------------
+                    // ESTOS TÓPICS NO ESTÁN CREADOS
+                    // --------------
+                });
+            })
 
-        }, (error) => {
-          console.error(error)
-        }) 
-    }*/
+            data.ros.on("error", (error) => {
+                console.log("Error en ROSBridge: ", error)
+                alert("¡Error al conectar con el robot!\nComprueba que ROSBridge esté levantado en " + data.rosbridge_address);
+                resolve(false);  // Rechazar también sería válido: reject(error)
 
-        // Versión usando librería MJPEGCANVAS (requiere cargarla)
-    /*function setCamera(){
-        console.log("setting the camera")
-    var viewer = new MJPEGCANVAS.Viewer({
-        divID : 'mjpeg',
-        host : 'localhost',
-        width : 640,
-        height : 480,
-        topic : '/camera/image_raw',
-        interval : 200
-        })
-    }*/
-
-    // otro ejemplo de función (simple para prueba inicial)
-    function updateCameraFeed() {
-    const img = document.getElementById("cameraFeed");
-    //const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
-    img.src = `http://127.0.0.1:8080/stream?topic=/camera/image_raw`;
-    //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
-    }
-
-    // Sólo se notificará una vez por sesión
-    data.batteryLowNotified = false;
-    data.wifiLowNotified = false;
-
-    function subscribeBattery() {
-        let batteryTopic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/battery_state',
-            messageType: 'sensor_msgs/msg/BatteryState'
+            })
+            data.ros.on("close", () => {
+                data.connected = false
+                console.log("Conexion con ROSBridge cerrada")
+                alert("La conexión con el robot se ha cerrado.");
+                resolve(false);
+            })
         });
-        batteryTopic.subscribe(msg => {
-            const pct = msg.percentage; // 0.0 … 1.0
-            if (pct < 0.2 && !data.batteryLowNotified) {
-                data.batteryLowNotified = true;
-                alert(`Nivel de batería bajo: ${(pct * 100).toFixed(0)}%`);
+
+        function disconnect(){
+            return new Promise((resolve) => {
+                if (data.ros) {
+                data.ros.on("close", () => {
+                    data.connected = false;
+                    console.log("Conexión cerrada");
+                    localStorage.removeItem("robot");
+                    resolve();
+                });
+                data.ros.close();
+                console.log("Clic en botón de desconexión");
+                } else {
+                    resolve(); // Si ya está desconectado
+                }
+            });
+        }
+
+
+        function publishMovement(linearX, angularZ) {
+            if (!cmdVelTopic) {
+                console.warn("cmdVelTopic aún no inicializado");
+                return;
+            }
+            const msg = new ROSLIB.Message({
+                linear:  { x: linearX, y: 0, z: 0 },
+                angular: { x: 0, y: 0, z: angularZ }
+            });
+            cmdVelTopic.publish(msg);
+            subscribe(msg);
+            //suscribeOdom();
+        }
+
+        // Linea Recta Delante
+        function move() {
+            publishMovement(0.1, 0.0);
+        }
+
+        // Linea Recta Atras
+        function back() {
+            publishMovement(-0.1, 0.0);
+        }
+
+        // Para el robot
+        function stop() {
+            publishMovement(0.0, 0.0);
+        }
+        
+
+        // Sentido horario
+        function right() {
+            publishMovement(0.0, -0.2);
+        }
+
+        // Sentido antihorario
+        function left() {
+            publishMovement(0.0, 2.0);
+        }
+
+        // Agregar control con el teclado (WASD)
+        document.addEventListener("keydown", (event) => {
+            switch (event.key.toLowerCase()) {
+                case "w": move(); break;
+                case "s": stop(); break;
+                case "a": left(); break;
+                case "d": right(); break;
+                case "x": back(); break;
             }
         });
-    }
 
-    function subscribeWifi() {
-        let wifiTopic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/wifi_strength',
-            messageType: 'std_msgs/msg/Float32'
-        });
-        wifiTopic.subscribe(msg => {
-            const level = msg.data; // por ejemplo, -80 dBm
-            if (level < -70 && !data.wifiLowNotified) {
-                data.wifiLowNotified = true;
-                alert(`Señal Wi-Fi débil: ${level.toFixed(0)} dBm`);
-            }
-        });
+        function subscribe(message){
+            let topic = new ROSLIB.Topic({
+                ros: data.ros,
+                name: '/odom',
+                messageType: 'nav_msgs/msg/Odometry'
+            })
+            
+            topic.subscribe((message) => {
+                data.position = message.pose.pose.position
+                    document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
+                    document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2)
+            })
+        }
+
+        /*function subscribeService(){
+            // define the service to be called
+        let service = new ROSLIB.Service({
+            ros : data.ros,
+            name : '/move',
+            serviceType : 'rossrv/Type',
+            })
+            // define the request
+            let request = new ROSLIB.ServiceRequest({
+            param1 : 123,
+            param2 : 'example of parameter',
+            })
+            // define a callback
+            service.callService(request, (result) => {
+            console.log('This is the response of the service ')
+            console.log(result)
+
+            }, (error) => {
+            console.error(error)
+            }) 
+        }*/
+
+            // Versión usando librería MJPEGCANVAS (requiere cargarla)
+        /*function setCamera(){
+            console.log("setting the camera")
+        var viewer = new MJPEGCANVAS.Viewer({
+            divID : 'mjpeg',
+            host : 'localhost',
+            width : 640,
+            height : 480,
+            topic : '/camera/image_raw',
+            interval : 200
+            })
+        }*/
+
+        // otro ejemplo de función (simple para prueba inicial)
+        function updateCameraFeed() {
+        const img = document.getElementById("cameraFeed");
+        //const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
+        img.src = `http://127.0.0.1:8080/stream?topic=/camera/image_raw`;
+        //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
+        }
+
+        // Sólo se notificará una vez por sesión
+        data.batteryLowNotified = false;
+        data.wifiLowNotified = false;
+
+        function subscribeBattery() {
+            let batteryTopic = new ROSLIB.Topic({
+                ros: data.ros,
+                name: '/battery_state',
+                messageType: 'sensor_msgs/msg/BatteryState'
+            });
+            batteryTopic.subscribe(msg => {
+                const pct = msg.percentage; // 0.0 … 1.0
+                if (pct < 0.2 && !data.batteryLowNotified) {
+                    data.batteryLowNotified = true;
+                    alert(`Nivel de batería bajo: ${(pct * 100).toFixed(0)}%`);
+                }
+            });
+        }
+
+        function subscribeWifi() {
+            let wifiTopic = new ROSLIB.Topic({
+                ros: data.ros,
+                name: '/wifi_strength',
+                messageType: 'std_msgs/msg/Float32'
+            });
+            wifiTopic.subscribe(msg => {
+                const level = msg.data; // por ejemplo, -80 dBm
+                if (level < -70 && !data.wifiLowNotified) {
+                    data.wifiLowNotified = true;
+                    alert(`Señal Wi-Fi débil: ${level.toFixed(0)} dBm`);
+                }
+            });
+        }
     }
-});

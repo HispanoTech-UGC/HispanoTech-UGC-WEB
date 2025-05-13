@@ -1,7 +1,12 @@
 //'giro-dirección-AD'
+import { getMisInformes } from "../services/supa_informs.js";
+import { displayInformes } from "./informes.js";
+asignarFuncionalidadBotones();
+
+const user = JSON.parse(localStorage.getItem('usuario'));
 const direccionIcon = document.querySelector('.direccion');
 let currentRotation = 0;
-
+const placa = user.num_placa;
 document.addEventListener('keydown', (e) => {
     if (e.key === 'a' || e.key === 'A') {
     currentRotation -= 15;
@@ -107,30 +112,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
-
-
-
-
-
-
-
-
 // menu PDA operador
-
-asignarFuncionalidadBotones();
 
 async function opcionSeleccionadaMenu(target){
     const contenido = document.getElementById(target);
     const menu = document.getElementById('menu');
-    const retro = document.getElementById('retroceder');
+    /*const retro = document.getElementById('retroceder');*/
 
     contenido.style.display = 'block';
     contenido.style.height = '100vh';
     menu.style.display = 'none';
 
-    if (target==='robot'){
+    if (target==='mis-informes'){
+        contenido.style.height = 'auto';
         //await filtrar();
         //getAllCuerpos();
+        let result = await getMisInformes(placa);
+        displayInformes(result);
     }
 }
 

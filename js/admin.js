@@ -1,7 +1,11 @@
-import {deleteUser, editUser, getCuerpoId, getUserByPlaca, getCuerpos, getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
+import {deleteUser, editUser, getCuerpoId, getUserByPlaca, /*getCuerpos ,*/ getUsers, getUsersByCuerpo} from "../services/supa_admin.js";
+import {getInformesCuerpo} from "../services/supa_informs.js";
+import {displayInformes} from "./informes.js";
 const user = JSON.parse(localStorage.getItem('usuario'));
+const placa = user.num_placa;
 const textoHeader = document.getElementById('texto-bienvenida');
 textoHeader.textContent = 'Bienvenido '+user.num_placa;
+let debounceTimeout;
 
 
 async function displayUsers(result) {
@@ -87,7 +91,7 @@ async function borrarUser(placa) {
     }
   }
 
-async function getAllCuerpos() {
+/*async function getAllCuerpos() {
     // Obtener los cuerpos desde la base de datos
     const cuerpos = await getCuerpos();  // Supongo que esta función devuelve los datos de cuerpos
     
@@ -123,7 +127,7 @@ async function getAllCuerpos() {
       await displayUsers();
     }
   });
-}
+}*/
 
 
 async function activarEdicionUsuario(user, tr) {
@@ -186,7 +190,7 @@ async function activarEdicionUsuario(user, tr) {
         const result = await editUser(updatedUser);
         if (result.success) {
             alert("Usuario actualizado correctamente.");
-            filtrar(); // Refrescar la tabla
+            await filtrar(); // Refrescar la tabla
         } else {
             alert(result.message || "Error al actualizar.");
         }
@@ -231,10 +235,15 @@ async function opcionSeleccionadaMenu(target){
 
     contenido.style.display = 'block';
     menu.style.display = 'none';
+    contenido.style.alignContent = 'center';
 
     if (target==='gestionar-usuarios'){
         await filtrar();
         //getAllCuerpos();
+    }else if(target==='informes'){
+        const abreviatura = placa.match(/^[A-Za-z]+/)[0];
+        let result = await getInformesCuerpo(abreviatura);
+        displayInformes(result);
     }
 }
 
@@ -261,7 +270,7 @@ function asignarFuncionalidadBotones(){
                 opcion = 'registrar-usuarios';
                 break;
             case 2:
-                opcion = 'administrar-informes';
+                opcion = 'informes';
                 break;
             default:
                 opcion = 'opcion-desconocida';
@@ -283,7 +292,7 @@ function asignarFuncionalidadBotones(){
                 opcion = 'registrar-usuarios';
                 break;
             case 2:
-                opcion = 'administrar-informes';
+                opcion = 'informes';
                 break;
             default:
                 opcion = 'opcion-desconocida';
@@ -294,11 +303,6 @@ function asignarFuncionalidadBotones(){
         });
     });
 }
-
-
-
-let debounceTimeout;
-
 document.getElementById('placa').addEventListener('input', (e) => {
     clearTimeout(debounceTimeout);  // Limpiar cualquier timeout previo
 
