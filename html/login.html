@@ -88,5 +88,33 @@
 
   <!-- Script de login -->
   <script type="module" src="../js/login.js"></script>
+
+  <!-- Cargar @supabase/supabase-js desde un CDN -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = 'https://pynqyypeepucyrrmncpi.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB5bnF5eXBlZXB1Y3lycm1uY3BpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyNzY4MTUsImV4cCI6MjA1OTg1MjgxNX0.snRvFKlyvlNKRbiduOR2NfXDXeMjqn_2mvJGXSafdIY';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+      const email = document.getElementById('nombre-email').value;
+      const password = document.getElementById('contraseña').value;
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      const mensaje = document.getElementById('mensaje');
+      if (error) {
+        mensaje.textContent = 'Error: ' + error.message;
+        mensaje.style.color = 'red';
+      } else {
+        mensaje.textContent = 'Inicio de sesión exitoso';
+        mensaje.style.color = 'green';
+        // Redirigir al usuario a otra página si es necesario
+        window.location.href = '../html/operador.html';
+      }
+    });
+  </script>
 </body>
 </html>
