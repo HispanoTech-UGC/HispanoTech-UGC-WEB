@@ -1,0 +1,121 @@
+body{
+    height: 100vh;
+}
+#contenedor-pagina{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100%;
+    background-color: var(--color-primario);
+}
+
+#menu{
+    height: 100%;
+    align-content: center;
+}
+
+main{
+    display: none;
+}
+
+.retroceder{
+    background: none;
+    border: none;
+    font-size: 2vw;
+    color: white;
+}
+
+/* Estilos principales para .game-button */
+.game-button {
+    border-radius: 20px; /* Bordes redondeados */
+    text-align: center; /* Centrar el contenido dentro del botón */
+    padding: 10px; /* Espaciado interior */
+    background-color: transparent; /* Color de fondo primario */
+    color: white; /* Color del texto */
+    margin-bottom: 20px; /* Espaciado inferior entre botones */
+    transition: transform 0.2s; /* Suavizar el efecto de transformación */
+    border: 3px solid rgb(255, 255, 255);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(10px);
+}
+.game-button i {
+    max-width: 100%; /* La imagen ocupa el ancho total disponible */
+    font-size: 8.5vw; /* Mantener la proporción de la imagen */
+    border-radius: 10px; /* Bordes redondeados en las imágenes */
+}
+
+.game-button button {
+    background: var(--color-primario); /* Color de fondo del botón */
+    border-radius: 20px; /* Bordes redondeados del botón */
+    display: none; /* El botón se muestra como un bloque */
+    border: none;
+}
+.game-button h4 {
+    margin-top: 10px; /* Espaciado superior para el título */
+    font-size: 20px; /* Tamaño de fuente predeterminado */
+    font-weight: bold; /* Título en negrita */
+}
+
+.game-button:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
+    color: var(--color-primario); /* Cambiar el color del texto en hover */
+    background: white;
+}
+
+header h1{
+    color: white;
+}
+
+header #logout{
+    background: none;
+    border: none;
+    color: red;
+    padding: 10px;
+    font-size: 3vw;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+header #logout:hover{
+    color: white;
+    transform: scale(1.2);
+}
+
+#gestionar-usuarios h2{
+    color: white;
+}
+#gestionar-usuarios button{
+    font-size: 1.5vw;
+}
+
+/* Media queries para pantallas de menos de 992px */
+@media (max-width: 992px) {
+    .game-button h4 {
+        font-size: 1.5rem; /* Ajustar el tamaño de la fuente en pantallas medianas */
+    }
+    .game-button {
+        max-width: 100%; /* Botones ocupan todo el ancho en pantallas medianas */
+    }
+    .col-md-3 {
+        max-width: 33.33%; /* Tres columnas por fila en pantallas medianas */
+    }
+}
+
+/* Media queries para pantallas de menos de 768px */
+@media (max-width: 768px) {
+    .game-button button {
+        display: none; /* Ocultar los botones en pantallas pequeñas */
+    }
+    .game-button {
+        max-width: 100%; /* Botones ocupan todo el ancho en pantallas pequeñas */
+    }
+    .col-md-3 {
+        max-width: 50%; /* Dos columnas por fila en pantallas pequeñas */
+    }
+    .game-button h4 {
+        font-size: 16px; /* Reducir el tamaño de la fuente en pantallas pequeñas */
+    }
+}

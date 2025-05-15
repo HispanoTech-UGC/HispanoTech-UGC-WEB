@@ -37,7 +37,7 @@ registroBtn.addEventListener('click', async () => {
 
         // Redirigir o mostrar mensaje de éxito
         setTimeout(() => {
-            window.location.href = 'login.html';
+            window.location.href = 'admin_cuerpos.html';
         }, 1500);
 
     } else {

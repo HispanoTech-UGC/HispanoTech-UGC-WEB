@@ -13,13 +13,16 @@ html, body {
   z-index: 2;
   opacity: 0.5;
 }
+hr{
+  width: 10vw;
+}
 .header-landing{
     display: flex;
     width: 100%;
     height: 92px;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 14px;
+    padding: 0 14px;
     position: relative;
   z-index: 3;
   }
@@ -53,13 +56,13 @@ html, body {
   }
   
   .login-button{
-  display: inline-flexbox;
+  display: flex;
+  flex-direction: row;
   width:50px;
   height: 50px;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: relative;
   flex: 0 0 auto;
   background-color: var(--color-negro);
   border-radius: 100px;
@@ -149,13 +152,13 @@ height: 100%;
 }
 
 .body .frame-wrapper {
-  width: 471px;
+  width: 40vw;
   gap: 10px;
   padding: 10px 20px;
   background-color: #ffffff;
   border-radius: 60px;
   border: 2px solid;
-  border-color: var(--negro);
+  border-color: var(--color-negro);
   display: flex;
   align-items: center;
   position: relative;
@@ -176,7 +179,7 @@ height: 100%;
   margin-top: -1.00px;
   font-family: var(--body-large-font-family);
   font-weight: var(--body-large-font-weight);
-  color: var(--negro);
+  color: var(--color-negro);
   font-size: var(--body-large-font-size);
   letter-spacing: var(--body-large-letter-spacing);
   line-height: var(--body-large-line-height);
@@ -191,7 +194,7 @@ height: 100%;
   margin-top: -1.00px;
   font-family: var(--body-large-font-family);
   font-weight: var(--body-large-font-weight);
-  color: var(--negro);
+  color: var(--color-negro);
   font-size: var(--body-large-font-size);
   letter-spacing: var(--body-large-letter-spacing);
   line-height: var(--body-large-line-height);
@@ -206,7 +209,7 @@ height: 100%;
   margin-top: -1.00px;
   font-family: var(--body-large-font-family);
   font-weight: var(--body-large-font-weight);
-  color: var(--negro);
+  color: var(--color-negro);
   font-size: var(--body-large-font-size);
   letter-spacing: var(--body-large-letter-spacing);
   line-height: var(--body-large-line-height);
@@ -216,7 +219,7 @@ height: 100%;
 
 .body .botn {
   display: flex;
-  width: 473px;
+  width: 40vw;
   height: 64px;
   align-items: center;
   justify-content: center;
@@ -312,7 +315,7 @@ height: 100%;
   background-color: #eef1f166;
   border-radius: 100px;
   border: 2px solid;
-  border-color: var(--colorwheelplaygroundprimitives-1-grey-100);
+  border-color: var(--color-gris);
   gap: 10px;
   position: relative;
   color: var(--color-blanco);
@@ -329,7 +332,7 @@ height: 100%;
   width: fit-content;
   font-family: var(--body-medium-font-family);
   font-weight: var(--body-medium-font-weight);
-  color: var(--blanco);
+  color: var(--color-blanco);
   font-size: var(--body-medium-font-size);
   letter-spacing: var(--body-medium-letter-spacing);
   line-height: var(--body-medium-line-height);
@@ -366,4 +369,14 @@ height: 100%;
     border: none; /* Elimina el borde */
     outline: none; /* Elimina el contorno al hacer clic */
     background: transparent; /* Si también quieres que el fondo sea transparente */
+}
+
+@media (max-width: 645px) {
+  .body .frame-wrapper {
+    width: 60vw;
+  }
+
+  .body .botn{
+    width: 60vw;
+  }
 }

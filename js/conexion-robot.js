@@ -1,193 +1,165 @@
 document.addEventListener('DOMContentLoaded', event => {
-    console.log("entro en la pagina")
+    console.log("Entrando en la página");
+    event.preventDefault();
 
-    canvasMap = document.getElementById("map");
-
-    // Agregar control con el teclado (WASD)
-    document.addEventListener("keydown", (event) => {
-        switch (event.key.toLowerCase()) {
-            case "w":
-                move();
-                break;
-            case "s":
-                stop();
-                break;
-            case "a":
-                left();
-                break;
-            case "d":
-                right();
-                break;
-        }
-    });
-
+    let canvasMap = document.getElementById("map");
+    let popupInput = document.getElementById("popupInput");
 
     data = {
-        // ros connection
         ros: null,
-        rosbridge_address: 'ws://127.0.0.1:9090/',
+        rosbridge_address: 'ws://192.168.0.95:9090', // Dirección IP del robot
         connected: false,
-        // service information 
-	    service_busy: false, 
-	    service_response: ''
-    }
+        service_busy: false,
+        service_response: ''
+    };
+
     connect();
 
-    function connect(){
-	      console.log("Clic en connect")
-          //console.log(direccionBridge)
+    function connect() {
+        console.log("Intentando conectar a ROSBridge en:", data.rosbridge_address);
+        data.ros = new ROSLIB.Ros({ url: data.rosbridge_address });
 
-	      data.ros = new ROSLIB.Ros({
-                url: 'ws://127.0.0.1:9090/',
-        })
-
-        // Define callbacks
         data.ros.on("connection", () => {
-            data.connected = true
-            /*estado.textContent = 'Conectado';
-            estado.style.background = 'green';*/
-            //Subscribe to the map topic
-            var mapTopic = new ROSLIB.Topic({
-                ros: data.ros,
-                name: '/map',
-                messageType: 'nav_msgs/msg/OccupancyGrid'
-            });
+            console.log("Conectado a ROSBridge en:", data.rosbridge_address);
+            data.connected = true;
 
-            mapTopic.subscribe((message) => {
-                console.log('suscrito a map')
-                draw_occupancy_grid(canvasMap, message, 0);
-            });
+            // Actualiza el feed de la cámara después de la conexión
             updateCameraFeed();
-            console.log("Conexion con ROSBridge correcta")
-        })
+            console.log("Conexión ROSBridge exitosa");
+        });
+
         data.ros.on("error", (error) => {
-            console.log("Se ha producido algun error mientras se intentaba realizar la conexion")
-            console.log(error)
-        })
+            console.error("Error al conectar con ROSBridge:", error);
+            console.warn("Verifica que el servidor ROSBridge esté corriendo en la IP:", data.rosbridge_address);
+        });
+
         data.ros.on("close", () => {
-            data.connected = false
-            console.log("Conexion con ROSBridge cerrada")
-        })
+            console.log("Conexión a ROSBridge cerrada.");
+            data.connected = false;
+        });
     }
 
     function disconnect(){
-	      data.ros.close()
-	      data.connected = false
-          estado.textContent = 'Desconectado';
-          estado.style.background = 'red';
-        console.log('Clic en botón de desconexión')
+        data.ros.close();
+        data.connected = false;
+        estado.textContent = 'Desconectado';
+        estado.style.background = 'red';
+        console.log('Clic en botón de desconexión');
     }
 
+    function publishMovement(linearX, angularZ) {
+        if (!cmdVelTopic) {
+            console.warn("cmdVelTopic aún no inicializado");
+            return;
+        }
+        const msg = new ROSLIB.Message({
+            linear: { x: linearX, y: 0, z: 0 },
+            angular: { x: 0, y: 0, z: angularZ }
+        });
+        cmdVelTopic.publish(msg);
+        subscribe(msg);
+    }
+
+    // Movimiento recto
     function move() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: -0.2, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        publishMovement(0.1, 0.0);
     }
 
+    // Detener el robot
     function stop() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.0, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
+        publishMovement(0.0, 0.0);
     }
 
-    function right() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: 0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
-    }
+            }, (error) => {
+            console.error(error)
+            }) 
+        }*/
 
-    function left() {
-        let topic = new ROSLIB.Topic({
-            ros: data.ros,
-            name: '/cmd_vel',
-            messageType: 'geometry_msgs/msg/Twist'
-        })
-        let message = new ROSLIB.Message({
-            linear: {x: -0.1, y: 0, z: 0, },
-            angular: {x: 0, y: 0, z: 0.0, },
-        })
-        topic.publish(message)
-        subscribe(message)
-    }
+            // Versión usando librería MJPEGCANVAS (requiere cargarla)
+        /*function setCamera(){
+            console.log("setting the camera")
+        var viewer = new MJPEGCANVAS.Viewer({
+            divID : 'mjpeg',
+            host : 'localhost',
+            width : 640,
+            height : 480,
+            topic : '/camera/image_raw',
+            interval : 200
+            })
+        }*/
+
+    // Control con el teclado (WASD)
+    document.addEventListener("keydown", (event) => {
+        switch (event.key.toLowerCase()) {
+            case "w": move(); break;
+            case "s": stop(); break;
+            case "a": left(); break;
+            case "d": right(); break;
+        }
 
     function subscribe(message){
         let topic = new ROSLIB.Topic({
             ros: data.ros,
             name: '/odom',
             messageType: 'nav_msgs/msg/Odometry'
-        })
+        });
+
         topic.subscribe((message) => {
-            data.position = message.pose.pose.position
-                document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2)
-                document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2)
-        })
+            data.position = message.pose.pose.position;
+            document.getElementById("pos_x").innerHTML = data.position.x.toFixed(2);
+            document.getElementById("pos_y").innerHTML = data.position.y.toFixed(2);
+        });
     }
 
-    function subscribeService(){
-        // define the service to be called
-       let service = new ROSLIB.Service({
-          ros : data.ros,
-          name : '/move',
-          serviceType : 'rossrv/Type',
-        })
-        // define the request
-        let request = new ROSLIB.ServiceRequest({
-          param1 : 123,
-          param2 : 'example of parameter',
-        })
-        // define a callback
-        service.callService(request, (result) => {
-          console.log('This is the response of the service ')
-          console.log(result)
-
-        }, (error) => {
-          console.error(error)
-        }) 
-    }
-
-        // Versión usando librería MJPEGCANVAS (requiere cargarla)
-    function setCamera(){
-        console.log("setting the camera")
-    var viewer = new MJPEGCANVAS.Viewer({
-        divID : 'mjpeg',
-        host : 'localhost',
-        width : 640,
-        height : 480,
-        topic : '/camera/image_raw',
-        interval : 200
-        })
-    }
-
-    // otro ejemplo de función (simple para prueba inicial)
+    // Función para mostrar el feed de la cámara en la página
     function updateCameraFeed() {
-    const img = document.getElementById("cameraFeed");
-    const timestamp = new Date().getTime(); // Evita caché agregando un timestamp
-    img.src = `http://127.0.0.1:8080/stream?topic=/camera/image_raw`;
-    //img.src = `http://localhost:8080/stream?topic=/turtlebot3/camera/image_raw&console.log("Cactualizando: http://0.0.0.0:8080/stream?topic=/camera/image_raw)"`
-    }
+        const canvas = document.getElementById("cameraCanvas");
 
+        if (!canvas) {
+            console.error("Elemento <canvas> con id 'cameraCanvas' no encontrado en el DOM.");
+            return;
+        }
+
+        const context = canvas.getContext("2d");
+
+        // Verificar la conexión al topic /image
+        const cameraTopic = new ROSLIB.Topic({
+            ros: data.ros,
+            name: '/image',
+            messageType: 'sensor_msgs/msg/Image',
+            qos: {
+                reliability: ROSLIB.QOS_POLICY_RELIABILITY_BEST_EFFORT,
+                durability: ROSLIB.QOS_POLICY_DURABILITY_VOLATILE
+            }
+        });
+
+        cameraTopic.subscribe((message) => {
+            //console.log("Mensaje recibido del topic /image:", message);
+
+            try {
+                // Decodificar los datos de la imagen
+                const binaryData = atob(message.data);
+                const bgrBuffer = new Uint8ClampedArray(binaryData.length);
+
+                for (let i = 0; i < binaryData.length; i++) {
+                    bgrBuffer[i] = binaryData.charCodeAt(i);
+                }
+
+                // Convertir de BGR a RGBA
+                const rgbaBuffer = new Uint8ClampedArray(message.width * message.height * 4);
+                for (let i = 0, j = 0; i < bgrBuffer.length; i += 3, j += 4) {
+                    rgbaBuffer[j] = bgrBuffer[i + 2];     // R
+                    rgbaBuffer[j + 1] = bgrBuffer[i + 1]; // G
+                    rgbaBuffer[j + 2] = bgrBuffer[i];     // B
+                    rgbaBuffer[j + 3] = 255;              // A (opacidad)
+                }
+
+                // Crear ImageData y dibujar en el canvas
+                const imageData = new ImageData(rgbaBuffer, message.width, message.height);
+                context.putImageData(imageData, 0, 0);
+            } catch (error) {
+                console.error("Error al procesar los datos de la imagen:", error);
+            }
+        });
+    }
 });

@@ -1,25 +1,33 @@
-'giro-dirección-AD'
+//'giro-dirección-AD'
+import { getMisInformes } from "../services/supa_informs.js";
+import { displayInformes } from "./informes.js";
+asignarFuncionalidadBotones();
+
+const user = JSON.parse(localStorage.getItem('usuario'));
 const direccionIcon = document.querySelector('.direccion');
 let currentRotation = 0;
-
+const placa = user.num_placa;
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'a' || e.key === 'A') {
+    if (e.key === 'a' || e.key === 'A') {
     currentRotation -= 15;
-  } else if (e.key === 'd' || e.key === 'D') {
+    } else if (e.key === 'd' || e.key === 'D') {
     currentRotation += 15;
-  }
+    }
 
-  direccionIcon.style.transform = `rotate(${currentRotation}deg)`;
+    direccionIcon.style.transform = `rotate(${currentRotation}deg)`;
+
+    // Actualiza el texto del elemento con id "angleText-8"
+    document.getElementById('angleText-8').textContent = currentRotation + 'º';
 });
 
-'AWSDX-botones'
+//'AWSDX-botones'
 document.addEventListener('DOMContentLoaded', () => {
     const buttonW = document.querySelector('.WASD.W');
     const buttonA = document.querySelector('.WASD.A');
     const buttonS = document.querySelector('.WASD.S');
     const buttonD = document.querySelector('.WASD.D');
     const buttonX = document.querySelector('.WASD.X');
-  
+
     const mostrarDatos = (key) => {
         // Aquí puedes calcular la velocidad y el ángulo, o bien solo mostrar los valores
         const velocidad = 10;  // Aquí iría tu cálculo de velocidad
@@ -63,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mostrarDatos('X');
         }
     });
-  
+
     document.addEventListener('keyup', (e) => {
         const key = e.key.toLowerCase();
     
@@ -101,8 +109,76 @@ document.addEventListener('DOMContentLoaded', () => {
         buttonX.classList.add('active');
         mostrarDatos('X');
     });
+
+
 });
+// menu PDA operador
 
+async function opcionSeleccionadaMenu(target){
+    const contenido = document.getElementById(target);
+    const menu = document.getElementById('menu');
+    /*const retro = document.getElementById('retroceder');*/
 
-    
-  
+    contenido.style.display = 'block';
+    contenido.style.height = '100vh';
+    menu.style.display = 'none';
+
+    if (target==='mis-informes'){
+        contenido.style.height = 'auto';
+        //await filtrar();
+        //getAllCuerpos();
+        let result = await getMisInformes(placa);
+        displayInformes(result);
+    }
+}
+
+function retroceder(target){
+    const contenido = document.getElementById(target);
+    const menu = document.getElementById('menu');
+
+    contenido.style.display = 'none';
+    menu.style.display = 'block';
+}
+
+function asignarFuncionalidadBotones(){
+    const botones = document.querySelectorAll('.game-button');
+    const retrocesos = document.querySelectorAll('.retroceder');
+
+    botones.forEach((boton, index) => {
+        let opcion = '';
+
+        switch (index) {
+            case 0:
+                opcion = 'robot';
+                break;
+            case 1:
+                opcion = 'mis-informes';
+                break;
+            default:
+                opcion = 'opcion-desconocida';
+        }
+
+        boton.addEventListener('click', () => {
+            opcionSeleccionadaMenu(opcion).then(r => r);
+        });
+    });
+
+    retrocesos.forEach((boton, index) => {
+        let opcion = '';
+
+        switch (index) {
+            case 0:
+                opcion = 'robot';
+                break;
+            case 1:
+                opcion = 'mis-informes';
+                break;
+            default:
+                opcion = 'opcion-desconocida';
+        }
+
+        boton.addEventListener('click', () => {
+            retroceder(opcion);
+        });
+    });
+}
