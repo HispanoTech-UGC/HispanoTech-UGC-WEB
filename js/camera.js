@@ -1,9 +1,11 @@
 import { subirImagenASupabase } from '../services/supa_operator.js'
 import { crearInforme,  finalizarInforme } from '../services/supa_informs.js'
+import { reconocerArmas } from '../armas/reconocerArmas.py'
 
 const user = JSON.parse(localStorage.getItem('usuario'))
 let path = null
 let informeId = null
+let capturaIntervalId = null
 
 export async function setPath()
 {
@@ -34,6 +36,7 @@ export function removePath(){
     localStorage.removeItem('path');
     finalizarInforme(informe_id).then(r => r);
     alert('Path eliminado')
+    detenerCapturaAutomatica()
 }
 
 export function hacerFoto() {
@@ -44,36 +47,68 @@ export function hacerFoto() {
     }
 
     const img = document.getElementById('cameraFeed')
-
     const canvas = document.createElement('canvas')
     const informe_id = localStorage.getItem('informe');
+
     canvas.width = img.naturalWidth || img.width
     canvas.height = img.naturalHeight || img.height
 
     const ctx = canvas.getContext('2d')
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 
-    const now = new Date()
-    const timestamp = now.toISOString()
-        .replace(/:/g, '-')       // reemplaza ":" para evitar problemas en nombres de archivo
-        .replace(/\..+/, '')      // quita milisegundos y zona horaria
-        .replace('T', '_')        // opcional: más legible
-
-    const fileName = `captura-${timestamp}.png`
-
+    // Convertir a blob para el reconocimiento
     canvas.toBlob(async (blob) => {
-        if (blob) {
-            try {
-                await subirImagenASupabase(blob, `${pathBucket}/${fileName}`, informe_id)
-            } catch (err) {
-                alert('Error al subir la imagen.')
-                console.error(err)
+        if (!blob) return
+
+        try {
+            // Llamada al detector de armas
+            const tieneArma = await reconocerArmas(blob)
+            if (!tieneArma) {
+                console.log('No se detectó arma. Imagen descartada.')
+                return
             }
+
+            const now = new Date()
+            const timestamp = now.toISOString()
+                .replace(/:/g, '-')       // reemplaza ":" para evitar problemas en nombres de archivo
+                .replace(/\..+/, '')      // quita milisegundos y zona horaria
+                .replace('T', '_')        // opcional: más legible
+
+            const fileName = `captura-${timestamp}.png`
+            await subirImagenASupabase(blob, `${pathBucket}/${fileName}`, informe_id)
+            console.log('Imagen con arma subida:', fileName)
+        } catch (err) {
+            console.error('Error en reconocimiento o subida:', err)
         }
     }, 'image/png')
+}
+
+// Inicia la captura cada 2 segundos
+export function iniciarCapturaAutomatica() {
+    if (!path) {
+        alert('Primero establece un path.')
+        return
+    }
+    if (capturaIntervalId) {
+        console.warn('La captura automática ya está en marcha.')
+        return
+    }
+    capturaIntervalId = setInterval(hacerFoto, 2000)
+    console.log('Captura automática iniciada (cada 2s).')
+}
+
+// Detiene la captura periódica
+export function detenerCapturaAutomatica() {
+    if (capturaIntervalId) {
+        clearInterval(capturaIntervalId)
+        capturaIntervalId = null
+        console.log('Captura automática detenida.')
+    }
 }
 
 window.setPath = setPath
 window.removePath = removePath
 window.hacerFoto = hacerFoto
+window.iniciarCapturaAutomatica = iniciarCapturaAutomatica
+window.detenerCapturaAutomatica = detenerCapturaAutomatica
 
