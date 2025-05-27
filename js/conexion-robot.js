@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', event => {
+
     console.log("Entrando en la página");
     event.preventDefault();
 
     let canvasMap = document.getElementById("map");
     let popupInput = document.getElementById("popupInput");
 
-    data = {
+    let data = {
         ros: null,
         rosbridge_address: 'ws://192.168.0.95:9090', // Dirección IP del robot
         connected: false,
@@ -72,8 +73,7 @@ document.addEventListener('DOMContentLoaded', event => {
 
             }, (error) => {
             console.error(error)
-            }) 
-        }*/
+            })
 
             // Versión usando librería MJPEGCANVAS (requiere cargarla)
         /*function setCamera(){
