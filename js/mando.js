@@ -1,5 +1,3 @@
-import {hacerFoto} from "./camera.js";
-
 let sharePressed = false;
 
 function inicializarMando() {
@@ -32,7 +30,7 @@ function inicializarMando() {
         const rightY = gamepad.axes[3];
         moveStick('stick-r', rightX, rightY);
     }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(inicializarMando);
 }
 
 inicializarMando();

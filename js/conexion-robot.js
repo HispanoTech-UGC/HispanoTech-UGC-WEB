@@ -1,44 +1,44 @@
-document.addEventListener('DOMContentLoaded', event => {
 
-    console.log("Entrando en la página");
-    event.preventDefault();
 
     let canvasMap = document.getElementById("map");
     let popupInput = document.getElementById("popupInput");
 
     let data = {
         ros: null,
-        rosbridge_address: 'ws://192.168.0.95:9090', // Dirección IP del robot
+        rosbridge_address: 'ws://127.0.0.1:9090/', // Dirección IP del robot
         connected: false,
         service_busy: false,
         service_response: ''
     };
 
-    connect();
+    //connect();
 
     function connect() {
         console.log("Intentando conectar a ROSBridge en:", data.rosbridge_address);
-        data.ros = new ROSLIB.Ros({ url: data.rosbridge_address });
-
-        data.ros.on("connection", () => {
-            console.log("Conectado a ROSBridge en:", data.rosbridge_address);
-            data.connected = true;
-
-            // Actualiza el feed de la cámara después de la conexión
-            updateCameraFeed();
-            console.log("Conexión ROSBridge exitosa");
-        });
-
-        data.ros.on("error", (error) => {
-            console.error("Error al conectar con ROSBridge:", error);
-            console.warn("Verifica que el servidor ROSBridge esté corriendo en la IP:", data.rosbridge_address);
-        });
-
-        data.ros.on("close", () => {
-            console.log("Conexión a ROSBridge cerrada.");
-            data.connected = false;
+    
+        return new Promise((resolve, reject) => {
+            data.ros = new ROSLIB.Ros({ url: data.rosbridge_address });
+    
+            data.ros.on("connection", () => {
+                console.log("Conectado a ROSBridge en:", data.rosbridge_address);
+                data.connected = true;
+                updateCameraFeed();
+                console.log("Conexión ROSBridge exitosa");
+                resolve(true);
+            });
+    
+            data.ros.on("error", (error) => {
+                console.error("Error al conectar con ROSBridge:", error);
+                reject(false);
+            });
+    
+            data.ros.on("close", () => {
+                console.log("Conexión a ROSBridge cerrada.");
+                data.connected = false;
+            });
         });
     }
+    
 
     function disconnect(){
         data.ros.close();
@@ -71,10 +71,6 @@ document.addEventListener('DOMContentLoaded', event => {
         publishMovement(0.0, 0.0);
     }
 
-            }, (error) => {
-            console.error(error)
-            })
-
             // Versión usando librería MJPEGCANVAS (requiere cargarla)
         /*function setCamera(){
             console.log("setting the camera")
@@ -96,6 +92,7 @@ document.addEventListener('DOMContentLoaded', event => {
             case "a": left(); break;
             case "d": right(); break;
         }
+    });
 
     function subscribe(message){
         let topic = new ROSLIB.Topic({
@@ -114,6 +111,9 @@ document.addEventListener('DOMContentLoaded', event => {
     // Función para mostrar el feed de la cámara en la página
     function updateCameraFeed() {
         const canvas = document.getElementById("cameraCanvas");
+        const img = document.getElementById('cameraFeed');
+
+        img.src = `http://127.0.0.0:8080/stream?topic=/camera/image_raw`;
 
         if (!canvas) {
             console.error("Elemento <canvas> con id 'cameraCanvas' no encontrado en el DOM.");
@@ -162,4 +162,4 @@ document.addEventListener('DOMContentLoaded', event => {
             }
         });
     }
-});
+

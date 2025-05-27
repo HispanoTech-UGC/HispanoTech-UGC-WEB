@@ -1,6 +1,11 @@
 //'giro-dirección-AD'
 import { getMisInformes } from "../services/supa_informs.js";
 import { displayInformes } from "./informes.js";
+import { hacerFoto } from "./camera.js";
+
+const captura = document.getElementById('foto');
+captura.onclick = hacerFoto;
+
 asignarFuncionalidadBotones();
 
 const user = JSON.parse(localStorage.getItem('usuario'));
