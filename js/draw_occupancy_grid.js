@@ -1,10 +1,7 @@
 function draw_occupancy_grid(canvas, map_data, robotPosition) {
     const container = canvas.parentElement;
     const ctx = canvas.getContext("2d");
-    robotPosition = {
-        x:0,
-        y:0
-    }
+
     // Ajustar el tamaño del canvas al tamaño del contenedor
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
