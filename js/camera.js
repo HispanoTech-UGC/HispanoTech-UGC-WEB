@@ -1,6 +1,6 @@
 import { subirImagenASupabase } from '../services/supa_operator.js'
 import { crearInforme,  finalizarInforme } from '../services/supa_informs.js'
-import { reconocerArmas } from '../armas/reconocerArmas.py'
+//import { reconocerArmas } from '../armas/reconocerArmas.py'
 
 const user = JSON.parse(localStorage.getItem('usuario'))
 let path = null
