@@ -21,6 +21,36 @@ export async function getUsers() {
   return data;
 }
 
+export async function editUser(updatedUser) {
+    //const { num_placa, rol, cuerpo } = updatedUser;
+    const { num_placa, rol } = updatedUser;
+
+    if (!num_placa) {
+        return { success: false, message: 'El campo num_placa es obligatorio para editar el usuario.' };
+    }
+
+    /*const { data, error } = await supabase
+        .from('usuarios')
+        .update({ rol, cuerpo })
+        .eq('num_placa', num_placa)
+        .select();*/
+    const { data, error } = await supabase
+        .from('usuarios')
+        .update({ rol })
+        .eq('num_placa', num_placa)
+        .select();
+
+    if (error) {
+        return { success: false, message: 'Error al actualizar el usuario.', details: error };
+    }
+
+    if (!data || data.length === 0) {
+        return { success: false, message: 'No se encontró ningún usuario con ese num_placa.' };
+    }
+
+    return { success: true, message: 'Usuario actualizado correctamente.', user: data[0] };
+}
+
 export async function getCuerpos() {
     const { data, error } = await supabase
       .from('cuerpos')
@@ -57,6 +87,27 @@ export async function getUsersByCuerpo(id) {
   
     return data;  // Retorna solo el valor del cuerpo
   }
+
+
+export async function getUserByPlaca(placa) {
+    const { data, error } = await supabase
+        .from('usuarios')
+        .select('*')
+        .ilike('num_placa', `%${placa}%`);  // ← Búsqueda flexible con LIKE (case-insensitive)
+
+    console.log('ID solicitado:', placa);  // Verificar qué ID se está pasando
+    console.log('Datos obtenidos:', data);  // Ver qué datos se obtienen de la consulta
+
+    if (error) {
+        return { success: false, message: 'Error al acceder a la base de datos.' };
+    }
+
+    if (!data || data.length === 0) {
+        return { success: false, message: 'No se encontraron datos del usuario.' };
+    }
+
+    return {success: true, message: data};  // Retorna solo el valor del cuerpo
+}
 
 
 
