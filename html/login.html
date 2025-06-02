@@ -22,6 +22,15 @@
   <link rel="stylesheet" href="../css/páginas/meshgradient.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "crypto-js": "https://cdn.jsdelivr.net/npm/crypto-js@4.2.0/+esm"
+      }
+    }
+    </script>
+    
   <!-- 2. Cargar supabaseClient.js -->
 
 </head>
@@ -33,7 +42,7 @@
       <img class="logoLanding" src="../assets/imágenes/LogoNegro.svg" alt="Logo HispanoTech" onclick="window.location.href='../index.html'">
       <div class="frame botones-header">
         <div class="headerFrame">
-          <button class="producto-button" onclick="window.location.href='../producto.html'">Producto</button>
+          <!--<button class="producto-button" onclick="window.location.href='../producto.html'">Producto</button>-->
           <button class="login-button" onclick="window.location.href='login.html'"><img class="loginIcono" src="/assets/imágenes/iconos/solar_login-linear-blanco.svg" alt="login"></button>
         </div>
       </div>

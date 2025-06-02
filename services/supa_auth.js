@@ -1,38 +1,44 @@
 import { supabase } from '../config/supabaseClient.js';
-export async function loginUsuario(numPlaca, password) {
-  const { data, error } = await supabase
-      .from('usuarios')
-      .select('*')
-      .eq('num_placa', numPlaca)
-      .single();
 
+export async function loginUsuario(numPlaca, password) {
+  // 1) Buscamos el usuario: si no hay fila, data === null
+  const { data, error } = await supabase
+    .from('usuarios')
+    .select('*')
+    .eq('num_placa', numPlaca)
+    .maybeSingle();          // ← cambio clave, no altera nombres
+
+  /* ------ 1. Error real de base de datos ------ */
   if (error) {
+    console.error('Supabase:', error);          // para tu registro
     return { success: false, message: 'Error al acceder a la base de datos.' };
   }
 
+  /* ------ 2. Usuario no encontrado ------ */
   if (!data) {
     return { success: false, message: 'Usuario no encontrado.' };
   }
 
-  // Generamos el hash de la contraseña proporcionada usando SHA-256
+  /* ------ 3. Contraseña incorrecta ------ */
   const hashedPassword = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
-
-  // Comparamos el hash de la contraseña proporcionada con el hash almacenado en la base de datos
-  if (hashedPassword === data.password) {
-    // ✅ Actualizar el campo ultima_sesion a la fecha/hora actual
-    const { error: updateError } = await supabase
-        .from('usuarios')
-        .update({ ultima_sesion: new Date().toISOString() })
-        .eq('num_placa', numPlaca);
-
-    if (updateError) {
-      console.error('No se pudo actualizar ultima_sesion:', updateError.message);
-      // No detenemos el login, solo registramos el error
-    }
-    return { success: true, message: 'Login correcto.', usuario: data };
-  } else {
+  if (hashedPassword !== data.password) {
     return { success: false, message: 'Contraseña incorrecta.' };
   }
+
+  /* ------ 4. Login correcto ------ */
+  // actualizamos ultima_sesion sin bloquear la respuesta
+  supabase
+    .from('usuarios')
+    .update({ ultima_sesion: new Date().toISOString() })
+    .eq('num_placa', numPlaca)
+    .then(({ error: updateError }) => {
+      if (updateError) {
+        console.error('No se pudo actualizar ultima_sesion:', updateError.message);
+      }
+    });
+
+  // devolvemos el usuario tal cual lo recibías
+  return { success: true, message: 'Login correcto.', usuario: data };
 }
 
 export async function registrarUsuario(numPlaca, password, cuerpo, rol = 2) {
