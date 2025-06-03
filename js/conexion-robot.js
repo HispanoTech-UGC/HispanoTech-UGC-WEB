@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', event => {
     event.preventDefault();
 
     let canvasMap = document.getElementById("map");
-    let popupInput = document.getElementById("popupInput");
 
     data = {
         ros: null,
@@ -70,23 +69,15 @@ document.addEventListener('DOMContentLoaded', event => {
         publishMovement(0.0, 0.0);
     }
 
-            }, (error) => {
-            console.error(error)
-            }) 
-        }*/
+    // Sentido horario
+    function right() {
+        publishMovement(0.0, -0.2);
+    }
 
-            // Versión usando librería MJPEGCANVAS (requiere cargarla)
-        /*function setCamera(){
-            console.log("setting the camera")
-        var viewer = new MJPEGCANVAS.Viewer({
-            divID : 'mjpeg',
-            host : 'localhost',
-            width : 640,
-            height : 480,
-            topic : '/camera/image_raw',
-            interval : 200
-            })
-        }*/
+    // Sentido antihorario
+    function left() {
+        publishMovement(0.0, 2.0);
+    }
 
     // Control con el teclado (WASD)
     document.addEventListener("keydown", (event) => {
@@ -96,6 +87,7 @@ document.addEventListener('DOMContentLoaded', event => {
             case "a": left(); break;
             case "d": right(); break;
         }
+    });
 
     function subscribe(message){
         let topic = new ROSLIB.Topic({
