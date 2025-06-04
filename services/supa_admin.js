@@ -118,7 +118,7 @@ export async function getCuerpoId(id) {
     .select('cuerpo')  // Selecciona solo el campo 'cuerpo'
     .eq('id', id);  // Filtra por el ID del cuerpo
 
-  console.log('ID solicitado:', id);  // Verificar qué ID se está pasando
+  //console.log('ID solicitado:', id);  // Verificar qué ID se está pasando
   console.log('Datos obtenidos:', data);  // Ver qué datos se obtienen de la consulta
 
   if (error) {

@@ -109,8 +109,6 @@ function ocultarBarra() {
         barra.style.display = 'inline-flex';
         barra.classList.remove('animate__slideOutRightCustom');
         barra.classList.add('animate__slideInRightCustom');
-        sonidos.menu.play();
-        sonidos.menu.pause();
     } else {
         barra.classList.remove('animate__slideInRightCustom');
         barra.classList.add('animate__slideOutRightCustom');
@@ -119,8 +117,6 @@ function ocultarBarra() {
         barra.addEventListener('animationend', () => {
             if (barra.classList.contains('animate__slideOutRightCustom')) {
                 barra.style.display = 'none';
-                sonidos.cancel.play();
-                sonidos.cancel.pause();
             }
         }, { once: true });
     }
@@ -133,9 +129,6 @@ function ocultarBarra() {
 
     // Espera a que el usuario haga clic en cualquier parte del documento
     document.addEventListener('click', () => {
-    sonidos.inicio.play().catch(err => {
-    console.warn('No se pudo reproducir el sonido:', err);
-});
 }, { once: true }); // Solo una vez
 });
 
