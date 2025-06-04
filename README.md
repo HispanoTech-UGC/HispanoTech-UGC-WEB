@@ -65,6 +65,69 @@ graph LR
     C -->|Respuesta| A
 ```
 
+## Diagramas de Funcionamiento
+
+### Funcionamiento General del Sistema
+
+```mermaid
+graph TD
+    Usuario((Usuario))
+    Frontend["Frontend (HTML/CSS/JS)"]
+    Auth["Autenticación (Supabase Auth)"]
+    API["API JS/Services"]
+    DB[(Base de Datos PostgreSQL)]
+    Robot["Robot (ROS/Operador)"]
+    Informes["Gestión de Informes"]
+    Mapa["Mapa Interactivo"]
+
+    Usuario -->|Interacción| Frontend
+    Frontend -->|Login/Registro| Auth
+    Auth -->|Token| Frontend
+    Frontend -->|Solicitudes| API
+    API -->|Lectura/Escritura| DB
+    API -->|Control| Robot
+    API --> Informes
+    API --> Mapa
+    Robot -->|Estado/Feedback| API
+    Informes -->|Visualización| Frontend
+    Mapa -->|Visualización| Frontend
+```
+
+### Flujo de Operación del Robot (Operador)
+
+```mermaid
+graph LR
+    O[Operador] -->|Comandos (WASD, UI)| JS[operador.js]
+    JS -->|Publica comandos| ROS[Robot/ROS]
+    ROS -->|Estado, posición, sensores| JS
+    JS -->|Actualiza UI| UI[Interfaz de Usuario]
+    O -->|Visualiza estado| UI
+```
+
+### Flujo de Gestión de Informes
+
+```mermaid
+graph TD
+    Op[Operador/Admin] -->|Solicita informes| Front[Frontend]
+    Front -->|Llama| Service[services/supa_informs.js]
+    Service -->|Consulta| DB[Supabase/PostgreSQL]
+    DB -->|Datos| Service
+    Service -->|Devuelve| Front
+    Front -->|Muestra| Op
+```
+
+### Flujo de Autenticación (Detallado)
+
+```mermaid
+graph TD
+    User[Usuario] -->|Formulario| Frontend
+    Frontend -->|Credenciales| SupabaseAuth
+    SupabaseAuth -->|Verifica| DB[Base de Datos]
+    DB -->|Resultado| SupabaseAuth
+    SupabaseAuth -->|Token/Estado| Frontend
+    Frontend -->|Acceso| User
+```
+
 ## Instalación
 
 1. Clona este repositorio:
